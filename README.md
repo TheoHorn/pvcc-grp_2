@@ -8,10 +8,10 @@ Gérald Oster <<gerald.oster@telecomnancy.eu>>
 ## Titre du projet
 
 **Membres du groupe** :
-- À compléter
-- À compléter
-- À compléter
-- À compléter
+- ARIES Lucas
+- DEVAUX Paul
+- HORNBERGER Théo
+- TEMPESTINI Terry
 
 ## Description du projet
 
