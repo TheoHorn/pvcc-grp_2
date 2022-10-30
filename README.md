@@ -21,11 +21,11 @@ Gérald Oster <<gerald.oster@telecomnancy.eu>>
 Plus besoin de séparer son jardin en parcelle, ici tout le monde travaille main dans la main pour être récompensé et recevoir les fruits de son labeur.
 
 
-## Lancement du projet
-Au root du projet veuillez effectuer ses commandes pour lancer l'application
+## Installation du projet
+Au root du projet veuillez effectuer ses commandes pour installer et lancer l'application
 ```bash
-$ python3 -m venv venv
-$ source venv/bin/activate
-$ pip install -r requirements.txt
-$ flask run --host=0.0.0.0 --port=5454
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+flask run --host=0.0.0.0 --port=5454
 ```
