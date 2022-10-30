@@ -1,9 +1,17 @@
 from .databaseHandler import get_db
 
+"""
+Builder for query help to simplify the syntax
+How to use it:
+-- SELECT --
+data = QueryBuilder("SELECT * FROM test")
+data = data.fetch_all()
+-- INSERT DELETE --
+data = QueryBuilder("INSERT INTO test VALUES (1)")
+data = data.commit()
+"""
 
-# Builder for query help to simplify the syntax
-# How to use it:
-#
+
 class QueryBuilder:
 
     # Set up the query

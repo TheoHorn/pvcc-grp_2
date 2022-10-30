@@ -1,0 +1,13 @@
+/* A css file link to every page of the website so be careful when adding or removing something here (maybe create another .css ?) */
+:root {
+    --grey: #6A645A;
+    --green: #5D7052;
+    --yellow-white: #E3CD8B;
+    --brown-orange: #C18845;
+    --taupe:  #F0BE86;
+    --white: #e2e3d2;
+}
+
+body {
+    background: var(--white);
+}
