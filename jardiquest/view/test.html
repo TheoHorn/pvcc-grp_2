@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link rel="stylesheet" href="/static/theme.css">
+</head>
+<body>
+    Hello World
+    <br> If you see that, it's mean all the links are good
+    <br> Test for the database link (maybe not working because data in it don't exist
+    <ul>
+        {% for data in datas %}
+        <li>{{data}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
