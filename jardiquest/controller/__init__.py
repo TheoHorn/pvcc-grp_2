@@ -1,6 +1,7 @@
 from flask import Blueprint
 
 # allow to create path in multiple file
+# useful to let app.py found the path in the controller folder
 app = Blueprint('controller', __name__)
 
 # to create a new file of path import him here
