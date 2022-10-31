@@ -38,7 +38,7 @@ flask run
 ```
 
 ## Lancement des tests
-Dans le root du projet effectué :
+Dans le root du projet :
 ```bash
 source venv/bin/activate
 pytest
