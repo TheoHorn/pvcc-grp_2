@@ -1,4 +1,4 @@
-from .databaseHandler import get_db
+from .database_handler import get_db
 
 """
 Builder for query help to simplify the syntax

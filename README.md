@@ -33,5 +33,13 @@ flask run --host=0.0.0.0 --port=5454
 ## Lancement du projet
 Après avoir installé le projet vous pouvez le lancer en étant au root du projet avec
 ```bash
+source venv/bin/activate
 flask run
+```
+
+## Lancement des tests
+Dans le root du projet effectué :
+```bash
+source venv/bin/activate
+pytest
 ```
