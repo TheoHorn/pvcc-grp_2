@@ -1,6 +1,6 @@
 from flask import render_template
 from . import app
-from ..model.database.queryBuilder import QueryBuilder
+from ..model.database.query_builder import QueryBuilder
 
 
 @app.get('/')
