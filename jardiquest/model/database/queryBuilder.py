@@ -8,7 +8,7 @@ data = QueryBuilder("SELECT * FROM test")
 data = data.fetch_all()
 -- INSERT DELETE --
 data = QueryBuilder("INSERT INTO test VALUES (1)")
-data = data.commit()
+data.commit()
 """
 
 

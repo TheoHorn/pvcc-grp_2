@@ -29,3 +29,9 @@ source venv/bin/activate
 pip install -r requirements.txt
 flask run --host=0.0.0.0 --port=5454
 ```
+
+## Lancement du projet
+Après avoir installé le projet vous pouvez le lancer en étant au root du projet avec
+```bash
+flask run
+```
