@@ -1,5 +1,5 @@
-from jardiquest.model.database.database_handler import get_db
-from jardiquest.model.database.query_builder import QueryBuilder
+from jardiquest.model.database.sql.database_handler import get_db
+from jardiquest.model.database.sql.query_builder import QueryBuilder
 
 
 # TODO should change once the program is well avance (their not guaranteed to work everytime)
@@ -10,9 +10,8 @@ from jardiquest.model.database.query_builder import QueryBuilder
 # example how to use the database
 def test_get_db(test_client):
     assert get_db() is not None
-    data = QueryBuilder("SELECT * FROM test")
-    data = data.fetch_all()
-    assert data == [(1,), (2,), (3,)]
+    data = QueryBuilder("SELECT * FROM user")
+    data.fetch_all()
 
 
 # example of how to make query to the server in the test function

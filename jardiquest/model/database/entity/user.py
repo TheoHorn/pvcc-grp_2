@@ -6,5 +6,14 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
-    is_active = db.Column(db.Boolean)
 
+    def get_id(self):
+        return self.id
+
+    @staticmethod
+    def is_active():
+        return True
+
+    @staticmethod
+    def is_authenticated():
+        return True

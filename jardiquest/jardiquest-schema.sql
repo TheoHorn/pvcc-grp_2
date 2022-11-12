@@ -1,2 +1,0 @@
--- Here is the schema of the sqlite database, please keep it updated with the current schema
--- You can get the schema in sqlite3 with `.schema`

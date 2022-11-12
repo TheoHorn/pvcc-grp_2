@@ -55,7 +55,7 @@ def login_post():
     password = request.form.get('password')
 
     user = User.query.filter_by(email=email).first()
-    print(user.name, " ", user.email, " ", user.id)
+
     if not user or not check_password_hash(user.password, password):
         flash('Please check your login details and try again.')
         return redirect(url_for('controller.login'))

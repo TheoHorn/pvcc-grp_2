@@ -2,6 +2,7 @@ from .database_handler import get_db
 
 """
 Builder for query help to simplify the syntax
+To bypass the ORM (should not be needed)
 How to use it:
 -- SELECT --
 data = QueryBuilder("SELECT * FROM test")
