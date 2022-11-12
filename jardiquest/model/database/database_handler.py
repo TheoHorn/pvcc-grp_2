@@ -1,8 +1,7 @@
 from flask import g
 import sqlite3
 
-# path of the sqlite file
-DATABASE = 'jardiquest/jardiquest.db'
+from jardiquest.setup_sql import database_path
 
 
 # close the connection to the database call when the flask server is teardown
@@ -16,6 +15,6 @@ def close_connection(exception) -> None:
 def get_db() -> (any or None):
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
+        db = g._database = sqlite3.connect(database_path)
     return db
 
