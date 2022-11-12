@@ -51,6 +51,6 @@ def create_app():
     @flask_serv_intern.before_request
     def before_request():
         session.permanent = True
-        flask_serv_intern.permanent_session_lifetime = timedelta(seconds=10)
+        flask_serv_intern.permanent_session_lifetime = timedelta(hours=4)
 
     return flask_serv_intern

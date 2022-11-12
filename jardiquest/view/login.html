@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 {% block content %}
 <title>Se connecter</title>
-<link rel="stylesheet" href="/static/css/view/login.css">
+<link rel="stylesheet" href="/static/css/view/auth.css">
 
 <div class="portal-container">
     <div class="centered-element">
@@ -12,8 +12,8 @@
             </div>
 
             <hr class="hr-separator">
-            {{callback}}
-            <form method="POST" action="/login{{callback}}" class="form-login">
+
+            <form method="POST" action="/login{{callback}}" class="form-auth">
                 <table>
                     <tr>
                         <td rowspan="2">
@@ -48,8 +48,8 @@
                 {% endif %}
                 {% endwith %}
 
-                <div class="footer-login">
-                    <a class="signup-a" href="{{ url_for('controller.signup') }}">Pas de compte ?</a>
+                <div class="footer-auth">
+                    <a class="signup-a" href="/signup{{callback}}">Pas de compte ?</a>
                     <input type="submit" class="submit" value="" />
                 </div>
             </form>
