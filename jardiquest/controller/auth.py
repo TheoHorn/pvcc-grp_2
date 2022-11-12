@@ -45,7 +45,12 @@ def signup_post():
 
 @app.get('/login')
 def login():
-    return render_template('login.html')
+    callback = request.args.get('next')
+    if callback is None:
+        callback = ''
+    else:
+        callback = "?next=" + callback
+    return render_template('login.html', callback=callback)
 
 
 @app.post('/login')
@@ -56,11 +61,19 @@ def login_post():
 
     user = User.query.filter_by(email=email).first()
 
-    if not user or not check_password_hash(user.password, password):
-        flash('Please check your login details and try again.')
+    if not user:
+        flash('Email inconnu')
+        return redirect(url_for('controller.login'))
+    if not check_password_hash(user.password, password):
+        flash('Mot de passe incorrect')
         return redirect(url_for('controller.login'))
 
     login_user(user)
+    callback = request.args.get('next')
+
+    if callback is not None:
+        return redirect(callback)
+
     return redirect(url_for('controller.profile'))
 
 

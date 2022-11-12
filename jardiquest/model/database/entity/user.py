@@ -12,7 +12,7 @@ class User(db.Model):
 
     @staticmethod
     def is_active():
-        return True
+        return False
 
     @staticmethod
     def is_authenticated():

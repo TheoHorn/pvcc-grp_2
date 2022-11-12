@@ -1,4 +1,6 @@
-from flask import Flask
+from datetime import timedelta
+
+from flask import Flask, session, redirect, url_for, flash, request
 from flask_login import LoginManager
 
 from jardiquest import controller, model
@@ -27,6 +29,15 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = 'controller.login'
     login_manager.init_app(flask_serv_intern)
+    login_manager.refresh_view = 'controller.login'
+
+    login_manager.needs_refresh_message = u"Session expirée, veuillez vous reconnecter"
+    login_manager.needs_refresh_message_category = "info"
+
+    @login_manager.unauthorized_handler
+    def unauthorized_callback():
+        flash("Veuillez vous connecter pour accéder à ce contenu")
+        return redirect(url_for('controller.login', next=request.url))
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -36,5 +47,10 @@ def create_app():
     @flask_serv_intern.teardown_appcontext
     def close_ressource(exception):
         model.close_connection(exception)
+
+    @flask_serv_intern.before_request
+    def before_request():
+        session.permanent = True
+        flask_serv_intern.permanent_session_lifetime = timedelta(seconds=10)
 
     return flask_serv_intern
