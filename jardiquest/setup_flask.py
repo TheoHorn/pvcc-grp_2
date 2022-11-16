@@ -2,13 +2,15 @@ from datetime import timedelta
 
 from flask import Flask, session, redirect, url_for, flash, request
 from flask_login import LoginManager
+from werkzeug.exceptions import HTTPException
 
 from jardiquest import controller, model
+from jardiquest.controller import handling_status_error
 from jardiquest.model.database.entity.user import User
 from jardiquest.setup_sql import db, database_path
 
 # do not remove this import allows SQLAlchemy to find the table
-from jardiquest.model.database.entity import accepte, annonce, catalogue, jardin, quete, recolte
+from jardiquest.model.database.entity import annonce, catalogue, jardin, quete, recolte
 
 # create the flask app (useful to be separate from the app.py
 # to be used in the test and to put all the code in the jardiquest folder
@@ -22,8 +24,8 @@ def create_app():
     flask_serv_intern.config['SQLALCHEMY_DATABASE_URI'] = db_path
     flask_serv_intern.config['SECRET_KEY'] = '=xyb3y=2+z-kd!3rit)hfrg0j!e!oggyny0$5bliwlb8v76j'
     flask_serv_intern.register_blueprint(controller.app)
+    flask_serv_intern.register_error_handler(HTTPException, handling_status_error)
     db.init_app(flask_serv_intern)
-
 
     with flask_serv_intern.app_context():
         db.create_all()
