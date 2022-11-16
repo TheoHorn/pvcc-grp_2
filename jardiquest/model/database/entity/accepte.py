@@ -1,5 +1,6 @@
 from jardiquest.setup_sql import db
 
+
 class Accepte(db.Model):
     ended = db.Column(db.Boolean())
 

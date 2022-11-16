@@ -6,8 +6,8 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100), nullable=False)
     name = db.Column(db.String(1000), nullable=False)
-    role = db.Column(db.String(15), default = "Participant")
-    balance = db.Column(db.Float(), default = 0.00)
+    role = db.Column(db.String(15), default="Participant")
+    balance = db.Column(db.Float(), default=0.00)
     idJardin = db.Column(db.Date())
 
     def get_id(self):

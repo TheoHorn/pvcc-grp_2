@@ -1,5 +1,6 @@
 from jardiquest.setup_sql import db
 
+
 class Quete(db.Model):
     idQuete = db.Column(db.String(10), primary_key=True)
     title = db.Column(db.String(100), default = "")
