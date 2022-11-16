@@ -1,13 +1,5 @@
 from jardiquest.setup_sql import db
 
-accepte_table = db.Table(
-    "accepte",
-    db.Base.metadata,
-    db.Column("idUser", db.ForeignKey("user.idUser"), primary_key=True),
-    db.Column("idQuete", db.ForeignKey("quete.idQuete"), primary_key=True),
-    db.Column("ended",db.Boolean(),default=False)
-    )
-
 class User(db.Model):
     __tablename__ = "user"
 
@@ -24,7 +16,7 @@ class User(db.Model):
 
     annonce = db.relationship("Annonce", back_populates="user")
 
-    quete = db.relationship("Quete", secondary=accepte_table, backref="user")
+    quete = db.relationship("Accepte",secondary="accepte")
 
     def get_id(self):
         return self.idUser
