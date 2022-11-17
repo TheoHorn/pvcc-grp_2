@@ -1,14 +1,25 @@
 from jardiquest.setup_sql import db
 
-
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = "user"
+
+    idUser = db.Column(db.String(10), primary_key=True)
     email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
+    password = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(1000), nullable=False)
+    role = db.Column(db.String(15), default="Participant")
+    balance = db.Column(db.Float(), default=0.00)
+    recruitmentDate = db.Column(db.Date())
+
+    idJardin = db.Column(db.String(10), db.ForeignKey("jardin.idJardin"))
+    jardin = db.relationship("Jardin", back_populates="user")
+
+    annonce = db.relationship("Annonce", back_populates="user")
+
+    quete = db.relationship("Accepte",secondary="accepte")
 
     def get_id(self):
-        return self.id
+        return self.idUser
 
     @staticmethod
     def is_active():
