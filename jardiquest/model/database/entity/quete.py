@@ -12,6 +12,9 @@ class Quete(db.Model):
     estimatedTime = db.Column(db.Date())
     startingDate = db.Column(db.Date())
     expiration = db.Column(db.Date())
+
+    user = db.relationship("Accepte", back_populates="quete")
+    
     
     def get_id(self):
         return self.idQuete
