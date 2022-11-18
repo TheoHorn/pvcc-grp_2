@@ -16,7 +16,7 @@ class User(db.Model):
 
     annonce = db.relationship("Annonce", back_populates="user")
 
-    quete = db.relationship("Accepte",secondary="accepte")
+    quete = db.relationship("Accepte", secondary="accepte")
 
     def get_id(self):
         return self.idUser

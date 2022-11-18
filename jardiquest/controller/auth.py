@@ -1,3 +1,5 @@
+from datetime import date
+
 from flask import render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_required, current_user, logout_user, login_user
@@ -41,7 +43,9 @@ def signup_post():
         flash('L\'email existe déjà')
         return redirect(url_for('controller.signup', next=callback))
 
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+    new_user = User(email=email, name=name,
+                    password=generate_password_hash(password, method='sha256'),
+                    recruitmentDate=date.today())
 
     # add the new user to the database
     db.session.add(new_user)
