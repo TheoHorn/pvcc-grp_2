@@ -25,7 +25,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input class="input" type="email" name="email" autofocus=""></td>
+                        <td>
+                            {% if email is not none %}
+                                <input class="input" type="text" name="email" autofocus="" value={{email}}>
+                            {% else %}
+                                <input class="input" type="text" name="email" autofocus="">
+                            {% endif %}
+                        </td>
                     </tr>
 
                     <tr style="height: 20px"><td></td></tr>
@@ -39,7 +45,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input class="input" type="text" name="name"></td>
+                        <td>
+                            {% if name is not none %}
+                                <input class="input" type="text" name="name" autofocus="" value={{name}}>
+                            {% else %}
+                                <input class="input" type="text" name="name" autofocus="">
+                            {% endif %}
+                        </td>
                     </tr>
 
                     <tr style="height: 20px"><td></td></tr>

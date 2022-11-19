@@ -23,11 +23,13 @@ def profile():
 @app.get('/signup')
 def signup():
     callback = request.args.get('next')
+    email = request.args.get('email')
+    name = request.args.get('name')
     if callback is None:
         callback = ''
     else:
         callback = "?next=" + callback
-    return render_template('signup.html', callback=callback)
+    return render_template('signup.html', callback=callback, email=email, name=name)
 
 
 @app.post('/signup')
@@ -39,9 +41,14 @@ def signup_post():
     user = User.query.filter_by(email=email).first()
     callback = request.args.get('next')
 
+    is_valid = User.is_valid_commit(email, name, password)
+    if type(is_valid) is not bool:
+        flash(is_valid)
+        return redirect(url_for('controller.signup', next=callback, email=email, name=name))
+
     if user:
         flash('L\'email existe déjà')
-        return redirect(url_for('controller.signup', next=callback))
+        return redirect(url_for('controller.signup', next=callback, email=email, name=name))
 
     new_user = User(email=email, name=name,
                     password=generate_password_hash(password, method='sha256'),
@@ -57,11 +64,12 @@ def signup_post():
 @app.get('/login')
 def login():
     callback = request.args.get('next')
+    email = request.args.get('email')
     if callback is None:
         callback = ''
     else:
         callback = "?next=" + callback
-    return render_template('login.html', callback=callback)
+    return render_template('login.html', callback=callback, email=email)
 
 
 @app.post('/login')
@@ -69,16 +77,20 @@ def login_post():
     # login code goes here
     email = request.form.get('email')
     password = request.form.get('password')
+    callback = request.args.get('next')
+
+    if email == '':
+        flash('Veuillez rentrer votre e-mail')
+        return redirect(url_for('controller.login', next=callback))
 
     user = User.query.filter_by(email=email).first()
-    callback = request.args.get('next')
 
     if not user:
         flash('Email inconnu')
-        return redirect(url_for('controller.login', next=callback))
+        return redirect(url_for('controller.login', next=callback, email=email))
     if not check_password_hash(user.password, password):
         flash('Mot de passe incorrect')
-        return redirect(url_for('controller.login', next=callback))
+        return redirect(url_for('controller.login', next=callback, email=email))
 
     login_user(user)
 
