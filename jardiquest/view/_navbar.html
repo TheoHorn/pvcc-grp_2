@@ -1,20 +1,25 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 
- <div class="topnav" id="topnav">
-  <!--<a class="logo-jardiquest"></a> -->
-  <a href="#home">Jardin</a>
-  <a href="#news" class="active">Quêtes</a>
-  <a href="#about">Blog</a>
-  <a href="#about">Marché</a>
-  <a class="icon" onclick="myFunction()">&#9776;</a>
-  <!-- <a class="icon"></a> -->
+<div class="topnav" id="topnav">
+    <a href="/" class="logo-jardiquest not-responsive">
+        <img src="/static/image/logo/jardiquest-logo.svg">
+    </a>
+        <a onclick="displayMenu()" class="icon">
+        <img src="/static/image/icon/menu-icon.png">
+    </a>
+    <a href="/profile" class="icon-user not-responsive">
+        <img src="/static/image/icon/user-icon.png">
+    </a>
+    <a class="new-line"></a>
+    <a href="#home">Jardin</a>
+    <a href="#news" class="active">Quêtes</a>
+    <a href="#about">Blog</a>
+    <a href="#about">Marché</a>
 </div>
-
 <div class="portal-rainbow invert-rainbow"></div>
 
-
 <script>
-    function myFunction() {
+    function displayMenu() {
         let x = document.getElementById("topnav");
         if (x.className === "topnav") {
             x.className += " responsive";
