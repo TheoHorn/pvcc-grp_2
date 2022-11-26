@@ -1,8 +1,6 @@
-from datetime import date
-
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 from jardiquest.model.database.entity.user import User
 from jardiquest.setup_sql import db
@@ -29,9 +27,7 @@ def signup_post_model(callback=None, email=None, name=None, password=None):
         flash(is_valid)
         return redirect(url_for('controller.signup', next=callback, email=email, name=name))
 
-    new_user = User(email=email, name=name,
-                    password=generate_password_hash(password, method='sha256'),
-                    recruitmentDate=date.today())
+    new_user = User(email=email, name=name, password=password)
 
     db.session.add(new_user)
     db.session.commit()

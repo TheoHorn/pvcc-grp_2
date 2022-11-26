@@ -6,10 +6,6 @@
     text-align: center;
 }
 
-.topnav a {
-    margin: 0 18px;
-}
-
 .active {
     color: var(--brown-orange);
 }
@@ -19,9 +15,11 @@
 }
 
 .topnav a {
+    margin: 0 18px;
     text-align: center;
     text-decoration: none;
     font-size: x-large;
+    white-space: nowrap;
 }
 
 .topnav .icon {
@@ -98,24 +96,26 @@
 @media screen and (max-width: 650px) {
     .topnav.responsive {
         position: relative;
-        padding: 0;
     }
     .topnav.responsive .icon,
     .topnav.responsive .not-responsive {
         border: none;
+        padding: 0;
+    }
+    .topnav.responsive .icon {
+        display: flex;
+        justify-content: center;
+    }
+    .topnav.responsive .icon img {
     }
     .topnav.responsive .active {
         display: none;
     }
-    .topnav.responsive .new-line {
-        display: block;
-        height: 60px;
-    }
-    .topnav.responsive a {
+    .topnav.responsive a:not(.icon):not(.not-responsive) {
         display: block;
         padding: 10px 5px;
         margin: 0;
-        border-bottom: 1px solid var(--green);
+        border-top: 1px solid var(--green);
     }
     .topnav.responsive {float: none;}
     .topnav.responsive {position: relative;}

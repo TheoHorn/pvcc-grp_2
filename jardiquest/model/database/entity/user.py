@@ -1,3 +1,7 @@
+from datetime import date
+
+from werkzeug.security import generate_password_hash
+
 from jardiquest.setup_sql import db
 
 import re
@@ -22,13 +26,19 @@ class User(db.Model):
 
     quete = db.relationship("Accepte", back_populates="user")
 
+    def __init__(self, email, password, name):
+        self.email = email
+        self.password = generate_password_hash(password, method='sha256')
+        self.name = name
+        self.recruitmentDate = date.today()
+
     def get_id(self):
         return self.email
 
     # return if the user as valid data or else the error message
     # use password not encoded because the sha256 algorithm will mess with the test of minimal len
     @staticmethod
-    def is_valid_commit(email, name, password_not_encoded) -> (bool | str):
+    def is_valid_commit(email, name, password_not_encoded) -> (bool or str):
         if email is None:
             return "Veuillez utiliser une adresse mail"
         if not re.fullmatch(regex, email):
