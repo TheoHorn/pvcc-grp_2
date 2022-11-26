@@ -4,35 +4,69 @@
 {% block content %}
 
 <title>Profil</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/profile.css') }}">
 
-dfhuzfuzf$zf
-zf
-<br>
-zf
-fzf
-f
-<button onclick="displayMenu()">zfjifhjuzfs</button>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-zf<br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-dh
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-zff
+<div class="portal-container">
+    <div class="centered-element">
+        <div class="align-user-icon">
+            <img src="{{ url_for('static', filename='image/icon/user-icon.png') }}" class="display-user">
+        </div>
+        <hr class="litle-hr">
+
+        <div class="handler-display-data">
+            <div>
+                <b>E-mail</b> <br>
+                <input class="input" type="text" name="email" autofocus="" value="{{user.email}}">
+            </div>
+            <div>
+                <b>Nom</b> <br>
+                <input class="input" type="text" name="email" autofocus="" value="{{user.name}}">
+            </div>
+            <div>
+                <b>Nouveau mot de passe</b> <br>
+                <input class="input" type="password" name="new_password">
+            </div>
+            <div>
+                <b>Rôle</b> <br>
+                <span>{{ user.role}}</span>
+            </div>
+            <div>
+                <b>Balance</b> <br>
+                <span>{{ user.balance }}</span>
+            </div>
+            <div>
+                <b>Date d'inscription</b> <br>
+                <span>{{ user.recruitmentDate.strftime('%d-%m-%Y') }}</span>
+            </div>
+        </div>
+        <div class="button-panel">
+
+             <form action="account" method="post">
+                 <input type="hidden" name="_method" value="put"/>
+                <button class="green">Sauvegarder</button>
+             </form>
+
+            <form action="logout" method="post">
+                <button class="red">Déconnexion</button>
+            </form>
+
+            <form action="account" method="post" id="delete-form">
+                <input type="hidden" name="_method" value="delete" />
+            </form>
+            <button class="red" onclick="modalDelete()">Supprimer</button>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    function modalDelete() {
+        if (confirm("Voulez vous vraiment supprimer votre compte ?")) {
+            document.getElementById("delete-form").submit()
+        }
+    }
+</script>
+
+
 
 {% endblock %}
