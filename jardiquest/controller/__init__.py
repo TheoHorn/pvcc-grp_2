@@ -9,8 +9,6 @@ app = Blueprint('controller', __name__)
 from .auth import *
 from .status_error import *
 from .common import *
-<<<<<<< HEAD
 from .quest import *
-=======
 from .account import *
->>>>>>> f2b34ab67cce18dffa5ae9938db28f65b13862fc
+
