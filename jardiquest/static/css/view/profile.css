@@ -8,7 +8,7 @@
 
 .display-user {
     text-align: center;
-    margin: 1em;
+    margin: 1em 1em 0 1em;
 }
 
 .litle-hr {
@@ -87,6 +87,26 @@
 
 .red {
     background: var(--error);
+}
+
+.error {
+    color: var(--error);
+    font-size: large;
+    align-self: center;
+    text-align: center;
+}
+
+.display-name {
+    font-size: xx-large;
+    text-align: center;
+    margin: 0.5em 0;
+}
+
+.notification-parent {
+    position: relative;
+    align-self: center;
+    justify-content: center;
+    margin: auto;
 }
 
 @media only screen and (max-width: 800px) {

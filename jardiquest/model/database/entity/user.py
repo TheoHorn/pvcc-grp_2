@@ -32,6 +32,9 @@ class User(db.Model):
         self.name = name
         self.recruitmentDate = date.today()
 
+    def update_password(self, new_password):
+        self.password = generate_password_hash(new_password, method='sha256')
+
     def get_id(self):
         return self.email
 
@@ -39,18 +42,25 @@ class User(db.Model):
     # use password not encoded because the sha256 algorithm will mess with the test of minimal len
     @staticmethod
     def is_valid_commit(email, name, password_not_encoded) -> (bool or str):
-        if email is None:
-            return "Veuillez utiliser une adresse mail"
-        if not re.fullmatch(regex, email):
-            return "Veuillez utiliser une adresse mail valide"
-        if name == '' or name is None:
-            return "Veuillez utiliser un nom"
+        rep = User.is_valid_commit_email_name(email, name)
+        if type(rep) is not bool:
+            return rep
+
         if password_not_encoded is None:
             return "Veuillez utiliser un mot de passe"
         if len(password_not_encoded) < 8:
             return "Veuillez utiliser un mot de passe avec au moins 8 caractères"
         return True
 
+    @staticmethod
+    def is_valid_commit_email_name(email, name) -> (bool or str):
+        if email is None:
+            return "Veuillez utiliser une adresse mail"
+        if not re.fullmatch(regex, email):
+            return "Veuillez utiliser une adresse mail valide"
+        if name == '' or name is None:
+            return "Veuillez utiliser un nom"
+        return True
 
     @staticmethod
     def is_active():

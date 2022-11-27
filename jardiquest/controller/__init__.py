@@ -9,3 +9,4 @@ app = Blueprint('controller', __name__)
 from .auth import *
 from .status_error import *
 from .common import *
+from .account import *
