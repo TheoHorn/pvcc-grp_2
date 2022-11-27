@@ -1,0 +1,17 @@
+{% extends "_base.html" %}
+{% block content %}
+<title>Créer une quête</title>
+
+<div class="form">
+    <form method="post" action="/quests/create_quest">
+        <input type="text" name="title" placeholder="Titre de la quête" required>
+        <input type="text" name="description" placeholder="Description de la quête">
+        <input type="number" min=0 name="sum" placeholder="Récompense de la quête" required>
+        <input type="time" name="duration" placeholder="Durée estimée de la quête en minute">
+        <input type="time" name="periodicity" placeholder="Périodicité de la quête en jour">
+        <input type="date" name="expiration" placeholder="Date de fin de la quête">
+        <input type="submit" value="Créer">
+    </form>
+
+</div>
+{% endblock %}
