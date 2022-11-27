@@ -44,7 +44,7 @@ def login_post():
     return login_post_model(email, password, callback)
 
 
-@app.get('/logout')
+@app.post('/logout')
 @login_required
 def logout():
     from jardiquest.model.path.auth_model import logout_model

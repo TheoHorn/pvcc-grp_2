@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 {% block content %}
 <title>Inscrivez-vous</title>
-<link rel="stylesheet" href="/static/css/view/auth.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/auth.css') }}">
 
 
 <div class="portal-container">
@@ -9,7 +9,7 @@
         <div class="portal-rainbow"></div>
         <div class="portal-content">
             <div class="image-logo-container">
-                <img class="logo-jardiquest" src="/static/image/logo/jardiquest-logo-text.svg" alt="logo de jardi'quest">
+                <img class="logo-jardiquest" src="{{ url_for('static', filename='image/logo/jardiquest-logo-text.svg') }}" alt="logo de jardi'quest">
             </div>
 
             <hr class="hr-separator">
@@ -18,7 +18,7 @@
                 <table>
                     <tr>
                         <td rowspan="2">
-                            <img class="field-icon" src="/static/image/icon/user-icon.png">
+                            <img class="field-icon" src="{{ url_for('static', filename='image/icon/user-icon.png') }}">
                         </td>
                         <td>
                             <span>e-mail</span>
@@ -38,7 +38,7 @@
                     <tr>
 
                         <td rowspan="2">
-                            <img class="field-icon" src="/static/image/icon/pen-icon.png">
+                            <img class="field-icon" src="{{ url_for('static', filename='image/icon/pen-icon.png') }}">
                         </td>
                         <td>
                             <span>nom</span>
@@ -58,7 +58,7 @@
 
                     <tr>
                         <td rowspan="2">
-                            <img class="field-icon" src="/static/image/icon/cadenas-icon.png">
+                            <img class="field-icon" src="{{ url_for('static', filename='image/icon/cadenas-icon.png') }}">
                         </td>
                         <td>
                             <span>mot de passe</span>

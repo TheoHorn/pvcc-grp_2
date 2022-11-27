@@ -6,11 +6,12 @@ from jardiquest.controller import app
 
 @app.get('/')
 def home():
-    return render_template('home.html')
+    from jardiquest.model.path.common_model import home_model
+    return home_model()
 
 
 @app.get('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('profile.html', user=current_user)
 
