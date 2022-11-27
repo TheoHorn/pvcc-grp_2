@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+{% set active='user' %}
+{% if user.role =='Gerant' %}
+    {% set owner=1 %}
+{% endif %}
+{% include "_navbar.html" %}
+{% block content %}
+
+<h1>Votre Jardin</h1>
+{% if notexist %}
+    <p>Erreur : Vous ne gérer aucun jardin. Comment êtes-vous arrivé ici ?</p>
+{% endif %}
+<ol>
+{% for res in jar %}
+    <li>{{res}} </li>
+{% endfor %}
+</ol>
+{% endblock %}
