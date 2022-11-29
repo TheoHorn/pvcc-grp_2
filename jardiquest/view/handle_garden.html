@@ -1,5 +1,5 @@
 {% extends "_base.html" %}
-{% set active='user' %}
+{% set active='handlegarden' %}
 {% if user.role =='Gerant' %}
     {% set owner=1 %}
 {% endif %}
@@ -11,8 +11,7 @@
     <p>Erreur : Vous ne gérer aucun jardin. Comment êtes-vous arrivé ici ?</p>
 {% endif %}
 <ol>
-{% for res in jar %}
-    <li>{{res}} </li>
-{% endfor %}
+    <li>{{jardin.idJardin}} </li>
+    <li>{{jardin.name}} </li>
 </ol>
 {% endblock %}

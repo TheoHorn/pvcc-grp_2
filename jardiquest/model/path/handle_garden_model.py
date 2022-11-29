@@ -11,3 +11,6 @@ def print_garden():
     else:
         return render_template('handle_garden.html', jardin=jar,user=current_user)
 
+def update_model_garden(name:str,nameMoney:str):
+    if name != None and nameMoney != None:
+        Jardin.update().values({"name": name,"moneyName": nameMoney})
