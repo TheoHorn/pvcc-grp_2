@@ -44,5 +44,5 @@ def update_account_model(user: User, email: str, name: str, new_password: str):
 def delete_account_model(user: User):
     db.session.delete(user)
     db.session.commit()
-    flash("Compte supprimer avec succès")
+    flash("Compte supprimé avec succès")
     return logout()

@@ -8,10 +8,11 @@ class Quete(db.Model):
     title = db.Column(db.String(100), default="")
     description = db.Column(db.String(1000), default="")
     periodicity = db.Column(db.Integer(), default=0)
-    sum = db.Column(db.Float(), default=0.00)
-    estimatedTime = db.Column(db.Date())
+    reward = db.Column(db.Float(), default=0.00)
+    estimatedTime = db.Column(db.Integer)
     startingDate = db.Column(db.Date())
-    expiration = db.Column(db.Date())
+    timeBeforeExpiration = db.Column(db.Integer)
+    id_jardin = db.Column(db.String(10), db.ForeignKey("jardin.idJardin"))
 
     user = db.relationship("Accepte", back_populates="quete")
     
