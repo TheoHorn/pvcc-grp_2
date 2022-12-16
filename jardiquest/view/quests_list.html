@@ -1,0 +1,59 @@
+{% extends "_base.html" %}
+{% block content %}
+
+{% set active='use r' %}
+{% set owner=1 %}
+{% include "_navbar.html" %}
+
+
+<title>Quêtes de {{ garden.name }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/quests_list.css') }}">
+
+<div class="container">
+    
+    {% if quests | length== 0 %}
+        <h2>Aucune quête n'est actuellement disponible<h2>
+    {% else %}
+    <h2>Quêtes disponibles :</h2>
+    <div class="quests_container">
+        
+        {% for quest in quests %}     
+            <div class="quest">
+
+                {% if quest.timeBeforeExpiration %}
+                    <div class="time_left">
+                        <!--TODO Display time left, to test-->
+                        {% set timeLeft = quest.timeBeforeExpiration - (today - quest.startingDate).days %}
+                        <p>Temps restant : {{ timeLeft }} jours</p>
+                    </div> 
+                {% endif %}
+                      
+                <div class="quest_title">
+                    <a href="{{ url_for('controller.display_quest', quest_id=quest.idQuete) }}">{{ quest.title }}</a>
+                </div>  
+
+                {% if quest.estimatedTime %}
+                    {% set minutes = quest.estimatedTime%60 %}
+                    {% set hours = quest.estimatedTime//60 %}
+
+                    <div class="estimated_time">
+                        <p>
+                            {% if hours > 0 %}
+                                {{ hours }}h
+                            {% endif %}
+                            {{ minutes }}min
+                        </p>
+                    </div>
+                {% endif %}
+
+                <div class="reward">
+                    <p>{{ quest.reward }} {{ garden.moneyName }}</p>
+                </div>
+
+                
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+</div> 
+{% endblock %}
