@@ -6,7 +6,7 @@ from . import app
 
 @app.get('/handle_garden')
 @login_required
-def all_garden():
+def your_garden():
 
     from jardiquest.model.path.handle_garden_model import print_garden
     return print_garden()
@@ -14,10 +14,8 @@ def all_garden():
 @app.post('/handle_garden')
 @login_required
 def post_garden():
-
-    name = request.form.get('name')
-    moneyName = request.form.get('moneyName')
-
-    from jardiquest.model.path.handle_garden_model import update_model_garden
-    return update_model_garden(name,moneyName)
+    # handle case with put or delete methods
+    methods = request.form.get('_method')
+    from jardiquest.model.path.handle_garden_model import account_handler_model
+    return account_handler_model(methods)
 

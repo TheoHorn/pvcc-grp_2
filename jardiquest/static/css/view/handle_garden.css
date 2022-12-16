@@ -1,0 +1,32 @@
+.table_participating {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+}
+
+.table_participating thead tr {
+    background-color: var(--green);
+    text-align: left;
+    border : 2px solid var(--green);
+}
+
+.table_participating th,
+.table_participating td {
+    padding: 12px 15px;
+}
+
+.table_participating tbody tr {
+    border-right: 2px solid var(--green) ;
+    border-left: 2px solid var(--green);
+    border-bottom: thin solid var(--green);
+}
+
+/*change the background when even*/
+.table_participating tbody tr:nth-of-type(even) {
+    background-color: var(--background-primary);
+}
+
+.table_participating tbody tr:last-of-type {
+    border-bottom: 2px solid var(--green);
+}
+
