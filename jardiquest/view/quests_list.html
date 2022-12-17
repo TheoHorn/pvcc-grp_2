@@ -6,51 +6,26 @@
 {% include "_navbar.html" %}
 
 
-<title>Quêtes de {{ garden.name }}</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/view/quests_list.css') }}">
+
+<title>Quêtes</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/quests/quests_list.css') }}">
+{% block css %}{% endblock %}
 
 <div class="container">
     
     {% if quests | length== 0 %}
         <h2>Aucune quête n'est actuellement disponible<h2>
     {% else %}
-    <h2>Quêtes disponibles :</h2>
+    <button class="quest_button" id="button_available_quests" href="">Quêtes disponibles</button> 
+    <button class="quest_button" id="button_my_quests" href="">Mes quêtes</button>
     <div class="quests_container">
         
         {% for quest in quests %}     
             <div class="quest">
-
-                {% if quest.timeBeforeExpiration %}
-                    <div class="time_left">
-                        <!--TODO Display time left, to test-->
-                        {% set timeLeft = quest.timeBeforeExpiration - (today - quest.startingDate).days %}
-                        <p>Temps restant : {{ timeLeft }} jours</p>
-                    </div> 
-                {% endif %}
-                      
-                <div class="quest_title">
-                    <a href="{{ url_for('controller.display_quest', quest_id=quest.idQuete) }}">{{ quest.title }}</a>
-                </div>  
-
-                {% if quest.estimatedTime %}
-                    {% set minutes = quest.estimatedTime%60 %}
-                    {% set hours = quest.estimatedTime//60 %}
-
-                    <div class="estimated_time">
-                        <p>
-                            {% if hours > 0 %}
-                                {{ hours }}h
-                            {% endif %}
-                            {{ minutes }}min
-                        </p>
-                    </div>
-                {% endif %}
-
-                <div class="reward">
-                    <p>{{ quest.reward }} {{ garden.moneyName }}</p>
-                </div>
-
+            {% block quest scoped required %}
                 
+
+            {% endblock %}    
             </div>
         {% endfor %}
         </div>

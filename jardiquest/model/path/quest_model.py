@@ -19,7 +19,7 @@ def getUser(user_id: int):
 def list_garden_id_quest_model(gardenId : int):
     garden = Jardin.query.get(gardenId)
     quests = Quete.query.filter_by(id_jardin=gardenId).all()
-    return render_template("quests_list.html", quests=quests, today = date.today(), garden = garden)
+    return render_template("quests_list_garden.html", quests=quests, today = date.today(), garden = garden)
 
 
 def list_garden_quest_model(user_id: str):
@@ -31,15 +31,14 @@ def list_garden_quest_model(user_id: str):
         id_garden = user.idJardin
         garden = Jardin.query.get(id_garden)
         quests = Quete.query.filter_by(id_jardin=id_garden).all()
-        return render_template("quests_list.html", quests=quests, today = date.today(), garden = garden)
+        return render_template("quests_list_garden.html", quests=quests, today = date.today(), garden = garden)
 
 
 # ------------------------------------------ User quests ------------------------------------------
 def list_user_quests_model(user_id: str):
     user = getUser(user_id)
     quests = Quete.query.filter_by(id_user=user_id).all()
-    # TODO view to display the quests of the user
-    pass
+    return render_template("quests_list_user.html", quests=quests, today = date.today(), user = user)
 
 
 
@@ -49,4 +48,4 @@ def list_user_quests_model(user_id: str):
 def display_quest_model(quest_id: int):
     """Display a quest with a specific id"""
     quest = Quete.query.get(quest_id)
-    return render_template("quest_detaills.html", quest=quest, today = date.today())
+    return render_template("quest_details.html", quest=quest, today = date.today())
