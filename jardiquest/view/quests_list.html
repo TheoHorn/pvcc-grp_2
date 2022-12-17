@@ -1,0 +1,34 @@
+{% extends "_base.html" %}
+{% block content %}
+
+{% set active='use r' %}
+{% set owner=1 %}
+{% include "_navbar.html" %}
+
+
+
+<title>Quêtes</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/quests/quests_list.css') }}">
+{% block css %}{% endblock %}
+
+<div class="container">
+    
+    {% if quests | length== 0 %}
+        <h2>Aucune quête n'est actuellement disponible<h2>
+    {% else %}
+    <button class="quest_button" id="button_available_quests" href="">Quêtes disponibles</button> 
+    <button class="quest_button" id="button_my_quests" href="">Mes quêtes</button>
+    <div class="quests_container">
+        
+        {% for quest in quests %}     
+            <div class="quest">
+            {% block quest scoped required %}
+                
+
+            {% endblock %}    
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+</div> 
+{% endblock %}
