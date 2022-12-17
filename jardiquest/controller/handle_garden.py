@@ -16,6 +16,6 @@ def your_garden():
 def post_garden():
     # handle case with put or delete methods
     methods = request.form.get('_method')
-    from jardiquest.model.path.handle_garden_model import account_handler_model
-    return account_handler_model(methods)
+    from jardiquest.model.path.handle_garden_model import handle_garden_handler_model
+    return handle_garden_handler_model(methods)
 

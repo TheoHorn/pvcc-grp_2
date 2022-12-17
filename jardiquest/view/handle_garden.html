@@ -35,7 +35,7 @@
 
                     <div>
                         <b>Nom de la monnaie</b> <br>
-                        <input class="input" type="text" name="name" autofocus="" value="{{jardin.moneyName}}">
+                        <input class="input" type="text" name="moneyName" autofocus="" value="{{jardin.moneyName}}">
                     </div>
                     <div>
                         <b>Participants</b> <br>
@@ -56,7 +56,6 @@
                                     <td>{{p.name}}</td>
                                     <td>{{p.balance}}</td>
                                     <td>{{p.recruitmentDate}}</td>
-                                
                                 </tr>
     
                             {%endfor%}
@@ -71,9 +70,13 @@
 
                 <button class="green" onclick="updateGarden()">Sauvegarder</button>
                 
+                <form action="/handle_garden/add_quest" method="get">
+                    <button class="green" type="submit" >Ajouter une quête</button>
+                </form>
+                
                 
                 <button class="red" onclick="deleteGarden()">Supprimer le Jardin</button>
-                <form action="garden" method="post" id="delete-garden">
+                <form action="/handle_garden" method="post" id="delete-garden">
                     <input type="hidden" name="_method" value="delete" />
                 </form>
 
@@ -83,11 +86,11 @@
 </div>
 <script>
     function deleteGarden() {
-        if (confirm("Voulez vous vraiment supprimer votre compte ?")) {
+        if (confirm("Voulez vous vraiment supprimer votre jardin ?")) {
             document.getElementById("delete-garden").submit()
         }
     }
-    function deleteGarden() {
+    function updateGarden() {
         document.getElementById("update-garden").submit()
     }
 </script>
