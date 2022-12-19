@@ -1,0 +1,44 @@
+{% extends "_base.html" %}
+{% set active='user' %}
+{% include "_navbar.html" %}
+{% block content %}
+
+<title>Profil</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/garden.css') }}">
+
+<div class="portal-container">
+    <div class="handler-display-data">
+        <div class="left">
+            <b class="brown-orange-style">Mon jardin :</b>
+            <span>{{user.idJardin}}</span>
+        </div>
+        <div class="button-panel right">
+            <button class="brown">Modifier</button>
+            <button class="green" onclick="windows.location.href='url_for(new_garden)'">Nouveau</button>
+        </div>  
+        <div class="bottom all-bottom list">
+            <span>
+                <b class="brown-orange-style">Trouver un autre jardin :</b> <br>
+            </span>
+            <table class="table-all">
+                <tbody>
+                    <tr>
+                        <th>Nom du jardin</th>
+                        <th>Monnaie</th>
+                        <th>Détail</th>
+                    </tr>
+                    {% for jardin in jardins %}
+                    <tr>
+                        <th>{{jardin.name}}</th>
+                        <th>{{jardin.name}}</th>
+                        <th>{{jardin.money}}</th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div> 
+    </div>
+</div>
+{% endblock %}
