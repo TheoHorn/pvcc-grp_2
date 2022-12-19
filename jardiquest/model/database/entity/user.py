@@ -20,11 +20,10 @@ class User(db.Model):
     recruitmentDate = db.Column(db.Date())
 
     idJardin = db.Column(db.String(10), db.ForeignKey("jardin.idJardin"))
+
     jardin = db.relationship("Jardin", back_populates="user")
-
     annonce = db.relationship("Annonce", back_populates="user")
-
-    quete = db.relationship("Accepte", back_populates="user")
+    quetes = db.relationship("Quete", back_populates="user")
 
     def __init__(self, email, password, name):
         self.email = email

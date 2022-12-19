@@ -10,16 +10,3 @@
     text-shadow: 0px 0px 1px var(--green);
 }
 
-
-
-.quest_checkbox input{
-    margin : 15% auto 10% auto;
-    display : inline-block;
-    width: 2em;
-    height: 2em;
-}
-
-input[type="checkbox"]:checked:before{
-    content: '';
-    background: var(--green);
-}

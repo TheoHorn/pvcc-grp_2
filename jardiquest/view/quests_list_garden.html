@@ -6,37 +6,3 @@
 {% block message_no_quest %}
 <p id="message_no_quest">Aucune quête n'est actuellement disponible</p>
 {% endblock %}
-
-{% block quest %}     
-
-<div class="quest_title">
-    {{ quest.title }}
-</div>  
-
-
-
-<div class="time_left">
-        {% set timeLeft = quest.timeBeforeExpiration - (today - quest.startingDate).days %}
-        <p>Temps restant : {{ timeLeft }} {% if timeLeft > 1 %} jours {% else %} jour {% endif %}</p>
-</div> 
-
-<div class="estimated_time">
-    {% if quest.estimatedTime %}
-        {% set minutes = quest.estimatedTime%60 %}
-        {% set hours = quest.estimatedTime//60 %}
-
-        
-            <p>
-                {% if hours > 0 %}
-                    Temps estimé : {{ hours }}h
-                {% endif %}
-                {{ minutes }}min
-            </p>
-        
-    {% endif %}
-</div>
-
-<div class="reward">
-    <p>{{ quest.reward }} {{ garden.moneyName }}</p>
-</div>
-{% endblock quest %}

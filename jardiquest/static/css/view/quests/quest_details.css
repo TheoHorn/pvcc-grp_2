@@ -8,8 +8,8 @@ body{
 }
 
 #quest{
-    margin: 50px 2% 50px 2%;
-    min-height: 70%;
+    margin: 50px 2% 80px 2%;
+    min-height: 69%;
     border-radius: 10px;
     background-color: var(--background-secondary);
     position:relative;
@@ -80,18 +80,29 @@ body{
     color : var(--taupe);
 }
 
-#button_accept_quest{
+
+#buttons_quest{
+    text-align: center;
     position: fixed;
     bottom: 2%;
     right: 5%; 
-    border-radius: 5px;
     padding : 2px;
-    border: 1px solid var(--brown-orange);   
-    color : var(--brown-orange);
+
 }
 
-#button_accept_quest:hover{
+#buttons_quest input{
+    border: 1px solid var(--brown-orange);   
+    color : var(--brown-orange);
+    border-radius: 5px;
+    width : 185px;
+}
+
+#buttons_quest input:hover{
     background-color: var(--brown-orange);
     color : white;
     opacity: 0.9;
+}
+
+#button_finish_quest{
+    margin-top: 5px;
 }
