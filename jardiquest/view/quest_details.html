@@ -1,9 +1,54 @@
 {% extends "_base.html" %}
 {% block content %}
 
-{% set active='user' %}
-{% set owner=1 %}
 {% include "_navbar.html" %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/quests/quest_details.css') }}">
+
+
+<div id="quest">
+    <div id="quest_header">
+        <div id="quest_title">
+            <h2>{{quest.title}}</h2>
+        </div>
+        
+        <div id="time_left">
+            {% set timeLeft = quest.timeBeforeExpiration - (today - quest.startingDate).days %}
+            <p>Temps restant : {{ timeLeft }} {% if timeLeft > 1 %} jours {% else %} jour {% endif %}</p>
+        </div>
+        
+        <div id="estimated_time">
+            {% if quest.estimatedTime %}
+                {% set minutes = quest.estimatedTime%60 %}
+                {% set hours = quest.estimatedTime//60 %}
+        
+                <p>
+                    {% if hours > 0 %}
+                        Temps estimé : {{ hours }}h
+                    {% endif %}
+                    {{ minutes }}min
+                </p>
+        
+            {% endif %}
+        </div>
+    </div>
+    
+    <div id="quest_content">
+        <div id="quest_description">
+            <p>{{quest.description}}</p>
+        </div> 
+    </div>
+    
+    <div id="reward">
+        <p>Vous recevrez : {{ quest.reward }} {{ garden.moneyName }}</p>
+    </div>
+
+    <input type="button" id="button_accept_quest" value="Accepter la quête">
+</div>
+
+
+
+
 
 
 {% endblock %}

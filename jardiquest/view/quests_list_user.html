@@ -1,23 +1,32 @@
 {% extends "quests_list.html" %}
+
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/view/quests/garden_quests_list.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/view/quests/user_quests_list.css') }}">
 {% endblock %}
 
 {% block message_no_quest %}
-<p id="message_no_quest">Aucune quête n'est actuellement disponible</p>
+<p id="message_no_quest">Vous n'avez pas encore accepté de quête</p>
 {% endblock %}
 
+
+
+
 {% block quest %}     
+<div class="quest_checkbox">
+    <input type="checkbox" name="quest" value="{{ quest.idQuete }}">
+</div>
 
 <div class="quest_title">
-    {{ quest.title }}
+    <a href="{{ url_for('controller.display_quest', quest_id=quest.idQuete) }}">{{ quest.title }}</a>
 </div>  
 
 
 
 <div class="time_left">
-        {% set timeLeft = quest.timeBeforeExpiration - (today - quest.startingDate).days %}
-        <p>Temps restant : {{ timeLeft }} {% if timeLeft > 1 %} jours {% else %} jour {% endif %}</p>
+    {% if quest.timeBeforeExpiration %}
+            {% set timeLeft = quest.timeBeforeExpiration - (today - quest.startingDate).days %}
+            <p>Temps restant : {{ timeLeft }} {% if timeLeft > 1 %} jours {% else %} jour {% endif %}</p>
+    {% endif %}
 </div> 
 
 <div class="estimated_time">

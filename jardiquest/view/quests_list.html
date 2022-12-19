@@ -1,8 +1,6 @@
 {% extends "_base.html" %}
 {% block content %}
 
-{% set active='use r' %}
-{% set owner=1 %}
 {% include "_navbar.html" %}
 
 
@@ -12,20 +10,18 @@
 {% block css %}{% endblock %}
 
 <div class="container">
+    <a class="quest_button" id="button_available_quests" href="{{ url_for('controller.list_garden_quests')}}">Quêtes disponibles</a> 
+    <a class="quest_button" id="button_my_quests" href="{{ url_for('controller.list_user_quests')}}">Mes quêtes</a>
     
     {% if quests | length== 0 %}
-        <h2>Aucune quête n'est actuellement disponible<h2>
+        {% block message_no_quest required %}{% endblock %} 
     {% else %}
-    <button class="quest_button" id="button_available_quests" href="">Quêtes disponibles</button> 
-    <button class="quest_button" id="button_my_quests" href="">Mes quêtes</button>
     <div class="quests_container">
         
-        {% for quest in quests %}     
-            <div class="quest">
-            {% block quest scoped required %}
-                
-
-            {% endblock %}    
+        {% for quest in quests %}    
+            {% set url = url_for('controller.display_quest', quest_id=quest.idQuete) %} 
+            <div class="quest" style="cursor: pointer;" onclick="window.location='{{url}}';"> 
+                {% block quest scoped required %}{% endblock %}    
             </div>
         {% endfor %}
         </div>

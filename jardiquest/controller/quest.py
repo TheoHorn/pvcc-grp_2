@@ -30,9 +30,9 @@ def list_garden_quests():
 @app.get("/my_quests")
 def list_user_quests():
     """List all quests accepted by the user"""
-    user_id = get_connected_user_id
-    from jardiquest.model.path.quest_model import list_my_quest_model
-    return list_my_quest_model(user_id)
+    user_id = get_connected_user_id()
+    from jardiquest.model.path.quest_model import list_user_quests_model
+    return list_user_quests_model(user_id)
 
 
 

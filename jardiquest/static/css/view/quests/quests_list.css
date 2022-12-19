@@ -1,11 +1,17 @@
 .quest_button{
     margin-left:2%;
     margin-top: 10px;
-    margin-bottom: 10px;
     border: none;
     font-size: 1.5em;
     display: inline-block;
     background-color: transparent;
+    text-decoration : none;
+}
+
+#message_no_quest{
+    font-size: 1.3em;
+    margin : 20px 0 0 10%;
+    display: block;
 }
 
 .quests_container{
@@ -24,7 +30,16 @@
     align-self: center;
     min-height: 50px;
     width : 80%;
+    background-color: #F7F7F7;
 }
+
+.quest_checkbox{
+    text-align: center;
+    justify-self: center;
+    grid-column: 1;
+    grid-row: 1/3;
+}
+
 
 .quest_title{
     color:black;
@@ -39,3 +54,8 @@
     color:grey;
     font-size: 13px;
 }
+
+
+
+
+
