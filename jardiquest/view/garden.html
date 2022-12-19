@@ -21,9 +21,17 @@
         <div class="top">
             <div>
                 <b class="brown-orange-style">Mon jardin :</b>
-                <span>{{jardin.name}}</span>
+                {% if jardin.name|length == 0 %}
+                    <span>Vous n'avez pas encore de jardin</span>
+                {% else %}
+                    <span>{{ jardin.name}}</span>
+                    <br>
+                    <b class="brown-orange-style">Monnaie :</b>
+                    <span>{{ jardin.moneyName}}</span>
+                {% endif %}
+                </span>
             </div>
-            <div>
+            <div class="right">
                 <a href="{{url_for('controller.new_garden')}}">Créer un nouveau jardin</a>
                 <a href="{{url_for('controller.new_garden')}}">Modifier mon jardin</a>
             </div>
@@ -32,18 +40,30 @@
             <span>
                 <b class="brown-orange-style">Trouver un autre jardin :</b> <br>
             </span>
+            <form method="POST" class="display_form">
+                <input type="text" name="filtreNom" placeholder="Nom du jardin"></input>
+                <input type="text" name="filtreDescription" placeholder="Description du jardin"></input>
+                <input type="text" name="filtreMonnaie" placeholder="Monnaie du jardin"></input>
+                <button type="submit">Search</button>
+            </form>
             <table class="table-all">
-                <tbody>
+                <thead>
                     <tr>
                         <th>Nom du jardin</th>
+                        <th>Description</th>
                         <th>Monnaie</th>
                         <th>Choisir</th>
+                        <th>Détail</th>
                     </tr>
+                </thead>
+                <tbody>
                     {% for jardin in jardins %}
                     <tr>
                         <th>{{jardin.name}}</th>
+                        <th>description</th>
                         <th>{{jardin.moneyName}}</th>
                         <th><a href="{{url_for('controller.choose', choose=jardin.idJardin)}}">Choose</a></th>
+                        <th>Détail</th>
                     </tr>
                     {% endfor %}
                 </tbody>

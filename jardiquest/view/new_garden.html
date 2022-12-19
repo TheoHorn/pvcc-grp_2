@@ -2,9 +2,8 @@
 {% set active='user' %}
 {% include "_navbar.html" %}
 {% block content %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/new_garden.css') }}">
 <title>Créer un jardin</title>
-
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -14,14 +13,19 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+<div class="portal-container">
+    <div class="container">
+        <form method="POST">
+            <input type="text" name="nom" placeholder="Nom du jardin" required>
+            <input type="text" name="description" placeholder="Description du jardin">
+            <input type="text" name="monnaie" placeholder="Nom de la monnaie" required>
+            <input type="text" name="adresse" placeholder="Adresse" required>
+            <input type="text" name="ville" placeholder="Ville" required>
+            <input type="submit" value="Créer">
+            <button><a href="{{url_for('controller.garden')}}">Annuler</a></button>
+        </form>
+    </div>
+</div>
 
-    <form method="POST">
-        <input type="text" name="nom" placeholder="Nom du jardin" required>
-        <input type="text" name="description" placeholder="Description du jardin">
-        <input type="text" name="monnaie" placeholder="Nom de la monnaie" required>
-        <input type="number" min=0 name="capacite" placeholder="Capacité" required>
-        <input type="submit" value="Créer">
-    </form>
-    
 {% endblock %}
 

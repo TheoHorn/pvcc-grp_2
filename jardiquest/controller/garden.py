@@ -12,12 +12,29 @@ import random
 
 # show all gardens
 # TODO create filter
-@app.get('/garden')
+@app.route('/garden',methods=['GET', 'POST'])
 @login_required
 def garden():
-    jardins = Jardin.query.all()
-    jar = Jardin.query.filter_by(idJardin=current_user.idJardin).first()
-    return render_template('garden.html', user=current_user, jardins=jardins, jardin=jar)
+    jardin_de_user = Jardin.query.filter_by(idJardin=current_user.idJardin).first()
+    print(jardin_de_user.idJardin)
+    # all the gardens he can access
+    if jardin_de_user is not None :
+        jardins = Jardin.query.filter(Jardin.idJardin != jardin_de_user.idJardin)
+    else :
+        jardins = Jardin.query.all()
+    if request.method == 'POST':
+        nom = request.form['filtreNom']
+        description = request.form['filtreDescription']
+        monnaie = request.form['filtreMonnaie']
+
+        name = "%{}%".format(nom)
+        monnaie = "%{}%".format(monnaie)
+        if jardin_de_user is not None :
+            jardins = Jardin.query.filter(Jardin.name.like(name), Jardin.idJardin != jardin_de_user.idJardin, Jardin.moneyName.like(monnaie)).all()
+        else :
+            jardins = Jardin.query.filter(Jardin.name.like(name), Jardin.moneyName.like(monnaie)).all()
+
+    return render_template('garden.html', user=current_user, jardins= jardins[0:19], jardin=jardin_de_user)
 
 # create a new garden (owner)
 @app.route('/new',methods=['GET', 'POST'])
@@ -27,7 +44,9 @@ def new_garden():
         nom = request.form['nom']
         description = request.form['description']
         monnaie = request.form['monnaie']
-        capacite = request.form['capacite']
+        adresse = request.form['adresse']
+        ville = request.form['ville']
+
         
         # verification if name and money are unique
         jar = Jardin.query.filter_by(name=nom).first()
@@ -44,20 +63,21 @@ def new_garden():
         if error :
             return redirect(url_for('controller.new_garden'))
 
-        # create it
-        new_garden = Jardin(idJardin=generateId(nom), name=nom, moneyName=monnaie)
-        db.session.add(new_garden)
-        db.session.commit()
+        id = generateId(nom)
 
+        # create it
+        new_garden = Jardin(idJardin=id, name=nom, moneyName=monnaie)
+        db.session.add(new_garden)
+        
         # update user status
-        current_user.update_garden(nom)
+        current_user.update_garden(id)
         db.session.commit()
 
         return redirect(url_for('controller.garden'))
         
     return render_template("new_garden.html", user=current_user)
 
-@app.route('/<choose>')
+@app.route('/change/<choose>')
 def choose(choose):
     jar = Jardin.query.filter_by(idJardin=choose).first()
     flash(f"Vous avez rejoint le jardin \"{jar.name}\"")

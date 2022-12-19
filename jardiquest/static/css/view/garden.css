@@ -22,6 +22,11 @@
     grid-template-columns: 1fr 1fr;
 }
 
+.right{
+    display: grid;
+    justify-items: end;
+}
+
 .button-panel > button {
     padding: 0.6em;
     margin: 0.2em 1em;
@@ -34,6 +39,7 @@
 
 .handler-display-data {
     display: grid;
+    height: 100%;
     grid-template-rows: 10% 90%;
 }
 
@@ -43,17 +49,20 @@
     width: 100%;
     display: table;
     border: 1px solid #ccc;
+    background-color: var(--background-secondary);
 }
 
-.table-all td, .table-all th {
+.display_form{
+    padding: 10px;
+}
+
+.table-all tbody th {
     padding: 8px 8px;
     display: table-cell;
-    text-align: left;
-    vertical-align: top;
+    text-align: middle;
 }
 
-tbody{
-    display: table-row-group;
+.table-all thead th{
     vertical-align: middle;
-    border-color: inherit;
+    color: var(--green);
 }
