@@ -3,38 +3,25 @@
 {% include "_navbar.html" %}
 {% block content %}
 
-<title>Profil</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/view/new_garden.css') }}">
+<title>Créer un jardin</title>
 
-<div class="portal-container">
-    <div class="handler-display-data">
-            <form action="/account" method="post" class="handler-display-data" id="update-account">
-                <input type="hidden" name="_method" value="put"/>
-                <div class="left top">
-                    <b class="brown">Créer un nouveau jardin :</b> <br>
-                    <input class="input" type="text" name="create" value="">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="notification-parent">
+                    <p class="notification error">{{ message }}</p>
                 </div>
-                <div class="right top">
-                    <b class="brown">Capacité :</b> <br>
-                    <input class="input" type="text" name="capacite" value="">
-                </div>
-                <div class="right middle">
-                    <b class="brown">Nom de la monnaie :</b> <br>
-                    <input class="input" type="text" name="capacite" value="">
-                </div>
-                <div class="middle left">
-                    <select class="box">
-                        <option>Coffee</option>
-                        <option>Tea</option>
-                        <option>Juice</option>
-                        <option selected>Cocktail</option>
-                    </select>
-                </div>
-                <div class="button-panel right bottom">
-                    <button class="red">Annuler</button>
-                    <button class="green">Valider</button>
-                </div>
-            </form>
-    </div>
-</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <input type="text" name="nom" placeholder="Nom du jardin" required>
+        <input type="text" name="description" placeholder="Description du jardin">
+        <input type="text" name="monnaie" placeholder="Nom de la monnaie" required>
+        <input type="number" min=0 name="capacite" placeholder="Capacité" required>
+        <input type="submit" value="Créer">
+    </form>
+    
 {% endblock %}
+

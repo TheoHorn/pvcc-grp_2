@@ -1,8 +1,7 @@
 .portal-container {
     align-self: left;
-    margin: 6% auto auto;
+    margin: auto auto;
     width: 100vw;
-    display: flex;
     padding: 2em 10%;
 }
 
@@ -18,24 +17,9 @@
     background: var(--brown-orange);
 }
 
-.right{
-    grid-column: 3;
-}
-
-.left{
-    grid-column: 1;
-}
-
 .top{
-    grid-row: 1;
-}
-
-.bottom{
-    grid-row: 2;
-}
-
-.all-bottom{
-    grid-column: 1/4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .button-panel > button {
@@ -50,8 +34,7 @@
 
 .handler-display-data {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 30% 70%;
+    grid-template-rows: 10% 90%;
 }
 
 .table-all {

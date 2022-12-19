@@ -6,17 +6,29 @@
 <title>Profil</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/garden.css') }}">
 
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="notification-parent">
+                    <p class="notification error">{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+{% endwith %}
+    
 <div class="portal-container">
     <div class="handler-display-data">
-        <div class="left">
-            <b class="brown-orange-style">Mon jardin :</b>
-            <span>{{user.idJardin}}</span>
+        <div class="top">
+            <div>
+                <b class="brown-orange-style">Mon jardin :</b>
+                <span>{{jardin.name}}</span>
+            </div>
+            <div>
+                <a href="{{url_for('controller.new_garden')}}">Créer un nouveau jardin</a>
+                <a href="{{url_for('controller.new_garden')}}">Modifier mon jardin</a>
+            </div>
         </div>
-        <div class="button-panel right">
-            <button class="brown">Modifier</button>
-            <button class="green" onclick="windows.location.href='url_for(new_garden)'">Nouveau</button>
-        </div>  
-        <div class="bottom all-bottom list">
+        <div>
             <span>
                 <b class="brown-orange-style">Trouver un autre jardin :</b> <br>
             </span>
@@ -25,19 +37,17 @@
                     <tr>
                         <th>Nom du jardin</th>
                         <th>Monnaie</th>
-                        <th>Détail</th>
+                        <th>Choisir</th>
                     </tr>
                     {% for jardin in jardins %}
                     <tr>
                         <th>{{jardin.name}}</th>
-                        <th>{{jardin.name}}</th>
-                        <th>{{jardin.money}}</th>
+                        <th>{{jardin.moneyName}}</th>
+                        <th><a href="{{url_for('controller.choose', choose=jardin.idJardin)}}">Choose</a></th>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-
-
         </div> 
     </div>
 </div>
