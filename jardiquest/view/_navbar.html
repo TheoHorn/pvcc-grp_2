@@ -23,9 +23,9 @@
     </a>
 
     {% if active == 'garden' %}
-        <a href="#garden" class="active">Jardin</a>
+        <a href="{{url_for('controller.garden')}}" class="active">Jardin</a>
     {% else %}
-        <a href="#garden">Jardin</a>
+        <a href="{{url_for('controller.garden')}}">Jardin</a>
     {% endif %}
 
     {% if active == 'quests' %}

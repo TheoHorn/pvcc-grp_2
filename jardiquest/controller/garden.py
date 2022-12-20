@@ -16,7 +16,6 @@ import random
 @login_required
 def garden():
     jardin_de_user = Jardin.query.filter_by(idJardin=current_user.idJardin).first()
-    print(jardin_de_user.idJardin)
     # all the gardens he can access
     if jardin_de_user is not None :
         jardins = Jardin.query.filter(Jardin.idJardin != jardin_de_user.idJardin)
