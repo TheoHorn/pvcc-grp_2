@@ -10,7 +10,7 @@ from jardiquest.model.database.entity.user import User
 from jardiquest.setup_sql import db, database_path
 
 # do not remove this import allows SQLAlchemy to find the table
-from jardiquest.model.database.entity import accepte, annonce, catalogue, jardin, quete, recolte
+from jardiquest.model.database.entity import annonce, catalogue, jardin, quete, recolte
 
 
 # create the flask app (useful to be separate from the app.py

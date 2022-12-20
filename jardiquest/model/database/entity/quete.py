@@ -12,9 +12,13 @@ class Quete(db.Model):
     estimatedTime = db.Column(db.Integer)
     startingDate = db.Column(db.Date())
     timeBeforeExpiration = db.Column(db.Integer)
-    id_jardin = db.Column(db.String(10), db.ForeignKey("jardin.idJardin"))
+    accomplished = db.Column(db.Boolean(), default=False)
 
-    user = db.relationship("Accepte", back_populates="quete")
+    id_jardin = db.Column(db.String(10), db.ForeignKey("jardin.idJardin"))
+    id_user = db.Column(db.String(100), db.ForeignKey("user.email"))
+
+    user = db.relationship("User", back_populates="quetes")
+   
     
     
     def get_id(self):

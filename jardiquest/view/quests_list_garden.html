@@ -3,35 +3,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/quests/garden_quests_list.css') }}">
 {% endblock %}
 
-{% block quest %}
-<div class="time_left">
-{% if quest.timeBeforeExpiration %}
-        {% set timeLeft = quest.timeBeforeExpiration - (today - quest.startingDate).days %}
-        <p>Temps restant : {{ timeLeft }} jours</p>
-{% endif %}
-</div> 
-        
-<div class="quest_title">
-    <a href="{{ url_for('controller.display_quest', quest_id=quest.idQuete) }}">{{ quest.title }}</a>
-</div>  
-
-<div class="estimated_time">
-    {% if quest.estimatedTime %}
-        {% set minutes = quest.estimatedTime%60 %}
-        {% set hours = quest.estimatedTime//60 %}
-
-        
-            <p>
-                {% if hours > 0 %}
-                    {{ hours }}h
-                {% endif %}
-                {{ minutes }}min
-            </p>
-        
-    {% endif %}
-</div>
-
-<div class="reward">
-    <p>{{ quest.reward }} {{ garden.moneyName }}</p>
-</div>
-{% endblock quest %}
+{% block message_no_quest %}
+<p id="message_no_quest">Aucune quête n'est actuellement disponible</p>
+{% endblock %}
