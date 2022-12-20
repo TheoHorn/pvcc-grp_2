@@ -68,3 +68,6 @@ class User(db.Model):
     @staticmethod
     def is_authenticated():
         return True
+
+    def update_garden(self, new_garden):
+        self.idJardin = new_garden

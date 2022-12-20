@@ -1,8 +1,7 @@
 .portal-container {
     align-self: left;
-    margin: 6% auto auto;
+    margin: auto auto;
     width: 100vw;
-    display: flex;
     padding: 2em 10%;
 }
 
@@ -18,24 +17,14 @@
     background: var(--brown-orange);
 }
 
-.right{
-    grid-column: 3;
-}
-
-.left{
-    grid-column: 1;
-}
-
 .top{
-    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
-.bottom{
-    grid-row: 2;
-}
-
-.all-bottom{
-    grid-column: 1/4;
+.right{
+    display: grid;
+    justify-items: end;
 }
 
 .button-panel > button {
@@ -50,8 +39,8 @@
 
 .handler-display-data {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 30% 70%;
+    height: 100%;
+    grid-template-rows: 10% 90%;
 }
 
 .table-all {
@@ -60,17 +49,20 @@
     width: 100%;
     display: table;
     border: 1px solid #ccc;
+    background-color: var(--background-secondary);
 }
 
-.table-all td, .table-all th {
+.display_form{
+    padding: 10px;
+}
+
+.table-all tbody th {
     padding: 8px 8px;
     display: table-cell;
-    text-align: left;
-    vertical-align: top;
+    text-align: middle;
 }
 
-tbody{
-    display: table-row-group;
+.table-all thead th{
     vertical-align: middle;
-    border-color: inherit;
+    color: var(--green);
 }
