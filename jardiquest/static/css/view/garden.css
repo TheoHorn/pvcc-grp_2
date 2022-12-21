@@ -7,6 +7,7 @@
 
 .brown-orange-style {
     color: var(--brown-orange);
+    font-size: large;
 }
 
 .green {
@@ -20,6 +21,7 @@
 .top{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    font-size: large;
 }
 
 .right{
@@ -49,7 +51,6 @@
     width: 100%;
     display: table;
     border: 1px solid #ccc;
-    background-color: var(--background-secondary);
 }
 
 .display_form{
@@ -62,7 +63,38 @@
     text-align: middle;
 }
 
+.table-all tr:nth-child(odd){
+    background-color: var(--background-secondary);
+  }
+
 .table-all thead th{
     vertical-align: middle;
     color: var(--green);
+    background-color: darkgray;
+    font-size: large;
+}
+
+.notification-parent{
+    font-size: large;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.attributs{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.input {
+    margin: 3px 10px 3px 0;
+    padding: 8px;
+    font-size: medium;
+    width: 20%;
+}
+
+.button{
+    margin: 3px 10px 3px 0;
+    padding: 8px;
+    font-size: medium;
+    width: 5em;
 }

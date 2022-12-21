@@ -15,19 +15,35 @@ form {
     align-items: center;
 }
 
-form label {
-    margin: 5px 10px 5px 0;
-}
-
-form input {
+.area{
     margin: 5px 10px 5px 0;
     padding: 10px;
+    font-size: large;
+    width: 30%;
 }
 
-button{
+.input {
     margin: 5px 10px 5px 0;
     padding: 10px;
+    font-size: large;
+    width: 30%;
+}
+
+button, .button{
     margin: 5px 10px 5px 0;
+    padding: 10px;
+    font-size: large;
+    width: 6em;
 }
 
 a:link { text-decoration: none; }
+
+.display_buttons{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.display_buttons_inline{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
