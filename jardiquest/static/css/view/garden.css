@@ -27,6 +27,7 @@
 .right{
     display: grid;
     justify-items: end;
+    grid-template-rows: 1fr 1fr 1fr;
 }
 
 .button-panel > button {
@@ -42,7 +43,7 @@
 .handler-display-data {
     display: grid;
     height: 100%;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 15% 85%;
 }
 
 .table-all {
@@ -97,4 +98,21 @@
     padding: 8px;
     font-size: medium;
     width: 5em;
+}
+
+.button_edit{
+    margin: 3px 10px 3px 0;
+    padding: 8px;
+    font-size: medium;
+    width: 5em;
+}
+
+a:link { text-decoration: none; }
+
+@media only screen and (max-width: 800px) {
+    .handler-display-data {
+        display: grid;
+        height: 100%;
+        grid-template-rows: 30% 70%;
+    }
 }

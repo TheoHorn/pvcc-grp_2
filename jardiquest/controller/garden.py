@@ -70,6 +70,7 @@ def new_garden():
         # update user status
         current_user.update_garden(id)
         current_user.update_role('Proprietaire')
+        current_user.update_balance(0)
         db.session.commit()
 
         return redirect(url_for('controller.garden'))
@@ -78,11 +79,17 @@ def new_garden():
 
 @app.route('/change/<choose>')
 def choose(choose):
-    jar = Jardin.query.filter_by(idJardin=choose).first()
-    flash(f"Vous avez rejoint le jardin \"{jar.name}\"")
+    if current_user.role != 'Participant' :
+        Jardin.query.filter(Jardin.idJardin == current_user.idJardin).delete()
+        current_user.update_role('Participant')
+        flash(f"Vous avez supprimé votre jardin")
 
+    jar = Jardin.query.filter_by(idJardin=choose).first()
+    flash(f"Vous avez rejoint le jardin \"{jar.name}\" en tant que participant")
+ 
     # update user status
     current_user.update_garden(choose)
+    current_user.update_balance(0)
     db.session.commit()
     return redirect(url_for('controller.garden'))   
 

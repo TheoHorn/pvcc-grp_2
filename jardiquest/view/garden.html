@@ -47,16 +47,18 @@
             </div>
             <div class="right">
                 {% if user.role == 'Participant' %}
-                    <a href="{{url_for('controller.new_garden')}}">Créer un nouveau jardin</a>
+                    <button class="button_edit"><a href="{{url_for('controller.new_garden')}}">Nouveau</a></button>
                 {% endif %}
                 <!-- To modify it must be your own garden -->
                 {% if user.role != 'Participant' %}
-                    <a href="{{url_for('controller.modify_garden')}}">Modifier mon jardin</a>
+                    <button class="button_edit"><a href="{{url_for('controller.modify_garden')}}">Modifier</a></button>
                 {% endif %}
                 <!-- To leave a garden we must be a participant that is in a garden -->
                 {% if user.idJardin|length != 0 %}
                     {% if user.role == 'Participant' %}
-                        <a href="{{url_for('controller.leave')}}">Quitter mon jardin</a>
+                        <button class="button_edit">
+                            <a href="{{url_for('controller.leave')}}">Quitter</a>
+                        </button>
                     {% endif %}
                 {% endif %}
             </div>
@@ -90,7 +92,7 @@
                         <th>{{jardin.moneyName}}</th>
                         <th>{{jardin.ville}}</th>
                         <th>{{jardin.adresse}}</th>
-                        <th><a href="{{url_for('controller.choose', choose=jardin.idJardin)}}">Choose</a></th>
+                        <th><a href="{{url_for('controller.choose', choose=jardin.idJardin)}}">Choisir</a></th>
                     </tr>
                     {% endfor %}
                 </tbody>

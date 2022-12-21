@@ -74,3 +74,6 @@ class User(db.Model):
     
     def update_role(self, new_role):
         self.role = new_role
+    
+    def update_balance(self, new_amount):
+        self.balance = new_amount
