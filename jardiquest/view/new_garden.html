@@ -16,13 +16,15 @@
 <div class="portal-container">
     <div class="container">
         <form method="POST">
-            <input type="text" name="nom" placeholder="Nom du jardin" required>
-            <input type="text" name="description" placeholder="Description du jardin">
-            <input type="text" name="monnaie" placeholder="Nom de la monnaie" required>
-            <input type="text" name="adresse" placeholder="Adresse" required>
-            <input type="text" name="ville" placeholder="Ville" required>
-            <input type="submit" value="Créer">
-            <button><a href="{{url_for('controller.garden')}}">Annuler</a></button>
+            <input class="input" type="text" name="nom" placeholder="Nom du jardin" required>
+            <textarea class="area" placeholder="Description du jardin" type="textarea" name="description" id="description" rows="4" cols="50"></textarea>
+            <input class="input" type="text" name="monnaie" placeholder="Nom de la monnaie" required>
+            <input class="input" type="text" name="adresse" placeholder="Adresse" required>
+            <input class="input" type="text" name="ville" placeholder="Ville" required>
+            <div class="display_buttons_inline">
+                <input class="button" type="submit" value="Créer">
+                <button><a href="{{url_for('controller.garden')}}">Annuler</a></button>
+            </div>
         </form>
     </div>
 </div>

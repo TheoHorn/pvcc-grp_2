@@ -19,7 +19,7 @@ class User(db.Model):
     balance = db.Column(db.Float(), default=0.00)
     recruitmentDate = db.Column(db.Date())
 
-    idJardin = db.Column(db.String(10), db.ForeignKey("jardin.idJardin"))
+    idJardin = db.Column(db.String(10), db.ForeignKey("jardin.idJardin"), default="")
 
     jardin = db.relationship("Jardin", back_populates="user")
     annonce = db.relationship("Annonce", back_populates="user")
@@ -71,3 +71,9 @@ class User(db.Model):
 
     def update_garden(self, new_garden):
         self.idJardin = new_garden
+    
+    def update_role(self, new_role):
+        self.role = new_role
+    
+    def update_balance(self, new_amount):
+        self.balance = new_amount
