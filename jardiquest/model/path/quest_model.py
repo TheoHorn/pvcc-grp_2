@@ -26,6 +26,7 @@ def list_garden_quest_model(user_id: str):
         garden = Jardin.query.get(id_garden)
         quests = Quete.query.filter_by(id_jardin=id_garden, id_user = None).all()
         quests.sort(key=lambda x: x.timeBeforeExpiration - (date.today() - x.startingDate).days)
+        quests = [quest for quest in quests if not ((date.today() - quest.startingDate).days > quest.timeBeforeExpiration)]
         return render_template("quests_list_garden.html", quests=quests, today = date.today(), garden = garden)
 
 
