@@ -36,6 +36,7 @@ def list_user_quests_model(user_id: str):
         return redirect(url_for("controller.garden"))
     garden = Jardin.query.get(user.idJardin)
     quests = user.quetes
+    quests = [quest for quest in quests if not quest.accomplished]
     quests.sort(key=lambda x: x.timeBeforeExpiration - (date.today() - x.startingDate).days)
     return render_template("quests_list_user.html", quests=quests, today = date.today(), user = user, garden=garden)
 
@@ -43,6 +44,7 @@ def list_user_quests_model(user_id: str):
 def accept_quest_model(user_id: str, quest_id: int):
     user = getUser(user_id)
     quest = Quete.query.get(quest_id)
+    print(quest.accomplished)
     if quest.id_jardin == user.idJardin:
         quest.id_user = user_id
         db.session.commit()
@@ -64,10 +66,12 @@ def cancel_quest_model(user_id: str, quest_id: int):
 
 
 def complete_quest_model(user_id: str, quest_id: int):
+    # TODO change if we want the garden manager to validate the quest
     user = getUser(user_id)
     quest = Quete.query.get(quest_id)
     if quest.id_jardin == user.idJardin:
         quest.accomplished = True
+        user.balance += quest.reward
         db.session.commit()
     else :
         abort(403)

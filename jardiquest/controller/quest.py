@@ -12,15 +12,6 @@ def get_connected_user_id():
     else:
         return user_id
 
-
-@app.get("/garden/<int:id_garden>/quests")
-def list_garden_id_quests(id_garden):
-    """List all quests of a specific garden"""
-    # TODO Soit delete, soit n'autoriser qu'aux modérateurs
-    from jardiquest.model.path.quest_model import list_garden_id_quest_model
-    return list_garden_id_quest_model(id_garden)
-
-
 @app.get("/garden/quests")
 @login_required
 def list_garden_quests():
