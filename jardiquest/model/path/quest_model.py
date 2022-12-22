@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, session
+from flask import render_template, redirect, url_for, session, abort
 from jardiquest.model.database.entity.quete import Quete
 from jardiquest.model.database.entity.jardin import Jardin
 from jardiquest.model.database.entity.user import User
@@ -17,30 +17,26 @@ def getUser(user_id: int):
 
 # ------------------------------------------ Garden quests ------------------------------------------
 
-def list_garden_id_quest_model(gardenId : int):
-    garden = Jardin.query.get(gardenId)
-    quests = Quete.query.filter_by(id_jardin=gardenId).all()
-    return render_template("quests_list_garden.html", quests=quests, today = date.today(), garden = garden)
-
-
 def list_garden_quest_model(user_id: str):
     user = getUser(user_id)
     if not user.idJardin :
-        # TODO : redirect to a page to create a garden or to join one
-        return "test"
-        pass
+        return redirect(url_for("controller.garden"))
     else:
         id_garden = user.idJardin
         garden = Jardin.query.get(id_garden)
         quests = Quete.query.filter_by(id_jardin=id_garden, id_user = None).all()
+        quests.sort(key=lambda x: x.timeBeforeExpiration - (date.today() - x.startingDate).days)
         return render_template("quests_list_garden.html", quests=quests, today = date.today(), garden = garden)
 
 
 # ------------------------------------------ User quests ------------------------------------------
 def list_user_quests_model(user_id: str):
     user = getUser(user_id)
+    if not user.idJardin :
+        return redirect(url_for("controller.garden"))
     garden = Jardin.query.get(user.idJardin)
     quests = user.quetes
+    quests.sort(key=lambda x: x.timeBeforeExpiration - (date.today() - x.startingDate).days)
     return render_template("quests_list_user.html", quests=quests, today = date.today(), user = user, garden=garden)
 
 
@@ -51,7 +47,7 @@ def accept_quest_model(user_id: str, quest_id: int):
         quest.id_user = user_id
         db.session.commit()
     else :
-        return "probleme"
+        abort(403)
     return redirect(url_for("controller.list_garden_quests"))
 
 
@@ -62,8 +58,7 @@ def cancel_quest_model(user_id: str, quest_id: int):
         quest.id_user = None
         db.session.commit()
     else :
-        return "probleme"
-        pass
+        abort(403)
     return redirect(url_for("controller.list_user_quests"))
 
 
@@ -75,7 +70,7 @@ def complete_quest_model(user_id: str, quest_id: int):
         quest.accomplished = True
         db.session.commit()
     else :
-        return "probleme"
+        abort(403)
     return redirect(url_for("controller.list_user_quests"))
 
 
@@ -84,7 +79,10 @@ def complete_quest_model(user_id: str, quest_id: int):
 def display_quest_model(quest_id: int):
     """Display a quest with a specific id"""
     user_id = session.get("_user_id")
+    user = getUser(user_id)
     quest = Quete.query.get(quest_id)
+    if not quest.id_jardin == user.idJardin:
+        abort(403)
     garden = Jardin.query.get(quest.id_jardin)
     return render_template("quest_details.html", quest=quest, today = date.today(), garden = garden, user = user_id)
 
