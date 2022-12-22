@@ -3,6 +3,7 @@
 {% include "_navbar.html" %}
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/new_garden.css') }}">
+
 <title>Créer un jardin</title>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -28,6 +29,5 @@
         </form>
     </div>
 </div>
-
 {% endblock %}
 

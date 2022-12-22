@@ -11,7 +11,6 @@ from jardiquest.model.database.entity.recolte import Recolte
 import random
 
 # show all gardens
-# TODO create filter
 @app.route('/garden',methods=['GET', 'POST'])
 @login_required
 def garden():
@@ -25,11 +24,23 @@ def garden():
         nom = request.form['filtreNom']
         description = request.form['filtreDescription']
         monnaie = request.form['filtreMonnaie']
+        ville = request.form['filtreVille']
+        adresse = request.form['filtreAdresse']
 
         name = "%{}%".format(nom)
         monnaie = "%{}%".format(monnaie)
+        description = "%{}%".format(description)
+        ville = "%{}%".format(ville)
+        adresse = "%{}%".format(adresse)
+
         if jardin_de_user is not None :
-            jardins = Jardin.query.filter(Jardin.name.like(name), Jardin.idJardin != jardin_de_user.idJardin, Jardin.moneyName.like(monnaie)).all()
+            jardins = Jardin.query.filter(Jardin.name.like(name),
+                Jardin.idJardin != jardin_de_user.idJardin,
+                Jardin.moneyName.like(monnaie),
+                Jardin.description.like(description),
+                Jardin.ville.like(ville),
+                Jardin.adresse.like(adresse)
+                ).all()
         else :
             jardins = Jardin.query.filter(Jardin.name.like(name), Jardin.moneyName.like(monnaie)).all()
 
@@ -79,11 +90,6 @@ def new_garden():
 
 @app.route('/change/<choose>')
 def choose(choose):
-    if current_user.role != 'Participant' :
-        Jardin.query.filter(Jardin.idJardin == current_user.idJardin).delete()
-        current_user.update_role('Participant')
-        flash(f"Vous avez supprimé votre jardin")
-
     jar = Jardin.query.filter_by(idJardin=choose).first()
     flash(f"Vous avez rejoint le jardin \"{jar.name}\" en tant que participant")
  
