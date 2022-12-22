@@ -6,6 +6,10 @@
 <title>Profil</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/garden.css') }}">
 
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -46,7 +50,8 @@
                     {% endif %}
             </div>
             <div class="right">
-                {% if user.role == 'Participant' %}
+                <!-- To create a garden you musn't have garden -->
+                {% if user.idJardin|length == 0 %}
                     <button class="button_edit"><a href="{{url_for('controller.new_garden')}}">Nouveau</a></button>
                 {% endif %}
                 <!-- To modify it must be your own garden -->
@@ -68,9 +73,11 @@
                 <b class="brown-orange-style">Trouver un autre jardin :</b> <br>
             </span>
             <form method="POST" class="display_form">
-                <input class="input" type="text" name="filtreNom" placeholder="Nom du jardin"></input>
-                <input class="input" type="text" name="filtreDescription" placeholder="Description du jardin"></input>
-                <input class="input" type="text" name="filtreMonnaie" placeholder="Monnaie du jardin"></input>
+                <input class="input" type="text" name="filtreNom" placeholder="Nom"></input>
+                <input class="input" type="text" name="filtreDescription" placeholder="Description"></input>
+                <input class="input" type="text" name="filtreMonnaie" placeholder="Monnaie"></input>
+                <input class="input" type="text" name="filtreVille" placeholder="Ville"></input>
+                <input class="input" type="text" name="filtreAdresse" placeholder="Adresse"></input>
                 <button class="button" type="submit">Search</button>
             </form>
             <table class="table-all">
@@ -81,7 +88,9 @@
                         <th>Monnaie</th>
                         <th>Ville</th>
                         <th>Adresse</th>
-                        <th>Choisir</th>
+                        {% if user.role == 'Participant' %}
+                            <th>Choisir</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -92,7 +101,9 @@
                         <th>{{jardin.moneyName}}</th>
                         <th>{{jardin.ville}}</th>
                         <th>{{jardin.adresse}}</th>
-                        <th><a href="{{url_for('controller.choose', choose=jardin.idJardin)}}">Choisir</a></th>
+                        {% if user.role == 'Participant' %}
+                            <th><button type="button" onclick='changeId("{{jardin.idJardin}}")' data-toggle="modal" data-target="#myModal">Choisir</button></th>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -100,4 +111,38 @@
         </div> 
     </div>
 </div>
+  
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="brown-orange-style">Changer de jardin</h4>
+            <p id="idGarden" hidden></p>
+        </div>
+        <div class="modal-body">
+            <p>Voulez vous vraiment changer de jardin ?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <button type="button" onclick="changeGarden()" class="btn btn-default">Choisir</button>
+        </div>
+    </div>        
+</div>
+<script>
+
+    function changeId(id) {
+        var element = document.getElementById('idGarden');
+        element.innerHTML = id;
+    }
+
+    function changeGarden(){
+        var element = document.getElementById('idGarden');
+        link = '/change/'+element.innerHTML
+        window.location = link;
+    }
+    
+</script>
 {% endblock %}
