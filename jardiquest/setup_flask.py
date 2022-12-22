@@ -9,8 +9,24 @@ from jardiquest.controller import handling_status_error
 from jardiquest.model.database.entity.user import User
 from jardiquest.setup_sql import db, database_path
 
+from flask_apscheduler import APScheduler
+
 # do not remove this import allows SQLAlchemy to find the table
 from jardiquest.model.database.entity import annonce, catalogue, jardin, quete, recolte
+
+
+
+
+
+
+
+from datetime import date, timedelta
+from jardiquest.model.database.entity.quete import Quete
+from jardiquest.setup_sql import db
+
+
+
+
 
 
 # create the flask app (useful to be separate from the app.py
@@ -31,6 +47,36 @@ def create_app():
     with flask_serv_intern.app_context():
         db.create_all()
 
+
+    # -----------------------------------
+    scheduler = APScheduler()
+    scheduler.init_app(flask_serv_intern)
+    
+    
+    @scheduler.task("interval",seconds=5)  
+    def update_state_quests():
+        with scheduler.app.app_context():
+            quests = Quete.query.filter_by(accomplished=False).all()
+            for quest in quests:
+                
+                if (date.today() - quest.startingDate).days > quest.timeBeforeExpiration:
+                    # If the quest is expired
+                    
+                    if quest.periodicity > 0:
+                        # If the quest is periodic, we create a new one
+                        new_quest = Quete(title = quest.title, description = quest.description, periodicity = quest.periodicity, 
+                                        timeBeforeExpiration = quest.timeBeforeExpiration, reward = quest.reward, id_jardin = quest.id_jardin, 
+                                        accomplished = False, startingDate = quest.startingDate + timedelta(days=quest.periodicity))
+                        db.session.add(new_quest)
+                    else:
+                        # If the quest is not periodic, we delete it
+                        db.session.delete(quest)
+            print("update")
+            db.session.commit()    
+
+    scheduler.start()   
+    # ----------------------------------
+
     # login handling
     login_manager = LoginManager()
     login_manager.login_view = 'controller.login'
@@ -39,6 +85,9 @@ def create_app():
 
     login_manager.needs_refresh_message = u"Session expirée, veuillez vous reconnecter"
     login_manager.needs_refresh_message_category = "info"
+
+
+
 
     @login_manager.unauthorized_handler
     def unauthorized_callback():

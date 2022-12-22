@@ -3,7 +3,7 @@ from jardiquest.model.database.entity.quete import Quete
 from jardiquest.model.database.entity.jardin import Jardin
 from jardiquest.model.database.entity.user import User
 from jardiquest.setup_sql import db
-from datetime import date
+from datetime import date, timedelta
 
 
 
@@ -72,6 +72,14 @@ def complete_quest_model(user_id: str, quest_id: int):
     if quest.id_jardin == user.idJardin:
         quest.accomplished = True
         user.balance += quest.reward
+
+        # If the quest is periodic, we create a new one
+        if quest.periodicity > 0:
+            new_quest = Quete(title = quest.title, description = quest.description, peridiodicity = quest.periodicity, 
+                            timeBeforeExpiration = quest.timeBeforeExpiration, reward = quest.reward, id_jardin = quest.id_jardin, 
+                            accomplished = False,  startingDate = quest.startingDate + timedelta(days=quest.periodicity))
+            db.session.add(new_quest)
+
         db.session.commit()
     else :
         abort(403)

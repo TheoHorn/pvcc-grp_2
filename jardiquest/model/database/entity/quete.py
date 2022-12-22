@@ -1,10 +1,9 @@
 from jardiquest.setup_sql import db
 
-
 class Quete(db.Model):
     __tablename__ = "quete"
 
-    idQuete = db.Column(db.String(10), primary_key=True)
+    idQuete = db.Column(db.String(10), primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000), default="")
     periodicity = db.Column(db.Integer(), default=0)
@@ -23,5 +22,3 @@ class Quete(db.Model):
     
     def get_id(self):
         return self.idQuete
-
-
