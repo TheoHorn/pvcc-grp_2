@@ -75,7 +75,7 @@ def complete_quest_model(user_id: str, quest_id: int):
         user.balance += quest.reward
 
         # If the quest is periodic, we create a new one
-        if quest.periodicity > 0:
+        if quest.periodicity :
             new_quest = Quete(title = quest.title, description = quest.description, peridiodicity = quest.periodicity, 
                             timeBeforeExpiration = quest.timeBeforeExpiration, reward = quest.reward, id_jardin = quest.id_jardin, 
                             accomplished = False,  startingDate = quest.startingDate + timedelta(days=quest.periodicity))

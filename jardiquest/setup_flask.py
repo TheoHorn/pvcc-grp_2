@@ -38,7 +38,7 @@ def create_app():
     scheduler = APScheduler()
     scheduler.init_app(flask_serv_intern)
 
-    @scheduler.task("interval",minutes=5,seconds=5)  
+    @scheduler.task("interval",hours=12)  
     def update_state_quests():
         update_quests(scheduler.app)
  
