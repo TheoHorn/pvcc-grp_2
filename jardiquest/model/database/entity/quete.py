@@ -34,10 +34,9 @@ def update_quests(app):
                 # If the quest is expired
                 if quest.periodicity :
                     # If the quest is periodic, we create a new one
-                    print(date.today() + timedelta(days=quest.timeBeforeExpiration))
                     new_quest = Quete(idQuete= uuid.uuid1().hex, title = quest.title, description = quest.description, periodicity = True, 
                                     timeBeforeExpiration = quest.timeBeforeExpiration, reward = quest.reward, id_jardin = quest.id_jardin, 
-                                    accomplished = False, startingDate = date.today() + timedelta(days=quest.timeBeforeExpiration))
+                                    accomplished = False, startingDate = quest.startingDate + timedelta(days=quest.timeBeforeExpiration))
                     db.session.add(new_quest)
                 else:
                     # If the quest is not periodic, we delete it
