@@ -12,6 +12,8 @@ from jardiquest.setup_sql import db, database_path
 # do not remove this import allows SQLAlchemy to find the table
 from jardiquest.model.database.entity import annonce, catalogue, jardin, quete, recolte
 
+from flask_apscheduler import APScheduler
+from jardiquest.model.database.entity.quete import update_quests
 
 # create the flask app (useful to be separate from the app.py
 # to be used in the test and to put all the code in the jardiquest folder
@@ -31,6 +33,18 @@ def create_app():
     with flask_serv_intern.app_context():
         db.create_all()
 
+
+    # Scheduler each day
+    scheduler = APScheduler()
+    scheduler.init_app(flask_serv_intern)
+
+    @scheduler.task("interval",hours=12)  
+    def update_state_quests():
+        update_quests(scheduler.app)
+ 
+    scheduler.start()   
+
+
     # login handling
     login_manager = LoginManager()
     login_manager.login_view = 'controller.login'
@@ -39,6 +53,9 @@ def create_app():
 
     login_manager.needs_refresh_message = u"Session expirée, veuillez vous reconnecter"
     login_manager.needs_refresh_message_category = "info"
+
+
+
 
     @login_manager.unauthorized_handler
     def unauthorized_callback():

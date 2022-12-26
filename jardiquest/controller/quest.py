@@ -12,15 +12,6 @@ def get_connected_user_id():
     else:
         return user_id
 
-
-@app.get("/garden/<int:id_garden>/quests")
-def list_garden_id_quests(id_garden):
-    """List all quests of a specific garden"""
-    # TODO Soit delete, soit n'autoriser qu'aux modérateurs
-    from jardiquest.model.path.quest_model import list_garden_id_quest_model
-    return list_garden_id_quest_model(id_garden)
-
-
 @app.get("/garden/quests")
 @login_required
 def list_garden_quests():
@@ -40,14 +31,14 @@ def list_user_quests():
 
 
 
-@app.get("/quest/<int:quest_id>")
+@app.get("/quest/<string:quest_id>")
 @login_required
 def display_quest(quest_id):
     """Display a quest with a specific id"""
     from jardiquest.model.path.quest_model import display_quest_model
     return display_quest_model(quest_id)
 
-@app.post("/quest/<int:quest_id>/accept")
+@app.post("/quest/<string:quest_id>/accept")
 @login_required
 def accept_quest(quest_id):
     """Accept a quest with a specific id"""
@@ -55,7 +46,7 @@ def accept_quest(quest_id):
     from jardiquest.model.path.quest_model import accept_quest_model
     return accept_quest_model(user_id, quest_id)
 
-@app.post("/quest/<int:quest_id>/cancel")
+@app.post("/quest/<string:quest_id>/cancel")
 @login_required
 def cancel_quest(quest_id):
     """Cancel a quest with a specific id"""
@@ -63,7 +54,7 @@ def cancel_quest(quest_id):
     from jardiquest.model.path.quest_model import cancel_quest_model
     return cancel_quest_model(user_id, quest_id)
 
-@app.post("/quest/<int:quest_id>/complete")
+@app.post("/quest/<string:quest_id>/complete")
 @login_required
 def complete_quest(quest_id):
     """Complete a quest with a specific id"""
