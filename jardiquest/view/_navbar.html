@@ -27,11 +27,11 @@
     {% else %}
         <a href="{{url_for('controller.garden')}}">Jardin</a>
     {% endif %}
-
+    
     {% if active == 'quests' %}
-        <a href="/garden/quests" class="active">Quêtes</a>
+        <a href="{{url_for('controller.list_garden_quests')}}" class="active">Quêtes</a>
     {% else %}
-        <a href="/garden/quests">Quêtes</a>
+        <a href="{{url_for('controller.list_garden_quests')}}">Quêtes</a>
     {% endif %}
 
     {% if active == 'blog' %}
@@ -41,9 +41,9 @@
     {% endif %}
 
     {% if active == 'market' %}
-        <a href="#market" class="active">Marché</a>
+        <a href="{{url_for('controller.garden')}}" class="active">Marché</a>
     {% else %}
-        <a href="#market">Marché</a>
+        <a href="{{url_for('controller.market')}}">Marché</a>
     {% endif %}
 
     {% if owner == 1 %}

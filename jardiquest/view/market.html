@@ -1,0 +1,73 @@
+{% extends "_base.html" %}
+{% block content %}
+
+{% set active="market" %}
+{% include "_navbar.html" %}
+
+<div id="market">
+    <div id="market_header">
+        <p>Que voulez-vous acheter ?</p>
+    </div>
+    
+    <div id="market_filters">
+        <div id="market_search_by_name">
+            <p>Nom</p>
+            <input type="text" name="search" id="search">
+            <button id="market_remove_search_by_name"></button>            
+        </div>
+
+        <div id="market_filters_type">
+            <p>Type</p>
+            <select name="type" id="type">
+                <option value="all">Tous</option>
+                <option value="fruit">Fruit</option>
+                <option value="legume">Légume</option>
+                <option value="plante">Plante aromatique</option>
+            </select>
+            <button id="market_remove_filters_type"></button>    
+        </div>
+
+        <div id="market_sort">
+            <p>Trier par :</p>
+            <select name="sort" id="sort">
+                <option value="name">Nom</option>
+                <option value="price">Prix</option>
+                <option value="type">Type</option>
+                <option value="quantity">Quantité</option>
+            </select>
+            <button id="market_remove_sort"></button>
+        </div>
+    </div>
+
+    {% if not produits %}
+        <div id="market_no_product">
+            <p>Aucun produit n'est actuellement disponible</p>	
+        </div>
+    {% else %}
+    <div id="produits">
+        {% for produit in produits %}
+        <div class="produit">
+            <div class="product_type">
+                {{ produit.type }}
+            </div>
+
+            <div class="product_name">
+                <a href="{{ url_for('controller.market_product', product=produit.name)}}">{{ produit.name }}</a>
+            </div>
+            
+            <div class="product_quantity">
+                <p>{{ produit.quantity }}kg</p>
+            </div>
+
+            <div class="product_cheaper_price">
+                <p>Le moins cher : {{ produit.cheaper_price }} {{ garden.moneyName }}/kg</p>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+</div>
+{% endblock %}
