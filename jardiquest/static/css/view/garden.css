@@ -64,10 +64,9 @@
     padding: 10px;
 }
 
-.table-all tbody th {
+.cells td {
     padding: 8px 8px;
-    display: table-cell;
-    text-align: middle;
+    text-align: center;
 }
 
 .table-all tr:nth-child(odd){
