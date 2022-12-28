@@ -1,0 +1,40 @@
+{% extends "_base.html" %}
+{% set active='garden' %}
+{% include "_navbar.html" %}
+{% block content %}
+
+<title>Suggestion</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/suggestion.css') }}">
+
+<div>
+    <b class="brown-orange-style">Mon jardin :</b>
+    {% if jardin.name|length == 0 %}
+        <span>Vous n'avez pas de jardin</span>
+    {% else %}
+        <span>{{jardin.name}}</span>
+        <br>
+        {% if recoltes|length > 0 %}
+        <span>Recoltes de mon jardin :</span>
+        <table>
+            {% for recolte in recoltes %}
+            <tr>
+                <td>{{recolte.idRecolte}}</td>
+                <td>{{recolte.quantity}}</td>
+                <td>{{recolte.date}}</td>
+                <td>{{recolte.cost}}</td>
+                <td>{{recolte.idCatalogue}}</td>
+                <td>{{recolte.idJardin}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        {% else %}
+        <span>Aucune récolte</span>
+        {% endif %}
+    {% endif %}
+    <br>
+    <b class="brown-orange-style">Mon solde :</b>
+    <span>{{user.balance}}</span>
+</div>
+
+{% endblock %}

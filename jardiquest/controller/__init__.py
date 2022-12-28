@@ -13,4 +13,5 @@ from .quest import *
 from .account import *
 from .handle_garden import *
 from .garden import *
+from .suggestion import *
 
