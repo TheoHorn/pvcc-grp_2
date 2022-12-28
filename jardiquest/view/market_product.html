@@ -3,7 +3,6 @@
 
 {% set active="market" %}
 {% include "_navbar.html" %}
-
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/market/product.css') }}">
 
 <div id="market_product">
@@ -25,12 +24,12 @@
             {% for selling in sellings %}
                 <div class="market_product_selling">
                     <span class="quantity">{{ selling.quantity }}kg disponible</span>
-                    <span class="price">{{ selling.cost }} {{ garden.moneyName }}/kg</span>
+                    <span class="price_txt"><span class="price">{{ selling.cost }}</span> {{ garden.moneyName }}/kg</span>
                     <span class="selling_date">Date de dépôt : {{ selling.date }}</span>
                     <form action="TODO" method="post" class="buy_form">
                         <label for="buy_quantity" class="buy_quantity_label">Quantité voulue en kg :</label>
-                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.1" min="0" max="{{ selling.quantity }}" value="{{ selling.quantity }}">
-                        <p class="cost">Coût : {{ selling.quantity * selling.cost }} {{ garden.moneyName }}</p>
+                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.05" min="0.05" max="{{ selling.quantity }}" value="{{ selling.quantity }}">
+                        <p class="cost">Coût : <span class="cost_float">{{ selling.quantity * selling.cost }}</span> {{ garden.moneyName }}</p>
                         <input type="submit" class="buy_button" value="Acheter">
                     </form>
                 </div>
@@ -38,4 +37,6 @@
         {% endif %}
     </div>
 </div>
+
+<script src="{{ url_for('static', filename='js/market_product.js') }}"></script>
 {% endblock %}

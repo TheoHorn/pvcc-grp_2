@@ -79,7 +79,7 @@
     margin-left: 5px;
 }
 
-.price{
+.price_txt{
     border-right: 1px solid black;
     grid-column : 1;
     grid-row : 2;
