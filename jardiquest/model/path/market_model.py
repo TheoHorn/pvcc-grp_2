@@ -22,7 +22,7 @@ def display_market_product(product):
     if product_infos is None:
         abort(404)
     selling_products = db.session.query(Recolte).filter(Recolte.idJardin == garden.idJardin, Recolte.idCatalogue == product_infos.idCatalogue).all()
-    return render_template('market_product.html', product=product_infos, sellings=selling_products, garden=garden)
+    return render_template('market_product.html', product=product_infos, sellings=selling_products, garden=garden, user=current_user)
 
 
 def test_dataset():

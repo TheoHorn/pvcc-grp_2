@@ -1,0 +1,126 @@
+/* Product Presentation */
+#market_product{
+    position:relative;
+}
+
+#market_product_presentation {
+    margin : 20px;
+}
+
+#product_desc_img{
+    margin : 20px;
+    display : flex;
+    flex-direction: row;
+    gap : 10px; 
+}
+
+#market_product_presentation #product_name{
+    font-size : 30px;
+    font-weight : bold;
+    text-decoration: underline;
+}
+
+#market_product_presentation img{
+    display: block;
+    max-width:400px;
+    max-height:400px;
+    width: auto;
+    height: auto;
+}
+
+#product_desc{
+    min-height : 20%;
+    text-align : justify;
+    font-style : italic;
+    color : grey;
+}
+
+#product_desc_source{
+    font-size : 10px;
+    font-style : italic;
+}
+
+
+/* User Golds */
+
+#user_golds{
+    position : absolute;
+    top : 0;
+    right : 2%; 
+}
+
+
+/* Sellings */
+
+#market_product_sellings_container{
+    margin-top : 20px;
+    display : flex;
+    flex-direction: column;
+    gap : 10px;
+}
+
+.market_product_selling{
+    display : grid;
+    column-gap: 8px;
+    border : 1px solid black;
+    border-radius : 5px;
+    box-shadow: 1px 1px 1px black;
+    align-self: center;
+    min-height: 50px;
+    width : 90%;
+    background-color: #F7F7F7;
+    grid-template-columns: 2fr 1fr 2fr;
+}
+
+.quantity{
+    border-right: 1px solid black;
+    grid-row: 1;
+    grid-column: 1;
+    margin-left: 5px;
+}
+
+.price{
+    border-right: 1px solid black;
+    grid-column : 1;
+    grid-row : 2;
+    margin-left: 5px;
+}
+
+.selling_date{
+    border-right: 1px solid black;
+    grid-row : 1/3;
+    grid-column : 2;
+}
+
+.buy_form{
+    grid-row : 1/3;
+    grid-column : 3;
+    display : grid;
+    gap : 5px;
+    margin-bottom: 5px;
+}
+
+.buy_quantity_label{
+    grid-row : 1;
+}
+
+.buy_quantity{
+    grid-row : 1;
+    grid-column: 2;
+    width : 50%;
+    text-align: center;
+}
+
+.cost{
+    grid-column : 1;
+    grid-row : 2;   
+}
+
+.buy_button{
+    grid-column:2;
+    grid-row : 2;
+    width : 50%;
+    text-align: center;
+}
+
+

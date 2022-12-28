@@ -4,22 +4,35 @@
 {% set active="market" %}
 {% include "_navbar.html" %}
 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/market/product.css') }}">
+
 <div id="market_product">
-    <div id="market_product_header">
-        <p>{{ product.name }}</p>
-        <img src="{{ url_for('static', filename='image/vegetables/' + product.imagePath) }}" alt="image de {{ product.name }}">
-        <p>{{ product.description }}</p>
+    <div id="market_product_presentation">
+        <h2 id="product_name">{{ product.name }}</h2>
+        <div id="product_desc_img">
+            <img src="{{ url_for('static', filename='image/vegetables/' + product.imagePath) }}" alt="image de {{ product.name }}">
+            <p id="product_desc">{{ product.description }} <a id="product_desc_source" href="{{ product.description_source }}">(source)</a></p> 
+        </div>
     </div> 
 
-    <div id="market_product_sellings">
+    <div id="user_golds">
+        <p>Vous avez : {{ user.balance }} {{ garden.moneyName }}</p>
+    </div>
+    <div id="market_product_sellings_container">
         {% if not sellings %}
             <p>Aucune vente n'est actuellement disponible</p>
         {% else %}
             {% for selling in sellings %}
                 <div class="market_product_selling">
                     <span class="quantity">{{ selling.quantity }}kg disponible</span>
-                    <span class="selling_date">{{ selling.date }}</span>
                     <span class="price">{{ selling.cost }} {{ garden.moneyName }}/kg</span>
+                    <span class="selling_date">Date de dépôt : {{ selling.date }}</span>
+                    <form action="TODO" method="post" class="buy_form">
+                        <label for="buy_quantity" class="buy_quantity_label">Quantité voulue en kg :</label>
+                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.1" min="0" max="{{ selling.quantity }}" value="{{ selling.quantity }}">
+                        <p class="cost">Coût : {{ selling.quantity * selling.cost }} {{ garden.moneyName }}</p>
+                        <input type="submit" class="buy_button" value="Acheter">
+                    </form>
                 </div>
             {% endfor %}
         {% endif %}
