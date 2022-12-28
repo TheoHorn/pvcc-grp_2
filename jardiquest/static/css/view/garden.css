@@ -20,8 +20,14 @@
 
 .top{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 4fr 1fr;
     font-size: large;
+}
+
+.find{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
 }
 
 .right{
@@ -43,7 +49,7 @@
 .handler-display-data {
     display: grid;
     height: 100%;
-    grid-template-rows: 15% 85%;
+    grid-template-rows: max(15%,5em) 85%;
 }
 
 .table-all {
@@ -58,10 +64,9 @@
     padding: 10px;
 }
 
-.table-all tbody th {
+.cells td {
     padding: 8px 8px;
-    display: table-cell;
-    text-align: middle;
+    text-align: center;
 }
 
 .table-all tr:nth-child(odd){
@@ -109,7 +114,7 @@
 
 a:link { text-decoration: none; }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 850px) {
     .handler-display-data {
         display: grid;
         height: 100%;

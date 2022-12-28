@@ -44,7 +44,12 @@ def garden():
         else :
             jardins = Jardin.query.filter(Jardin.name.like(name), Jardin.moneyName.like(monnaie)).all()
 
-    return render_template('garden.html', user=current_user, jardins= jardins[0:19], jardin=jardin_de_user)
+    table = []
+    for i in jardins :
+        row = [i.name,i.description,i.moneyName,i.ville,i.adresse,i.idJardin]
+        table.append(row)
+
+    return render_template('garden.html', jsTable = table, user=current_user, jardin=jardin_de_user, total=len(table))
 
 # create a new garden (owner)
 @app.route('/new',methods=['GET', 'POST'])
