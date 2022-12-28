@@ -1,12 +1,10 @@
 {% extends "_base.html" %}
-{% set active='user' %}
+{% set active='garden' %}
 {% include "_navbar.html" %}
 {% block content %}
 
 <title>Profil</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/garden.css') }}">
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -80,7 +78,7 @@
                 <input class="input" type="text" name="filtreAdresse" placeholder="Adresse"></input>
                 <button class="button" type="submit">Search</button>
             </form>
-            <table class="table-all">
+            <!-- <table class="table-all">
                 <thead>
                     <tr>
                         <th>Nom du jardin</th>
@@ -107,8 +105,24 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+            </table> -->
+            <table id="table" class="table-all">
+                <thead>
+                    <tr>
+                        <th>Nom du jardin</th>
+                        <th>Description</th>
+                        <th>Monnaie</th>
+                        <th>Ville</th>
+                        <th>Adresse</th>
+                        {% if user.role == 'Participant' %}
+                            <th>Choisir</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody id="body">
+                </tbody>
             </table>
-            <div class="find"><p>Résultats : {{displayed}}/{{total}}</p></div>
+            <div class="find"><button onclick="previousPage()">Précedent</button><p id="resultats"></p><button onclick="nextPage()">Suivant</button></div>
         </div> 
     </div>
 </div>
@@ -124,7 +138,7 @@
             <p id="idGarden" hidden></p>
         </div>
         <div class="modal-body">
-            <p>Voulez vous vraiment changer de jardin ?</p>
+            <p>Voulez vous vraiment choisir ce jardin ?</p>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
@@ -133,6 +147,11 @@
     </div>        
 </div>
 <script>
+    var init = 0
+    var counts = JSON.parse('{{jsTable|tojson|safe}}')
+    const sizeCounts = '{{total}}'
+    numberItems = 10
+    nextPage()
 
     function changeId(id) {
         var element = document.getElementById('idGarden');
@@ -144,9 +163,59 @@
         link = '/change/'+element.innerHTML
         window.location = link;
     }
-    
-    function callNextPage(){
 
+    function emptyTable(){
+        elt = document.getElementById('body')
+        elt.innerHTML = ""
+    }
+    
+    // next page is used to display the nexts rows in the table
+    function nextPage(){
+        emptyTable()
+        elt = document.getElementById('body')
+        liste = counts.slice(init,init + numberItems)
+        changeResultat(init+numberItems)
+        liste.forEach(
+            element => addRow(element,elt)
+            );
+        init = init + numberItems
+    }
+
+    function previousPage(){
+        emptyTable()
+        elt = document.getElementById('body')
+        listePrev = counts.slice(init-numberItems,init)
+        console.log(liste)
+        changeResultat(init-numberItems)
+        listePrev.forEach(
+            element => addRow(element,elt)
+            );
+        init = init - numberItems
+    }
+
+    function chooseButton(row){
+        const choose = '<button type="button" onclick="changeId(\''+row[5]+'\')" data-toggle="modal" data-target="#myModal">Choisir</button>'
+        return choose
+    }
+
+    function changeResultat(displayed){
+        res = document.getElementById('resultats')
+        res.innerHTML = 'Résultats : '+ Math.min(displayed,sizeCounts) +'/'+ sizeCounts
+    }
+
+    // use to insert a row in the table
+    function addRow(row,elt) {
+
+        if(!row[5].includes('button type="button" onclick=')){
+            choose = chooseButton(row)
+            row.pop()
+            row.push(choose)
+        }
+    
+        var ligne = elt.insertRow(-1);
+        row.forEach(
+            element => ligne.insertCell(-1).innerHTML = element
+            );
     }
 </script>
 {% endblock %}
