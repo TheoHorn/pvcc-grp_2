@@ -5,6 +5,18 @@
 {% include "_navbar.html" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/market/product.css') }}">
 
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
 <div id="market_product">
     <div id="market_product_presentation">
         <h2 id="product_name">{{ product.name }}</h2>
@@ -17,19 +29,31 @@
     <div id="user_golds">
         <p>Vous avez : {{ user.balance }} {{ garden.moneyName }}</p>
     </div>
+
+    
     <div id="market_product_sellings_container">
         {% if not sellings %}
-            <p>Aucune vente n'est actuellement disponible</p>
+            <p id="no_sellings_message">Aucune vente n'est actuellement disponible</p>
         {% else %}
+            <div id = "sort_sellings">
+                <p>Trier par :</p>
+                <select name="sort_sellings" id="sort_sellings">
+                    <option value="price">Prix</option>
+                    <option value="date">Date de dépôt</option>
+                    <option value="quantity">Quantité</option>
+                </select>
+            </div>
+    
             {% for selling in sellings %}
                 <div class="market_product_selling">
-                    <span class="quantity">{{ selling.quantity }}kg disponible</span>
+                    <span class="quantity"><span class="quantity_float">{{ "%.2f" % selling.quantity }}</span>kg disponible</span>
                     <span class="price_txt"><span class="price">{{ selling.cost }}</span> {{ garden.moneyName }}/kg</span>
-                    <span class="selling_date">Date de dépôt : {{ selling.date }}</span>
-                    <form action="TODO" method="post" class="buy_form">
+                    <span class="selling_date">Date de dépôt : <span class="date">{{ selling.date }}</span></span>
+                    <form action="{{ url_for('controller.market_buy', product= product.name ) }}" method="post" class="buy_form">
                         <label for="buy_quantity" class="buy_quantity_label">Quantité voulue en kg :</label>
-                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.05" min="0.05" max="{{ selling.quantity }}" value="{{ selling.quantity }}">
-                        <p class="cost">Coût : <span class="cost_float">{{ selling.quantity * selling.cost }}</span> {{ garden.moneyName }}</p>
+                        <input type="hidden" name="selling_id" value="{{ selling.idRecolte }}">
+                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.05" min="0.05" max="{{ '%.2f' % selling.quantity }}" value="{{ '%.2f' % selling.quantity }}">
+                        <p class="cost">Coût : <span class="cost_float">{{ "%.2f" % (selling.quantity * selling.cost) }}</span> {{ garden.moneyName }}</p>
                         <input type="submit" class="buy_button" value="Acheter">
                     </form>
                 </div>
@@ -37,6 +61,7 @@
         {% endif %}
     </div>
 </div>
+
 
 <script src="{{ url_for('static', filename='js/market_product.js') }}"></script>
 {% endblock %}

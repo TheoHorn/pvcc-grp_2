@@ -58,11 +58,11 @@
             </div>
             
             <div class="product_quantity">
-                <p>{{ produit.quantity }}kg</p>
+                <p>{{ "%.2f" % produit.quantity }}kg</p>
             </div>
 
             <div class="product_cheaper_price">
-                <p>Le moins cher : {{ produit.cheaper_price }} {{ garden.moneyName }}/kg</p>
+                <p>Le moins cher : {{ "%.2f" % produit.cheaper_price }} {{ garden.moneyName }}/kg</p>
             </div>
 
         </div>

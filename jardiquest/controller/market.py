@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, session
+from flask import redirect, url_for, session, request
 from flask_login import current_user, login_required
 from . import app
 
@@ -22,8 +22,14 @@ def market_product(product):
         return redirect(url_for('login'))
 
 
-@app.get('/test_dataset')
-def test_dataset():
-    """TODO DELETE THIS FUNCTION"""
-    from jardiquest.model.path.market_model import test_dataset
-    return test_dataset()
+@app.post('/market/<string:product>/buy')
+@login_required
+def market_buy(product):
+    # TODO Récupérer quantité et prix
+    quantity = float(request.form['buy_quantity'])
+    selling_id = request.form['selling_id']
+    if current_user.is_authenticated():
+        from jardiquest.model.path.market_model import market_buy
+        return market_buy(quantity, selling_id)
+    else:
+        return redirect(url_for('login'))
