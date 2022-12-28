@@ -3,6 +3,7 @@ from flask_login import current_user
 from jardiquest.setup_sql import db
 from sqlalchemy.sql import select, column, func
 import uuid
+import math
 from datetime import datetime
 from jardiquest.model.database.entity.catalogue import Catalogue
 from jardiquest.model.database.entity.recolte import Recolte
@@ -47,15 +48,17 @@ def market_buy(quantity, selling_id):
         # If no error : 
         # Decrease quantity, and delete if no more
         selling.quantity -= quantity
+        selling.quantity = math.floor(selling.quantity*100)/100
         if selling.quantity < 0.05:
             db.session.delete(selling)
     
         # Decrease user balance
         current_user.balance -= totalPrice
-        current_user.balance = round(current_user.balance, 2)
+        current_user.balance = math.floor(current_user.balance*100)/100
 
         # Create an order
         commande = Commande(idCommande = uuid.uuid1().hex, acheteur=current_user.email, recolte=selling_id, quantite=quantity, dateAchat = datetime.now())
+        db.session.add(commande)
         db.session.commit()
 
         return redirect(url_for('controller.market_product', product=product_name))

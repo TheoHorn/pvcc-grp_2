@@ -4,7 +4,7 @@ from jardiquest.setup_sql import db
 class Commande(db.Model):
     __tablename__ = "commande"
 
-    idCommande = db.Column(db.Integer, primary_key=True)
+    idCommande = db.Column(db.String(100), primary_key=True)
     quantite = db.Column(db.Integer, nullable=False)
     dateAchat = db.Column(db.Date, nullable=False)
     traitee = db.Column(db.Boolean, default=False)
