@@ -13,13 +13,12 @@
     
     <div id="market_filters">
         <div id="market_search_by_name">
-            <p>Nom</p>
-            <input type="text" name="search" id="search">
-            <button id="market_remove_search_by_name"></button>            
+            <p>Nom : </p>
+            <input type="text" id="research_bar" placeholder="Rechercher un article">         
         </div>
 
         <div id="market_filters_type">
-            <p>Type</p>
+            <p>Type : </p>
             <select name="type" id="type">
                 <option value="all">Tous</option>
                 <option value="fruit">Fruit</option>
@@ -48,14 +47,14 @@
         {% for produit in produits %}
 
         {% set url = url_for('controller.market_product', product = produit.name ) %} 
-        <div class="product" style="cursor: pointer;" onclick="window.location='{{url}}';">
+        <div class="product searching_items" style="cursor: pointer;" onclick="window.location='{{url}}';">
             <img src="{{ url_for('static', filename='image/vegetables/' + produit.imagePath) }}" alt="{{ produit.name }}" class="product_img">
             <div class="product_type">
                 {{ produit.type }}
             </div>
 
-            <div class="product_name">
-                <p href="{{ url_for('controller.market_product', product=produit.name)}}">{{ produit.name }}</a>
+            <div class="product_name searching_property">
+                <p>{{ produit.name }}</a>
             </div>
             
             <div class="product_quantity">
@@ -73,4 +72,6 @@
 
 
 </div>
+
+<script src="{{ url_for('static', filename='js/research_bar.js') }}"></script>
 {% endblock %}

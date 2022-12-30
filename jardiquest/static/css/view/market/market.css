@@ -6,7 +6,45 @@
 }
 
 #market_top{
+    font-size: 1.2em;
+    margin-left : 3em;
+    margin-bottom: 10px;
+}
 
+#market_filters {
+    margin-left : 4em;
+    display : flex;
+    gap : 10px;
+}
+
+#market_filters p{
+    color : grey;
+    font-size: 0.9em;
+}
+
+#market_filters select{
+    height : 2.5em;
+    border: 1px solid var(--grey); 
+    padding-left: 5px;
+    min-width : 150px;
+    color : grey; 
+    font-size: 1em;
+}
+
+#research_bar {
+    background-image: url('/static/image/icon/search_icon.png'); /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid var(--grey); 
+    font-size: 1em;
+    height : 2.5em;
+    margin-bottom: 12px; /* Add some space below the input */
+    color : grey;
+}
+
+#research_barsearch::placeholder {
+    color: grey;
 }
 
 #market_filters{
@@ -45,7 +83,6 @@
     grid-row: 1/4;
     object-fit: cover;
     margin : 2px;
-    max-height: 3.8em;
     max-width : 6em;
     border-radius: 80%;
 }
