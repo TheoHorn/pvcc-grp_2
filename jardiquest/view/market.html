@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/market/market.css') }}">
 
 <div id="market">
-    <div id="market_header">
+    <div id="market_top">
         <p>Que voulez-vous acheter ?</p>
     </div>
     
@@ -25,8 +25,7 @@
                 <option value="fruit">Fruit</option>
                 <option value="legume">Légume</option>
                 <option value="plante">Plante aromatique</option>
-            </select>
-            <button id="market_remove_filters_type"></button>    
+            </select>   
         </div>
 
         <div id="market_sort">
@@ -37,7 +36,6 @@
                 <option value="type">Type</option>
                 <option value="quantity">Quantité</option>
             </select>
-            <button id="market_remove_sort"></button>
         </div>
     </div>
 
@@ -46,19 +44,22 @@
             <p>Aucun produit n'est actuellement disponible</p>	
         </div>
     {% else %}
-    <div id="produits">
+    <div id="market_products">
         {% for produit in produits %}
-        <div class="produit">
+
+        {% set url = url_for('controller.market_product', product = produit.name ) %} 
+        <div class="product" style="cursor: pointer;" onclick="window.location='{{url}}';">
+            <img src="{{ url_for('static', filename='image/vegetables/' + produit.imagePath) }}" alt="{{ produit.name }}" class="product_img">
             <div class="product_type">
                 {{ produit.type }}
             </div>
 
             <div class="product_name">
-                <a href="{{ url_for('controller.market_product', product=produit.name)}}">{{ produit.name }}</a>
+                <p href="{{ url_for('controller.market_product', product=produit.name)}}">{{ produit.name }}</a>
             </div>
             
             <div class="product_quantity">
-                <p>{{ "%.2f" % produit.quantity }}kg</p>
+                <p>{{ "%.2f" % produit.quantity }} kg disponibles</p>
             </div>
 
             <div class="product_cheaper_price">

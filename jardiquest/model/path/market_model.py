@@ -13,8 +13,8 @@ def display_market():
     garden = current_user.jardin
     if garden is None:
         return redirect(url_for('controller.garden'))
-    
-    produits = db.session.query(func.min(Recolte.cost).label("cheaper_price"), func.sum(Recolte.quantity).label("quantity"), Catalogue.name, Catalogue.type).join(Catalogue).group_by(Catalogue.name).filter(Recolte.idJardin == garden.idJardin).all()
+
+    produits = db.session.query(func.min(Recolte.cost).label("cheaper_price"), func.sum(Recolte.quantity).label("quantity"), Catalogue.name, Catalogue.type, Catalogue.imagePath).join(Catalogue).group_by(Catalogue.name).filter(Recolte.idJardin == garden.idJardin).all()
     return render_template('market.html', produits=produits, garden=garden)
 
 def display_market_product(product):

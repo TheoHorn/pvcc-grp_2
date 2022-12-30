@@ -5,7 +5,7 @@ class Recolte(db.Model):
     __tablename__ = "recolte"
 
     idRecolte = db.Column(db.String(10), primary_key=True)
-    quantity = db.Column(db.Integer(), default=0)
+    quantity = db.Column(db.Float(), nullable=False)
     date = db.Column(db.Date())
     cost = db.Column(db.Float(), default=0.00)
     
