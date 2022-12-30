@@ -52,7 +52,7 @@
                     <form action="{{ url_for('controller.market_buy', product= product.name ) }}" method="post" class="buy_form">
                         <label for="buy_quantity" class="buy_quantity_label">Quantité voulue en kg :</label>
                         <input type="hidden" name="selling_id" value="{{ selling.idRecolte }}">
-                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.05" min="0.05" max="{{ selling.quantity }}" value="{{ '%.2f' % selling.quantity }}">
+                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.1" min="0.1" max="{{ selling.quantity }}" value="{{ '%.1f' % selling.quantity }}">
                         <p class="cost">Coût : <span class="cost_float">{{ "%.2f" % (selling.quantity * selling.cost) }}</span> {{ garden.moneyName }}</p>
                         <input type="submit" class="buy_button" value="Acheter">
                     </form>

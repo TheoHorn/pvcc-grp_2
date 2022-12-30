@@ -6,7 +6,7 @@
 searchingItems = document.querySelectorAll(".searching_items");
 document.querySelector("#research_bar").addEventListener("input", function(e) {
     searchingItems.forEach(function(item) {        
-        if (item.querySelector(".searching_property").textContent.toLowerCase().includes(e.target.value)){
+        if (item.querySelector(".searching_property").textContent.toLowerCase().includes(e.target.value.toLowerCase())){
             item.style.display = item.previousDisplay
         }
         else {

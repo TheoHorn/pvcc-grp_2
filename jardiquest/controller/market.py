@@ -33,3 +33,12 @@ def market_buy(product):
         return market_buy(quantity, selling_id)
     else:
         return redirect(url_for('login'))
+
+@app.get('/orders')
+@login_required
+def display_orders():
+    if current_user.is_authenticated():
+        from jardiquest.model.path.market_model import display_orders
+        return display_orders()
+    else:
+        return redirect(url_for('login'))
