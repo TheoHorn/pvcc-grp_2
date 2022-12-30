@@ -73,6 +73,7 @@ def complete_quest_model(user_id: str, quest_id: int):
     if quest.id_jardin == user.idJardin:
         quest.accomplished = True
         user.balance += quest.reward
+        user.balance = round(user.balance, 2)
 
         # If the quest is periodic, we create a new one
         if quest.periodicity :
