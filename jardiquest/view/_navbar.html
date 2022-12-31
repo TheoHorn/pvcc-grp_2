@@ -35,9 +35,9 @@
     {% endif %}
 
     {% if active == 'blog' %}
-        <a href="#blog" class="active">Blog</a>
+        <a href="{{url_for('controller.blog')}}" class="active">Blog</a>
     {% else %}
-        <a href="#blog">Blog</a>
+        <a href="{{url_for('controller.blog')}}" >Blog</a>
     {% endif %}
 
     {% if active == 'market' %}
@@ -48,9 +48,9 @@
 
     {% if owner == 1 %}
         {% if active == 'handlegarden' %}
-            <a href='/handle_garden' class="active">Gérer jardin</a>
+            <a href="{{url_for('controller.your_garden')}}" class="active">Gérer jardin</a>
         {% else %}
-            <a href='/handle_garden' >Gérer jardin</a>
+            <a href="{{url_for('controller.your_garden')}}">Gérer jardin</a>
         {% endif %}
     {% endif %}
 
