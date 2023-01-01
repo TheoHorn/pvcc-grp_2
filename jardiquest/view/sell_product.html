@@ -45,7 +45,7 @@
                 <span class="quantity"><span class="quantity_float">{{ selling.quantity }}</span>kg disponible</span>
                 <span class="price_txt"><span class="price">{{ selling.cost }}</span> {{ garden.moneyName }}/kg</span>
                 <span class="selling_date">Date de dépôt : <span class="date">{{ selling.date }}</span></span>
-                <form action="{{ url_for('controller.cancel_selling', selling= selling.idRecolte ) }}" method="post" class="buy_form">
+                <form action="{{ url_for('controller.cancel_selling', selling = selling.idRecolte ) }}" method="post" class="buy_form">
                     <input type="submit" class="buy_button" value="Annuler la vente" data-toggle="modal" data-target="#myModal">
                 </form>
             </div>
@@ -56,7 +56,28 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="brown-orange-style">Annuler la vente</h4>
+        </div>
+        <div class="modal-body">
+            <p>Voulez-vous vraimer annuler la vente ?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <button type="button" id="button_confirm_buy" class="btn btn-default">Confirmer</button>
+        </div>
+    </div>        
+</div>
+
 
 <script src="{{ url_for('static', filename='js/market_product.js') }}"></script>
 <script src="{{ url_for('static', filename='js/flash_messages_modal.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 {% endblock %}
