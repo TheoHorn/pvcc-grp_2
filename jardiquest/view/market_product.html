@@ -5,6 +5,7 @@
 {% include "_navbar.html" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/market/product.css') }}">
 
+
 {% with messages = get_flashed_messages(category_filter=["error"]) %}
     {% if messages %}
     <div id="flash_messages">
@@ -54,12 +55,31 @@
                         <input type="hidden" name="selling_id" value="{{ selling.idRecolte }}">
                         <input type="number" name="buy_quantity" class="buy_quantity" step="0.1" min="0.1" max="{{ selling.quantity }}" value="{{ '%.1f' % selling.quantity }}">
                         <p class="cost">Coût : <span class="cost_float">{{ "%.2f" % (selling.quantity * selling.cost) }}</span> {{ garden.moneyName }}</p>
-                        <input type="submit" class="buy_button" value="Acheter">
+                        <input type="submit" class="buy_button" value="Acheter" data-toggle="modal" data-target="#myModal">
                     </form>
                 </div>
             {% endfor %}
         {% endif %}
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="brown-orange-style">Confirmer l'achat</h4>
+        </div>
+        <div class="modal-body">
+            <p>Voulez-vous vraimer acheter ce produit ?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <button type="button" id="button_confirm_buy" class="btn btn-default">Confirmer</button>
+        </div>
+    </div>        
 </div>
 
 <script src="{{ url_for('static', filename='js/flash_messages_modal.js') }}"></script>
