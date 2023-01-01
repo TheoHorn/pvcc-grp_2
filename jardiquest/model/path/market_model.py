@@ -26,15 +26,20 @@ def display_sell_product(product):
         abort(403)
 
     # TODO formulaire pour la quantité et le prix    
-    return render_template('sell_product.html', product = product)
+    product = db.session.query(Catalogue.idCatalogue, Catalogue.name, Catalogue.imagePath, Catalogue.description, Catalogue.description_source).filter(Catalogue.name == product).first()
+    infos = db.session.query(func.min(Recolte.cost).label("min_cost")).filter(Recolte.idCatalogue == product.idCatalogue, Recolte.idJardin == current_user.jardin.idJardin).group_by(Recolte.idCatalogue).first()
+    return render_template('sell_product.html', product = product, infos=infos)
 
 
 def sell_product(product, quantity, cost):
-    if current_user.role != "Proprietaire":
+    idCatalogue = db.session.query(Catalogue.idCatalogue).filter(Catalogue.name == product).first().idCatalogue
+    if current_user.role != "Proprietaire" or not idCatalogue or quantity <= 0 or cost < 0:
         abort(403)
     
-    recolte = Recolte(idRecolte = uuid.uuid1(), idCatalogue = product, idJardin = current_user.jardin.idJardin, quantity = quantity, cost = cost, date = datetime.now())
+    
+    recolte = Recolte(idRecolte = uuid.uuid1().hex, idCatalogue = idCatalogue, idJardin = current_user.jardin.idJardin, quantity = quantity, cost = cost, date = datetime.now())
     db.session.add(recolte)
+    
     db.session.commit()
     return redirect(url_for('controller.sell_catalogue'))
 
@@ -64,9 +69,11 @@ def display_market_product(product):
 
 def market_buy(quantity, selling_id):
     selling = db.session.query(Recolte).filter(Recolte.idRecolte == selling_id).first()
-    if selling is None or quantity > selling.quantity or selling.jardin != current_user.jardin:
+    if selling is None or quantity > selling.quantity or quantity <= 0 or selling.jardin != current_user.jardin:
         abort(404)
+
     totalPrice = selling.cost * quantity
+
     if current_user.balance < totalPrice:
         flash("Votre solde n'est pas suffisant", "error")
     else:
