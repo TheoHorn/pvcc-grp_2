@@ -15,6 +15,7 @@
         </div>
     </div>
     
+    <h4>Vendre : </h4>
     <div id="sell">
         <form id="sell_product" action="{{ url_for('controller.sell_product_post', product = product.name) }}" method="post">
                 <label for="sell_quantity">Quantité à vendre en kg :</label>
@@ -24,10 +25,38 @@
                 <input type="submit" id="sell_button" value="Vendre">
         </form>
     </div>
+
+
+    {% if sellings|length != 0 %}
+    <h4>Ventes en cours : </h4>
+    <div id="market_product_sellings_container">
+        <div id = "sort_sells">
+            <label for="sort_sellings">Trier par :</label>
+            <select name="sort_sellings" id="sort_sellings">
+                <option value="date">Date de dépôt</option>
+                <option value="price">Prix</option>
+                <option value="quantity">Quantité</option>
+            </select>
+        </div>
+
+        
+        {% for selling in sellings %}
+            <div class="market_product_selling">
+                <span class="quantity"><span class="quantity_float">{{ selling.quantity }}</span>kg disponible</span>
+                <span class="price_txt"><span class="price">{{ selling.cost }}</span> {{ garden.moneyName }}/kg</span>
+                <span class="selling_date">Date de dépôt : <span class="date">{{ selling.date }}</span></span>
+                <form action="{{ url_for('controller.cancel_selling', selling= selling.idRecolte ) }}" method="post" class="buy_form">
+                    <input type="submit" class="buy_button" value="Annuler la vente" data-toggle="modal" data-target="#myModal">
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 
 
 
-
-
+<script src="{{ url_for('static', filename='js/market_product.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flash_messages_modal.js') }}"></script>
 {% endblock %}

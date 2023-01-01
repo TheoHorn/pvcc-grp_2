@@ -29,10 +29,19 @@ def sell_product(product):
 def sell_product_post(product):
     quantity = float(request.form['sell_quantity'])
     cost = float(request.form['sell_price'])
-    print(cost)
     if current_user.is_authenticated():
         from jardiquest.model.path.market_model import sell_product
         return sell_product(product, quantity, cost)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.post('/market/catalogue/cancel/<string:selling>')
+@login_required
+def cancel_selling(selling):
+    if current_user.is_authenticated():
+        from jardiquest.model.path.market_model import cancel_selling
+        return cancel_selling(selling)
     else:
         return redirect(url_for('login'))
 

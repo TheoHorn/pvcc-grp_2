@@ -28,7 +28,8 @@ def display_sell_product(product):
     # TODO formulaire pour la quantité et le prix    
     product = db.session.query(Catalogue.idCatalogue, Catalogue.name, Catalogue.imagePath, Catalogue.description, Catalogue.description_source).filter(Catalogue.name == product).first()
     infos = db.session.query(func.min(Recolte.cost).label("min_cost")).filter(Recolte.idCatalogue == product.idCatalogue, Recolte.idJardin == current_user.jardin.idJardin).group_by(Recolte.idCatalogue).first()
-    return render_template('sell_product.html', product = product, infos=infos)
+    sellings = db.session.query(Recolte.idRecolte, Recolte.quantity, Recolte.cost, Recolte.date).filter(Recolte.idCatalogue == product.idCatalogue, Recolte.idJardin == current_user.jardin.idJardin).all()
+    return render_template('sell_product.html', product = product, infos=infos, sellings = sellings, garden = current_user.jardin)
 
 
 def sell_product(product, quantity, cost):
@@ -36,12 +37,21 @@ def sell_product(product, quantity, cost):
     if current_user.role != "Proprietaire" or not idCatalogue or quantity <= 0 or cost < 0:
         abort(403)
     
-    
     recolte = Recolte(idRecolte = uuid.uuid1().hex, idCatalogue = idCatalogue, idJardin = current_user.jardin.idJardin, quantity = quantity, cost = cost, date = datetime.now())
     db.session.add(recolte)
-    
     db.session.commit()
     return redirect(url_for('controller.sell_catalogue'))
+
+
+def cancel_selling(selling_id):
+    recolte = db.session.query(Recolte).filter(Recolte.idRecolte == selling_id).first()
+    if recolte is None or current_user.role != "Proprietaire" or recolte.idJardin != current_user.jardin.idJardin:
+        abort(403)
+    db.session.delete(recolte)
+    db.session.commit()
+    product_name = db.session.query(Catalogue.name).filter(Catalogue.idCatalogue == recolte.idCatalogue).first().name
+    return redirect(url_for('controller.sell_product', product = product_name))
+
 
 def display_market():
     garden = current_user.jardin
