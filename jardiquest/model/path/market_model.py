@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template, session, abort
+from flask import redirect, url_for, render_template, session, abort, flash
 from flask_login import current_user
 from jardiquest.setup_sql import db
 from sqlalchemy.sql import select, column, func
@@ -37,13 +37,10 @@ def market_buy(quantity, selling_id):
     if selling is None:
         abort(404)
     if quantity > selling.quantity:
-        # Error TODO
-        return "error quantity"
+        abort(403)
     totalPrice = selling.cost * quantity
     if current_user.balance < totalPrice:
-        # Error TODO
-        return "error balance"
-        pass
+        flash("Votre solde n'est pas suffisant")
     else:
         # If no error : 
         # Decrease quantity, and delete if no more
@@ -68,5 +65,7 @@ def display_orders():
     garden = current_user.jardin
     if garden is None:
         return redirect(url_for('controller.garden'))
+    if current_user.role != "gerant":
+        abort(403)
     orders = db.session.query(Commande.quantite, Commande.acheteur.label("email"), User.name.label("username"), Commande.dateAchat, Commande.cout, Catalogue.name.label("productName")).join(Recolte.commande).join(Catalogue).join(User).filter(Recolte.idJardin == garden.idJardin, Commande.traitee == False).order_by(Commande.dateAchat).all()
     return render_template('orders.html', orders=orders, garden=garden)
