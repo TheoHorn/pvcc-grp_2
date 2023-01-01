@@ -10,9 +10,12 @@ from jardiquest.model.database.entity.recolte import Recolte
 from jardiquest.model.database.entity.commande import Commande
 from jardiquest.model.database.entity.user import User
 
+
+
 def display_market():
     garden = current_user.jardin
     if garden is None:
+        flash("Vous devez d'abord créer ou rejoindre un jardin pour accéder à cette page", 'error')
         return redirect(url_for('controller.garden'))
 
     produits = db.session.query(func.min(Recolte.cost).label("cheaper_price"), func.sum(Recolte.quantity).label("quantity"), Catalogue.name, Catalogue.type, Catalogue.imagePath).join(Catalogue).group_by(Catalogue.name).filter(Recolte.idJardin == garden.idJardin).having(func.sum(Recolte.quantity) >= 0.1).all()
@@ -23,6 +26,7 @@ def display_market():
 def display_market_product(product):
     garden = current_user.jardin
     if garden is None:
+        flash("Vous devez d'abord créer ou rejoindre un jardin pour accéder à cette page", 'error')
         return redirect(url_for('controller.garden'))
 
     product_infos = db.session.query(Catalogue).filter(Catalogue.name == product).first()
@@ -34,13 +38,11 @@ def display_market_product(product):
 
 def market_buy(quantity, selling_id):
     selling = db.session.query(Recolte).filter(Recolte.idRecolte == selling_id).first()
-    if selling is None:
+    if selling is None or quantity > selling.quantity or selling.jardin != current_user.jardin:
         abort(404)
-    if quantity > selling.quantity:
-        abort(403)
     totalPrice = selling.cost * quantity
     if current_user.balance < totalPrice:
-        flash("Votre solde n'est pas suffisant")
+        flash("Votre solde n'est pas suffisant", "error")
     else:
         # If no error : 
         # Decrease quantity, and delete if no more
@@ -61,11 +63,12 @@ def market_buy(quantity, selling_id):
 
 
 def display_orders():
-    # TODO verifier que l'utilisateur est gérant
     garden = current_user.jardin
     if garden is None:
+        flash("Vous devez d'abord créer ou rejoindre un jardin pour accéder à cette page", "error")
         return redirect(url_for('controller.garden'))
-    if current_user.role != "gerant":
+
+    if current_user.role != "Proprietaire":
         abort(403)
     orders = db.session.query(Commande.quantite, Commande.acheteur.label("email"), User.name.label("username"), Commande.dateAchat, Commande.cout, Catalogue.name.label("productName")).join(Recolte.commande).join(Catalogue).join(User).filter(Recolte.idJardin == garden.idJardin, Commande.traitee == False).order_by(Commande.dateAchat).all()
     return render_template('orders.html', orders=orders, garden=garden)
