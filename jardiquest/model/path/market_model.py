@@ -70,5 +70,24 @@ def display_orders():
 
     if current_user.role != "Proprietaire":
         abort(403)
-    orders = db.session.query(Commande.quantite, Commande.acheteur.label("email"), User.name.label("username"), Commande.dateAchat, Commande.cout, Catalogue.name.label("productName")).join(Recolte.commande).join(Catalogue).join(User).filter(Recolte.idJardin == garden.idJardin, Commande.traitee == False).order_by(Commande.dateAchat).all()
+    orders = db.session.query(Commande.idCommande, Commande.quantite, Commande.acheteur.label("email"), User.name.label("username"), Commande.dateAchat, Commande.cout, Catalogue.name.label("productName")).join(Recolte.commande).join(Catalogue).join(User).filter(Recolte.idJardin == garden.idJardin, Commande.traitee == False).order_by(Commande.dateAchat).all()
     return render_template('orders.html', orders=orders, garden=garden)
+
+
+def confirm_order(order_id):
+    garden = current_user.jardin
+    if garden is None:
+        flash("Vous devez d'abord créer ou rejoindre un jardin pour accéder à cette page", "error")
+        return redirect(url_for('controller.garden'))
+
+    if current_user.role != "Proprietaire":
+        abort(403)
+
+    order = db.session.query(Commande).filter(Commande.idCommande == order_id).first()
+    
+    if order is None:
+        abort(404)
+    
+    order.traitee = True
+    db.session.commit()
+    return redirect(url_for('controller.display_orders'))

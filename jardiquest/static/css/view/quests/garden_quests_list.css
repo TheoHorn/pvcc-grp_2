@@ -1,11 +1,7 @@
-#button_my_quests{
-    opacity: 0.2;
-}
-
 #button_my_quests:hover{
-    opacity: 0.6;
+    color : var(--taupe);
 }
 
-#button_available_quests:hover{
-    text-shadow: 0px 0px 1px var(--green);
-}
+#button_available_quests{
+    color: var(--brown-orange);
+}   

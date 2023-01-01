@@ -40,7 +40,7 @@ def list_user_quests_model():
 
 def accept_quest_model(quest_id: int):
     quest = Quete.query.get(quest_id)
-    if quest.jardin == current_user.jardin and quest.user == None and not quest.accomplished:
+    if quest.id_jardin == current_user.jardin.idJardin and quest.user == None and not quest.accomplished:
         quest.user = current_user
         db.session.commit()
     else :
@@ -50,7 +50,7 @@ def accept_quest_model(quest_id: int):
 
 def cancel_quest_model(quest_id: int):
     quest = Quete.query.get(quest_id)
-    if quest.jardin == current_user.jardin and quest.user == current_user and not quest.accomplished:
+    if quest.id_jardin == current_user.jardin.idJardin and quest.user == current_user and not quest.accomplished:
         quest.user = None
         db.session.commit()
     else :
@@ -62,7 +62,7 @@ def cancel_quest_model(quest_id: int):
 def complete_quest_model(quest_id: int):
     # TODO change if we want the garden manager to validate the quest
     quest = Quete.query.get(quest_id)
-    if quest.jardin == current_user.jardin and quest.user == current_user and not quest.accomplished:
+    if quest.id_jardin == current_user.jardin.idJardin and quest.user == current_user and not quest.accomplished:
         quest.accomplished = True
         current_user.balance += quest.reward
         current_user.balance = round(current_user.balance, 2)
@@ -85,7 +85,7 @@ def complete_quest_model(quest_id: int):
 def display_quest_model(quest_id: int):
     """Display a quest with a specific id"""
     quest = Quete.query.get(quest_id)
-    if quest.jardin != current_user.jardin or (quest.user != current_user and quest.user != None) or quest.accomplished:
+    if quest.id_jardin != current_user.jardin.idJardin or (quest.user != current_user and quest.user != None) or quest.accomplished:
         abort(403)
     garden = Jardin.query.get(quest.id_jardin)
     return render_template("quest_details.html", quest=quest, today = date.today(), garden = garden, user = current_user.email)

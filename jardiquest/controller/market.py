@@ -42,3 +42,12 @@ def display_orders():
         return display_orders()
     else:
         return redirect(url_for('login'))
+
+@app.post('/orders/<string:order_id>/confirm')
+@login_required
+def confirm_order(order_id):
+    if current_user.is_authenticated():
+        from jardiquest.model.path.market_model import confirm_order
+        return confirm_order(order_id)
+    else:
+        return redirect(url_for('login'))

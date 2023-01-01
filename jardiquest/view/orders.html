@@ -7,7 +7,7 @@
 
 <div id="orders_container">
     <div id="orders_top">
-        <p>Ce que les participants à votre jardin ont achetés :</p>
+        <p>Ce que les membres de votre jardin ont achetés :</p>
     </div>
 
     <div id="orders_filters">
@@ -40,7 +40,7 @@
                 <div class="price"><p>Prix : {{ "%.2f" % order.cout }} {{ garden.moneyName}}</p></div>
                 <div class="date_achat"><p>Date d&#39;achat : <span class="date">{{ order.dateAchat }}</span></p></div>
                 <div class="complete_order_container">
-                    <form method="post" action="TODO">
+                    <form method="post" action="{{ url_for('controller.confirm_order', order_id= order.idCommande ) }}">
                         <input type="hidden" name="id" value="{{ order.id }}">
                         <input type="submit" value="Finaliser la commande" class="complete_order">
                     </form>
