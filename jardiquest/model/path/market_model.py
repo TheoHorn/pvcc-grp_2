@@ -1,7 +1,7 @@
-from flask import redirect, url_for, render_template, session, abort, flash
+from flask import redirect, url_for, render_template, abort, flash
 from flask_login import current_user
 from jardiquest.setup_sql import db
-from sqlalchemy.sql import select, column, func
+from sqlalchemy.sql import func
 import uuid
 import math
 from datetime import datetime
@@ -11,6 +11,32 @@ from jardiquest.model.database.entity.commande import Commande
 from jardiquest.model.database.entity.user import User
 
 
+
+def display_sell_catalogue():
+    if current_user.role != "Proprietaire":
+        abort(403)
+
+    catalogue = db.session.query(Catalogue.name, Catalogue.imagePath, Catalogue.type, func.round((func.sum(Recolte.cost * Recolte.quantity)/func.sum(Recolte.quantity)),2).label("mean_cost"), func.min(Recolte.cost).label("min_cost"), func.sum(Recolte.quantity).label("quantity")).join(Recolte, isouter=True).group_by(Catalogue.name).all()
+    return render_template('sell_catalogue.html', catalogue = catalogue, garden = current_user.jardin)
+
+
+
+def display_sell_product(product):
+    if current_user.role != "Proprietaire":
+        abort(403)
+
+    # TODO formulaire pour la quantité et le prix    
+    return render_template('sell_product.html', product = product)
+
+
+def sell_product(product, quantity, cost):
+    if current_user.role != "Proprietaire":
+        abort(403)
+    
+    recolte = Recolte(idRecolte = uuid.uuid1(), idCatalogue = product, idJardin = current_user.jardin.idJardin, quantity = quantity, cost = cost, date = datetime.now())
+    db.session.add(recolte)
+    db.session.commit()
+    return redirect(url_for('controller.sell_catalogue'))
 
 def display_market():
     garden = current_user.jardin

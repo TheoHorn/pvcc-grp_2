@@ -2,6 +2,40 @@ from flask import redirect, url_for, session, request
 from flask_login import current_user, login_required
 from . import app
 
+@app.get('/market/catalogue')
+@login_required
+def sell_catalogue():
+    if current_user.is_authenticated():
+        from jardiquest.model.path.market_model import display_sell_catalogue
+        return display_sell_catalogue()
+    else:
+        return redirect(url_for('login'))
+
+
+
+@app.get('/market/catalogue/<string:product>')
+@login_required
+def sell_product(product):
+    if current_user.is_authenticated():
+        from jardiquest.model.path.market_model import display_sell_product
+        return display_sell_product(product)
+    else:
+        return redirect(url_for('login'))
+
+
+
+@app.post('/market/catalogue/sell/<string:product>')
+@login_required
+def sell_product_post(product):
+    quantity = float(request.form['selling_quantity'])
+    cost = float(request.form['selling_cost'])
+    if current_user.is_authenticated():
+        from jardiquest.model.path.market_model import sell_product
+        return sell_product(product, quantity, cost)
+    else:
+        return redirect(url_for('login'))
+
+
 @app.get('/market')
 @login_required
 def market():
@@ -25,7 +59,6 @@ def market_product(product):
 @app.post('/market/<string:product>/buy')
 @login_required
 def market_buy(product):
-    # TODO Récupérer quantité et prix
     quantity = float(request.form['buy_quantity'])
     selling_id = request.form['selling_id']
     if current_user.is_authenticated():
@@ -34,7 +67,7 @@ def market_buy(product):
     else:
         return redirect(url_for('login'))
 
-@app.get('/orders')
+@app.get('/market/orders')
 @login_required
 def display_orders():
     if current_user.is_authenticated():
@@ -43,7 +76,7 @@ def display_orders():
     else:
         return redirect(url_for('login'))
 
-@app.post('/orders/<string:order_id>/confirm')
+@app.post('/market/orders/<string:order_id>/confirm')
 @login_required
 def confirm_order(order_id):
     if current_user.is_authenticated():
