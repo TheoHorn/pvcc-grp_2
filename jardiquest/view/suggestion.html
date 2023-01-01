@@ -16,13 +16,23 @@
         {% if recoltes|length > 0 %}
         <span>Recoltes de mon jardin :</span>
         <table>
+            <tr>
+                <td>id recolte</td>
+                <td>quantité</td>
+                <td>date</td>
+                <td>prix</td>
+                <td>légume</td>
+                <td>quantité rec</td>
+                <td>jardin</td>
+            </tr>
             {% for recolte in recoltes %}
             <tr>
                 <td>{{recolte.idRecolte}}</td>
-                <td>{{recolte.quantity}}</td>
+                <td>{{recolte.quantity}}kg</td>
                 <td>{{recolte.date}}</td>
-                <td>{{recolte.cost}}</td>
+                <td>{{recolte.cost}}$</td>
                 <td>{{recolte.idCatalogue}}</td>
+                <td>{{recolte.qtt_recommandee}}</td>
                 <td>{{recolte.idJardin}}</td>
             </tr>
             {% endfor %}
@@ -35,6 +45,15 @@
     <br>
     <b class="brown-orange-style">Mon solde :</b>
     <span>{{user.balance}}</span>
+
+    <br>
+    Suggestion :
+    <br>
+        Prix : {{prix}} {{jardin.moneyName}}
+    <br>
+        Poids : {{poids}} kg
+    <br>
+        Panier : {{panier}}
 </div>
 
 {% endblock %}
