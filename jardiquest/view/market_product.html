@@ -6,16 +6,17 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/market/product.css') }}">
 
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
+{% with messages = get_flashed_messages(category_filter=["error"]) %}
+    {% if messages %}
+    <div id="flash_messages">
+        <p id="category_message" hidden>Erreur</p>
+        <p id="flash_message" hidden>{{ messages[0] }}</p>
+        <div id="flash_message_buttons" hidden>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+        </div>
+    </div>
+    {% endif %}
 {% endwith %}
-
 
 <div id="market_product">
     <div id="market_product_presentation">
@@ -35,7 +36,7 @@
         {% if not sellings %}
             <p id="no_sellings_message">Aucune vente n'est actuellement disponible</p>
         {% else %}
-            <div id = "sort_sellings">
+            <div id = "sort_sells">
                 <p>Trier par :</p>
                 <select name="sort_sellings" id="sort_sellings">
                     <option value="price">Prix</option>
@@ -52,9 +53,9 @@
                     <form action="{{ url_for('controller.market_buy', product= product.name ) }}" method="post" class="buy_form">
                         <label for="buy_quantity" class="buy_quantity_label">Quantité voulue en kg :</label>
                         <input type="hidden" name="selling_id" value="{{ selling.idRecolte }}">
-                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.05" min="0.05" max="{{ selling.quantity }}" value="{{ '%.2f' % selling.quantity }}">
+                        <input type="number" name="buy_quantity" class="buy_quantity" step="0.1" min="0.1" max="{{ selling.quantity }}" value="{{ '%.1f' % selling.quantity }}">
                         <p class="cost">Coût : <span class="cost_float">{{ "%.2f" % (selling.quantity * selling.cost) }}</span> {{ garden.moneyName }}</p>
-                        <input type="submit" class="buy_button" value="Acheter">
+                        <input type="submit" class="buy_button" value="Acheter" data-toggle="modal" data-target="#myModal">
                     </form>
                 </div>
             {% endfor %}
@@ -62,6 +63,27 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="brown-orange-style">Confirmer l'achat</h4>
+        </div>
+        <div class="modal-body">
+            <p>Voulez-vous vraimer acheter ce produit ?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            <button type="button" id="button_confirm_buy" class="btn btn-default">Confirmer</button>
+        </div>
+    </div>        
+</div>
 
+<script src="{{ url_for('static', filename='js/flash_messages_modal.js') }}"></script>
 <script src="{{ url_for('static', filename='js/market_product.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 {% endblock %}

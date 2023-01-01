@@ -7,16 +7,20 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/garden.css') }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/flash_messages_modal.js') }}"></script>
 
-{% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="notification-parent">
-                    <p>{{ message }}</p>
-                </div>
-            {% endfor %}
-        {% endif %}
+{% with messages = get_flashed_messages(category_filter=["error"]) %}
+    {% if messages %}
+    <div id="flash_messages">
+        <p id="category_message" hidden>Erreur</p>
+        <p id="flash_message" hidden>{{ messages[0] }}</p>
+        <div id="flash_message_buttons" hidden>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+        </div>
+    </div>
+    {% endif %}
 {% endwith %}
+
     
 <div class="portal-container">
     <div class="handler-display-data">
@@ -118,6 +122,7 @@
         </div>
     </div>        
 </div>
+
 <script>
     var init = -10
     var counts = JSON.parse('{{jsTable|tojson|safe}}')

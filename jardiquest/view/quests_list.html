@@ -11,8 +11,11 @@
 {% block css %}{% endblock %}
 
 <div class="container">
-    <a class="quest_button" id="button_available_quests" href="{{ url_for('controller.list_garden_quests')}}">Quêtes disponibles</a> 
-    <a class="quest_button" id="button_my_quests" href="{{ url_for('controller.list_user_quests')}}">Mes quêtes</a>
+    <div id="quest_buttons_container">
+        <a class="quest_button" id="button_available_quests" href="{{ url_for('controller.list_garden_quests')}}">Quêtes disponibles</a> 
+        <a class="quest_button" id="button_my_quests" href="{{ url_for('controller.list_user_quests')}}">Mes quêtes</a>
+    </div>
+    
     
     {% if quests | length== 0 %}
         {% block message_no_quest required %}{% endblock %} 

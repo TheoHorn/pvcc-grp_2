@@ -48,6 +48,7 @@
     top : 8em;
     right : 2%; 
     background-color: var(--background-secondary);
+    opacity: 0.9;
     border-radius: 5px;
     padding : 5px;
 }
@@ -62,8 +63,9 @@
     gap : 10px;
 }
 
-#sort_sellings{
+#sort_sells{
     margin-bottom : 5px;
+    margin-left : 5%;
 }
 
 #no_sellings_message{
@@ -82,6 +84,27 @@
     background-color: #F7F7F7;
     grid-template-columns: 2fr 1fr 2fr;
 }
+
+h4{
+    margin-left: 50px;
+}
+#sell{
+    margin : 20px 50px 3em 50px;
+    padding : 10px 10px 10px 20px;
+    background-color: var(--background-secondary);
+    border-radius: 10px;
+}
+
+#sell_product {
+    display : flex;
+    flex-direction: column;
+    gap : 10px;
+}
+
+#sell_product input {
+    width : 100px;
+}
+
 
 .quantity{
     border-right: 1px solid black;

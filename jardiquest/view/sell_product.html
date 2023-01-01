@@ -1,0 +1,62 @@
+{% extends "_base.html" %}
+{% block content %}
+
+{% set active="market" %}
+{% include "_navbar.html" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view/market/product.css') }}">
+
+
+<div id="market_product"></div>
+    <div id="market_product_presentation">
+        <h2 id="product_name">{{ product.name }}</h2>
+        <div id="product_desc_img">
+            <img src="{{ url_for('static', filename='image/vegetables/' + product.imagePath) }}" alt="image de {{ product.name }}">
+            <p id="product_desc">{{ product.description }} <a id="product_desc_source" href="{{ product.description_source }}">(source)</a></p> 
+        </div>
+    </div>
+    
+    <h4>Vendre : </h4>
+    <div id="sell">
+        <form id="sell_product" action="{{ url_for('controller.sell_product_post', product = product.name) }}" method="post">
+                <label for="sell_quantity">Quantité à vendre en kg :</label>
+                <input type="number" name="sell_quantity" id="sell_quantity" value="0.1" step="0.1" min="0.1">
+                <label for="sell_price">Prix de vente par kg :</label>
+                <input type="number" name="sell_price" id="sell_price" step="0.1" min="0" {% if infos.min_cost %} value="{{ '%.2f' % infos.min_cost }}" {% else %} value="{{ '%.2f' % 0 }}" {% endif %}>
+                <input type="submit" id="sell_button" value="Vendre">
+        </form>
+    </div>
+
+
+    {% if sellings|length != 0 %}
+    <h4>Ventes en cours : </h4>
+    <div id="market_product_sellings_container">
+        <div id = "sort_sells">
+            <label for="sort_sellings">Trier par :</label>
+            <select name="sort_sellings" id="sort_sellings">
+                <option value="date">Date de dépôt</option>
+                <option value="price">Prix</option>
+                <option value="quantity">Quantité</option>
+            </select>
+        </div>
+
+        
+        {% for selling in sellings %}
+            <div class="market_product_selling">
+                <span class="quantity"><span class="quantity_float">{{ selling.quantity }}</span>kg disponible</span>
+                <span class="price_txt"><span class="price">{{ selling.cost }}</span> {{ garden.moneyName }}/kg</span>
+                <span class="selling_date">Date de dépôt : <span class="date">{{ selling.date }}</span></span>
+                <form action="{{ url_for('controller.cancel_selling', selling= selling.idRecolte ) }}" method="post" class="buy_form">
+                    <input type="submit" class="buy_button" value="Annuler la vente" data-toggle="modal" data-target="#myModal">
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+
+
+<script src="{{ url_for('static', filename='js/market_product.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flash_messages_modal.js') }}"></script>
+{% endblock %}

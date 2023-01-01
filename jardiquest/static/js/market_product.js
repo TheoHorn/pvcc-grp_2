@@ -43,3 +43,14 @@ function sort_by_date(data){
     return new Date(a.querySelector(".date").innerHTML) - new Date(b.querySelector(".date").innerHTML);
   });
 }
+
+
+/* Buy confirmation */
+document.querySelectorAll(".buy_form").forEach((node) => {
+  node.addEventListener("submit", (ev) => {
+    document.querySelector("#button_confirm_buy").onclick = () => {
+      ev.target.submit()
+    }
+    ev.preventDefault()
+  });
+})

@@ -15,5 +15,7 @@ class Recolte(db.Model):
     idJardin = db.Column(db.String(10), db.ForeignKey("jardin.idJardin"))
     jardin = db.relationship("Jardin", back_populates="recolte")
 
+    commande = db.relationship("Commande", back_populates="recolte")
+
     def get_id(self):
         return self.idRecolte
