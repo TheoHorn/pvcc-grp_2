@@ -1,3 +1,21 @@
+.info_panier{
+    padding-top : 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+.prix_panier{
+    color: var(--brown-orange);
+    font-size: large;
+}
+
+.cost{
+    color: var(--green);
+}
+
 #market{
     margin : 20px 20px 3em 30px;
     display : flex;
@@ -139,6 +157,7 @@
 
 #user_golds{
     text-align: center;
+    width: 15em;
     background-color: var(--background-secondary);
     opacity: 0.9;
     border-radius: 5px;

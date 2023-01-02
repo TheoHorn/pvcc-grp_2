@@ -38,6 +38,11 @@ def suggestion():
 
     return render_template('suggestion.html',jardin = jardin,user = current_user,recoltes = recoltes,numbs = numbs,produits = produits,prix = prix, length = len(result))
 
+@app.route('/buy')
+@login_required
+def buy():
+    return 1
+
 def prixPanier(panier):
     somme = 0
     for i in range(0,len(panier)):
@@ -70,11 +75,11 @@ def tri_bulle(tab): # tri a bulle
 
 def triLoop(tab,last): # tri récursif des lots afin de maximiser la diversité
     liste = tab[:]
-    memoire = ''
+    memoire = []
     panier = []
     for i in range(0,len(liste)):
-        if(liste[i][0]!=memoire):
-            memoire = liste[i][0]
+        if(liste[i][0] not in memoire):
+            memoire.append(liste[i][0])
             panier.append(liste[i])
             liste[i]=0
     liste = [value for value in liste if value != 0]

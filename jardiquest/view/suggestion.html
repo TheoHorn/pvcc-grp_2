@@ -6,21 +6,20 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/suggestion.css') }}">
 
+<div class="info_panier">
+    <div>
+        <p class="prix_panier">Prix du panier : <span class="cost">{{"%.2f" % prix}} {{ jardin.moneyName }}</span></p>
+    </div>
+    <div id="user_golds">
+        <p>Vous avez : {{ user.balance }} {{ jardin.moneyName }}</p>
+    </div>
+    <div class="buy_form">
+        <input type="submit" class="buy_button" value="Acheter" data-toggle="modal" data-target="#myModal">
+    </div>
+</div>
 <div id="market">
     <div id="market_top">
-        <p>Panier recommandé</p>
-        <div class="buy_form">
-            <input type="submit" class="buy_button" value="Acheter" data-toggle="modal" data-target="#myModal">
-        </div>
-        <div>
-            <button>Retour</button>
-        </div>
-        <div>
-            <p>Prix du panier : {{prix}}</p>
-        </div>
-        <div id="user_golds">
-            <p>Vous avez : {{ user.balance }} {{ jardin.moneyName }}</p>
-        </div>
+        <p>Panier recommandé :</p>
     </div>
     
     {% if length==0 %}
@@ -30,9 +29,12 @@
     {% else %}
     <div id="market_products">
         {% for i in range(0,length) %}
+        {% set url = url_for('controller.market_product', product = produits[i].name ) %} 
         <div class="product searching_items" style="cursor: pointer;" onclick="window.location='{{url}}';">
+            <img src="{{ url_for('static', filename='image/vegetables/' + produits[i].imagePath) }}" alt="{{ produits[i].name }}" class="product_img">
+    
             <div class="product_type">
-                <p class="type">{{ produits[i].name }}</p>
+                <p class="type">{{ produits[i].type }}</p>
             </div>
 
             <div class="product_name searching_property">
@@ -40,7 +42,7 @@
             </div>
             
             <div class="product_quantity">
-                <p>Quantité recommandée : <span class="quantity_float">{{ numbs[i] }}</span> lots de <span class="quantity_float">{{ recoltes[i].qtt_recommandee }}</span>kg</p>
+                <p>Quantité recommandée : <span class="quantity_float">{{ numbs[i] }}</span> lots de <span class="quantity_float">{{ recoltes[i].qtt_recommandee }} soit {{ "%.2f" % (numbs[i]*recoltes[i].qtt_recommandee) }}</span>kg</p>
             </div>
 
             <div class="product_cheaper_price">
