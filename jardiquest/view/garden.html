@@ -27,7 +27,12 @@
         <div class="top">
             <div class="attributs">
                 <div>
-                    {% if jardin.name|length == 0 %}
+                    {% set name=jardin.name %}
+                
+                    {% if name is none %}
+                        {% set name='' %}
+                    {% endif %}
+                    {% if name|length == 0 %}
                         <b class="brown-orange-style">Mon jardin :</b>
                         <span>Vous n'avez pas de jardin</span>
                     </div>
@@ -52,17 +57,28 @@
                     {% endif %}
             </div>
             <div class="right">
+
+                {% set idJardin=user.idJardin %}
+                
+                {% if idJardin is none %}
+                    {% set idJardin='' %}
+                {% endif %}
+
                 <!-- To create a garden you musn't have garden -->
-                {% if user.idJardin|length == 0 %}
+                {% if idJardin|length == 0 %}
                     <button class="button_edit"><a href="{{url_for('controller.new_garden')}}">Nouveau</a></button>
                 {% endif %}
+            
                 <!-- To modify it must be your own garden -->
-                {% if user.role != 'Participant' %}
-                    <button class="button_edit"><a href="{{url_for('controller.modify_garden')}}">Modifier</a></button>
+                {% if user.role == 'Proprietaire' %}
+                    {% if idJardin|length != 0 %}
+                        <button class="button_edit"><a href="{{url_for('controller.modify_garden')}}">Modifier</a></button>
+                    {% endif %}
                 {% endif %}
+
                 <!-- To leave a garden we must be a participant that is in a garden -->
-                {% if user.idJardin|length != 0 %}
-                    {% if user.role == 'Participant' %}
+                {% if idJardin|length != 0 %}
+                        {% if user.role == 'Participant' %}
                         <button class="button_edit">
                             <a href="{{url_for('controller.leave')}}">Quitter</a>
                         </button>
