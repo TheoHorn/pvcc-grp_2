@@ -21,82 +21,54 @@ def suggestion():
     else :
         recoltes = []
 
-    id = []
-    prix = []
-    qtt_rec = []
-
-    for i in range(0,len(recoltes[:])):
-        #for j in range(0,recoltes[i].quantity):
-        id.append(recoltes[i].idCatalogue)
-        prix.append(recoltes[i].cost/recoltes[i].cost)
-        qtt_rec.append(recoltes[i].qtt_recommandee)
-
-    pris = [0 for i in range(0,len(id[:]))]
-
-    # données de test
-    id =       [2,2,2,1,3,3,3,3,8,5,5,6,4,4,4] #id des produits disponibles
-    prix =     [2,2,2,3,4,4,4,4,8,7,7,1,3,3,3] #prix du produit
-    qtt_rec =  [2,2,2,1,3,3,3,3,8,5,5,6,4,4,4] #quantité recommandée
-    pris =     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] #indique si le produit est pris
-
     solde = current_user.balance #argent que dispose le client
-    panier = suggestion_panier(pris,False,prix,qtt_rec,solde,id) # false = maximise diversité et true = maximise le poids
+    panier = glouton_solution(recoltes,solde)
+    prix = prixPanier(panier)
 
-    poids = valeur_panier(qtt_rec,panier)
-    prix = valeur_panier(prix,panier)
-    liste = listingProducts(listeProduits(id,panier))
+    return render_template('suggestion.html',jardin = jardin,user = current_user,recoltes = recoltes[:],panier = panier,prix = prix)
 
-    return render_template('suggestion.html',
-                            jardin = jardin,
-                            user = current_user,
-                            recoltes = recoltes[:],
-                            panier = liste,
-                            prix = prix,
-                            poids = poids
-                            )
-
-def listingProducts(liste):
-    tab = []
-    for i in range(0,len(liste)):
-        produit = Catalogue.query.filter_by(idCatalogue=liste[i]).first()
-        tab.append(produit.name)
-    return tab
-        
-
-def valeur_panier(valeurs,pris): # retourne la valeur du panier (prix)
+def prixPanier(panier):
     somme = 0
-    if(pris == []):
-        return somme
-    for i in range(0,len(valeurs)) :
-        if pris[i]==1 :
-            somme += valeurs[i]
+    for i in range(0,len(panier)):
+        somme = somme + panier[i][1]
     return somme
-
-def listeProduits(id,pris): # retourne la liste des produits du panier
+    
+def glouton_solution(recoltes,solde) :
     tab = []
-    for i in range(0,len(pris)) :
-        if pris[i]==1 :
-            tab.append(id[i])
-    return tab
 
-def plus_diversifie(id,pris):
-    return len(list(set(listeProduits(id,pris)))) # élimine les doublons et renvoie la longueur de la lise des produits
+    for i in range(0,len(recoltes[:])): # création de lots en fonction de la quantité recommandée
+        for j in range(0,int(recoltes[i].quantity/recoltes[i].qtt_recommandee)):
+            tab.append([recoltes[i].idCatalogue,(recoltes[i].cost/recoltes[i].quantity)*recoltes[i].qtt_recommandee,recoltes[i].qtt_recommandee,recoltes[i].idRecolte])
 
-def suggestion_panier(list,maximiser_poids,prix,qtt_rec,solde,id) :
-    allocation = [[]]
-    def suggestion(list,index,maximiser_poids,prix,qtt_rec,solde,id):
-        if len(list)!=index:
-            for i in range(0,2):
-                copy = list[:]
-                list[index] = i
-                if(valeur_panier(prix,list)<=solde) :
-                    if(maximiser_poids):
-                        if(valeur_panier(qtt_rec,list)>=valeur_panier(qtt_rec,allocation[0])):
-                            allocation[0] = list
-                    else :
-                        if(plus_diversifie(id,list)>=plus_diversifie(id,allocation[0])):
-                            allocation[0] = list
-                    suggestion(list,index+1,maximiser_poids,prix,qtt_rec,solde,id)
-                list = copy
-    suggestion(list,0,maximiser_poids,prix,qtt_rec,solde,id)
-    return allocation[0]
+    tri_bulle(tab) # tri des lots en fonction du prix pour minimiser le prix du panier final
+    ordre = triLoop(tab,[]) # tri pour maximiser la diversité
+    
+    panier = []
+    for i in range(0,len(ordre)): # création du panier selon la limite du solde
+        if(solde-ordre[i][1]>0):
+            solde = solde - ordre[i][1]
+            panier.append(ordre[i])
+    return panier
+
+def tri_bulle(tab): # tri a bulle
+    n = len(tab)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if tab[j][1] > tab[j+1][1] :
+                tab[j], tab[j+1] = tab[j+1], tab[j]
+
+def triLoop(tab,last): # tri récursif des lots afin de maximiser la diversité
+    liste = tab[:]
+    memoire = ''
+    panier = []
+    for i in range(0,len(liste)):
+        if(liste[i][0]!=memoire):
+            memoire = liste[i][0]
+            panier.append(liste[i])
+            liste[i]=0
+    liste = [value for value in liste if value != 0]
+
+    if(liste!=[]):   
+        return triLoop(liste,last+panier)
+    else :
+        return last+panier
