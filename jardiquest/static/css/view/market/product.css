@@ -1,133 +1,180 @@
-.portal-container {
-    align-self: left;
-    margin: auto auto;
-    width: 100vw;
-    padding: 2em 10%;
+/* Product Presentation */
+#market_product{
+    position:relative;
 }
 
-.brown-orange-style {
-    color: var(--brown-orange);
-    font-size: large;
+#market_product_presentation {
+    margin : 20px;
 }
 
-.green {
-    background: var(--green);
+#product_desc_img{
+    margin : 20px;
+    display : flex;
+    flex-direction: row;
+    gap : 10px; 
 }
 
-.brown {
-    background: var(--brown-orange);
+#market_product_presentation #product_name{
+    font-size : 30px;
+    font-weight : bold;
+    text-decoration: underline;
 }
 
-.top{
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    font-size: large;
+#market_product_presentation img{
+    display: block;
+    max-width:400px;
+    max-height:400px;
+    width: auto;
+    height: auto;
 }
 
-.find{
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
+#product_desc{
+    min-height : 20%;
+    text-align : justify;
+    font-style : italic;
+    color : grey;
 }
 
-.find button{
-    margin: 3px 10px 3px 0;
-    padding: 8px;
-    font-size: medium;
-    width: 6em;
+#product_desc_source{
+    font-size : 10px;
+    font-style : italic;
 }
 
-.right{
-    display: grid;
-    justify-items: end;
-    grid-template-rows: 1fr 1fr 1fr;
-}
 
-.button-panel > button {
-    padding: 0.6em;
-    margin: 0.2em 1em;
-    font-size: x-large;
-    cursor: pointer;
-    border: 1px solid var(--background-third);
-    color: var(--background-secondary);
-    border-radius: 9px;
-}
+/* User Golds */
 
-.handler-display-data {
-    display: grid;
-    height: 100%;
-    grid-template-rows: max(15%,5em) 85%;
-}
-
-.table-all {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    display: table;
-    border: 1px solid #ccc;
-}
-
-.display_form{
-    padding: 10px;
-}
-
-.cells td {
-    padding: 8px 8px;
-    text-align: center;
-}
-
-.table-all tr:nth-child(odd){
+#user_golds{
+    position : fixed;
+    top : 8em;
+    right : 2%; 
     background-color: var(--background-secondary);
-  }
-
-.table-all thead th{
-    vertical-align: middle;
-    color: var(--green);
-    background-color: darkgray;
-    font-size: large;
+    opacity: 0.9;
+    border-radius: 5px;
+    padding : 5px;
 }
 
-.notification-parent{
-    font-size: large;
+
+/* Sellings */
+
+#market_product_sellings_container{
+    margin : 20px 20px 3em 30px;
+    display : flex;
+    flex-direction: column;
+    gap : 10px;
+}
+
+#sort_sells{
+    margin-bottom : 5px;
+    margin-left : 5%;
+}
+
+#no_sellings_message{
+    margin-left : 3%;
+}
+
+.market_product_selling{
+    display : grid;
+    column-gap: 8px;
+    border : 1px solid black;
+    border-radius : 5px;
+    box-shadow: 1px 1px 1px black;
+    align-self: center;
+    min-height: 50px;
+    width : 90%;
+    background-color: #F7F7F7;
+    grid-template-columns: 2fr 1fr 2fr;
+}
+
+h4{
+    margin-left: 50px;
+}
+#sell{
+    margin : 20px 50px 3em 50px;
+    padding : 10px 10px 10px 20px;
+    background-color: var(--background-secondary);
+    border-radius: 10px;
+}
+
+#sell_product {
+    display : flex;
+    flex-direction: column;
+    gap : 10px;
+}
+
+#sell_product input {
+    width : 100px;
+}
+
+
+.quantity{
+    border-right: 1px solid black;
+    grid-row: 1;
+    grid-column: 1;
+    margin-left: 5px;
+    color : var(--green);
+}
+
+.price_txt{
+    border-right: 1px solid black;
+    grid-column : 1;
+    grid-row : 2;
+    margin-left: 5px;
+    color : var(--brown-orange);
+}
+
+.price{
+    color : inherit;
+}
+
+.selling_date{
+    border-right: 1px solid black;
+    grid-row : 1/3;
+    grid-column : 2;
+    font-style: italic;
+    color : grey;
+}
+
+.date{
+    color : inherit;
+}
+
+.buy_form{
+    grid-row : 1/3;
+    grid-column : 3;
+    display : grid;
+    gap : 5px;
+    margin-bottom: 5px;
+}
+
+.buy_quantity_label{
+    grid-row : 1;
+    color : var(--grey);
+    font-style: italic;
+}
+
+.buy_quantity{
+    grid-row : 1;
+    grid-column: 2;
+    width : 50%;
     text-align: center;
-    padding-top: 20px;
 }
 
-.attributs{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+.cost{
+    grid-column : 1;
+    grid-row : 2; 
+    color : black;  
 }
 
-.input {
-    margin: 3px 10px 3px 0;
-    padding: 8px;
-    font-size: medium;
-    width: 15%;
+.cost_float{
+    color : inherit;
 }
 
-.button{
-    margin: 3px 10px 3px 0;
-    padding: 8px;
-    font-size: medium;
-    width: 5em;
-}
-
-.button_edit{
-    margin: 3px 10px 3px 0;
-    padding: 8px;
-    font-size: medium;
-    width: 5em;
-}
-
-a:link { text-decoration: none; }
-
-@media only screen and (max-width: 850px) {
-    .handler-display-data {
-        display: grid;
-        height: 100%;
-        grid-template-rows: 30% 70%;
-    }
+.buy_button{
+    grid-column:2;
+    grid-row : 2;
+    width : 50%;
+    text-align: center;
+    color : var(--brown-orange);  
 }
 
 

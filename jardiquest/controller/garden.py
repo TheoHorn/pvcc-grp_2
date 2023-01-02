@@ -9,6 +9,7 @@ from jardiquest.model.database.entity.jardin import Jardin
 from jardiquest.model.database.entity.annonce import Annonce
 from jardiquest.model.database.entity.recolte import Recolte
 import random
+import uuid
 
 # show all gardens
 @app.route('/garden',methods=['GET', 'POST'])
@@ -42,7 +43,12 @@ def garden():
                 Jardin.adresse.like(adresse)
                 ).all()
         else :
-            jardins = Jardin.query.filter(Jardin.name.like(name), Jardin.moneyName.like(monnaie)).all()
+            jardins = Jardin.query.filter(Jardin.name.like(name),
+                Jardin.moneyName.like(monnaie),
+                Jardin.description.like(description),
+                Jardin.ville.like(ville),
+                Jardin.adresse.like(adresse)
+                ).all()
 
     table = []
     for i in jardins :
@@ -121,9 +127,7 @@ def delete():
     return redirect(url_for('controller.garden')) 
 
 def generateId(moneyName):
-    # TODO improve this function
-    num = random.randint(0,99999)
-    return moneyName[0:4]+str(num)
+    return uuid.uuid1().hex
 
 # create a new garden (owner)
 @app.route('/modify',methods=['GET', 'POST'])
