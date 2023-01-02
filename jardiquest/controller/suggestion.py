@@ -12,7 +12,7 @@ from jardiquest.model.database.entity.catalogue import Catalogue
 
 import random
 
-@app.route('/sug')
+@app.route('/suggestion')
 @login_required
 def suggestion():    
     jardin = Jardin.query.filter_by(idJardin=current_user.idJardin).first()
@@ -21,11 +21,22 @@ def suggestion():
     else :
         recoltes = []
 
-    solde = current_user.balance #argent que dispose le client
-    panier = glouton_solution(recoltes,solde)
-    prix = prixPanier(panier)
+    solde = current_user.balance # argent que dispose le client
+    panier = glouton_solution(recoltes,solde) # lots de produits recommandés
+    prix = prixPanier(panier) # prix total
 
-    return render_template('suggestion.html',jardin = jardin,user = current_user,recoltes = recoltes[:],panier = panier,prix = prix)
+    result = dict((i[3], [panier.count(i),i]) for i in panier) # dictionnaire {id_produit,[qtt,lot]}
+
+    produits, numbs, recoltes = [],[],[]
+    
+    for cle, valeur in result.items(): # création tableaux pour template
+        catalogue = Catalogue.query.filter(Catalogue.idCatalogue == valeur[1][0]).first()
+        recolte = Recolte.query.filter(Recolte.idRecolte == cle).first()
+        produits.append(catalogue)
+        recoltes.append(recolte)
+        numbs.append(valeur[0])
+
+    return render_template('suggestion.html',jardin = jardin,user = current_user,recoltes = recoltes,numbs = numbs,produits = produits,prix = prix, length = len(result))
 
 def prixPanier(panier):
     somme = 0
@@ -38,7 +49,7 @@ def glouton_solution(recoltes,solde) :
 
     for i in range(0,len(recoltes[:])): # création de lots en fonction de la quantité recommandée
         for j in range(0,int(recoltes[i].quantity/recoltes[i].qtt_recommandee)):
-            tab.append([recoltes[i].idCatalogue,(recoltes[i].cost/recoltes[i].quantity)*recoltes[i].qtt_recommandee,recoltes[i].qtt_recommandee,recoltes[i].idRecolte])
+            tab.append([recoltes[i].idCatalogue,recoltes[i].cost*recoltes[i].qtt_recommandee,recoltes[i].qtt_recommandee,recoltes[i].idRecolte])
 
     tri_bulle(tab) # tri des lots en fonction du prix pour minimiser le prix du panier final
     ordre = triLoop(tab,[]) # tri pour maximiser la diversité
