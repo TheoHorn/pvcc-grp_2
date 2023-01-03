@@ -7,6 +7,23 @@
     margin : 20px;
 }
 
+#back_arrow{
+    width: 20px;
+    height: 20px;
+    margin-left : 20px;
+    margin-right : 10px;
+    filter: invert(42%) sepia(4%) saturate(2457%) hue-rotate(54deg) brightness(93%) contrast(81%);
+}
+
+#back_arrow:hover{
+    cursor: pointer;
+    filter: invert(48%) sepia(96%) saturate(274%) hue-rotate(352deg) brightness(98%) contrast(91%);
+}
+
+#product_name{
+    display : inline-block;
+}
+
 #product_desc_img{
     margin : 20px;
     display : flex;
@@ -20,7 +37,7 @@
     text-decoration: underline;
 }
 
-#market_product_presentation img{
+#market_product_presentation #product_image{
     display: block;
     max-width:400px;
     max-height:400px;

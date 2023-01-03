@@ -10,6 +10,13 @@
 
 <div id="quest">
     <div id="quest_header">
+        {% if quest.id_user == user %}
+            <a id="link_back" href="{{ url_for('controller.list_user_quests') }}"><img src="{{ url_for('static', filename='image/icon/back-arrow-icon.png') }}" alt="back arrow" id="back_arrow"></a>
+        {% elif quest.id_user == None %}
+            <a id="link_back" href="{{ url_for('controller.list_garden_quests') }}"><img src="{{ url_for('static', filename='image/icon/back-arrow-icon.png') }}" alt="back arrow" id="back_arrow"></a>
+        {% endif %}
+
+
         <div id="quest_title">
             <h2>{{quest.title}}</h2>
         </div>

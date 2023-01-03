@@ -20,9 +20,10 @@
 
 <div id="market_product">
     <div id="market_product_presentation">
+        <a href="{{ url_for('controller.market') }}"><img src="{{ url_for('static', filename='image/icon/back-arrow-icon.png') }}" alt="back arrow" id="back_arrow"></a>
         <h2 id="product_name">{{ product.name }}</h2>
         <div id="product_desc_img">
-            <img src="{{ url_for('static', filename='image/vegetables/' + product.imagePath) }}" alt="image de {{ product.name }}">
+            <img src="{{ url_for('static', filename='image/vegetables/' + product.imagePath) }}" alt="image de {{ product.name }}" id="product_image">
             <p id="product_desc">{{ product.description }} <a id="product_desc_source" href="{{ product.description_source }}">(source)</a></p> 
         </div>
     </div> 
