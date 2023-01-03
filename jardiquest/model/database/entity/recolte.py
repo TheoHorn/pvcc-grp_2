@@ -8,6 +8,7 @@ class Recolte(db.Model):
     quantity = db.Column(db.Float(), nullable=False)
     date = db.Column(db.Date())
     cost = db.Column(db.Float(), default=0.00)
+    qtt_recommandee = db.Column(db.Float(), default=1.00)
     
     idCatalogue = db.Column(db.String(10), db.ForeignKey("catalogue.idCatalogue"))
     catalogue = db.relationship("Catalogue", back_populates="recolte")

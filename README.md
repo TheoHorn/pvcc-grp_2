@@ -17,12 +17,12 @@ Gérald Oster <<gerald.oster@telecomnancy.eu>>
 
 <img title="Jardi'Quest logo" alt="Logo de jardi'quest" src="./.res-readme/Jardi'Quest.svg" style="height: 200px; width: 200px; margin: auto; display: block" width="200" height="200">
 
-**Application Web** qui permet de gérer un **jardin** de façon **innovante** a l'aide de **quête**.
-Plus besoin de séparer son jardin en parcelle, ici tout le monde travaille main dans la main pour être récompensé et recevoir les fruits de son labeur.
+**Application Web** qui permet de gérer un **jardin** de façon **innovante** à l'aide de **quêtes**.
+Plus besoin de séparer son jardin en parcelles, ici tout le monde travaille main dans la main pour être récompensé et recevoir les fruits de son labeur.
 
 
 ## Installation du projet
-Au root du projet veuillez effectuer ses commandes pour installer et lancer l'application
+Au root du projet veuillez effectuer ces commandes pour installer et lancer l'application
 ```bash
 python3 -m venv venv
 source venv/bin/activate

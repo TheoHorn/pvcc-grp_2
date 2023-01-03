@@ -1,5 +1,29 @@
+.info_panier{
+    padding-top : 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.message_suggestion{
+    font-size: large;
+    color: var(--brown-orange);
+    text-align: center;
+}
+
+.prix_panier{
+    color: var(--brown-orange);
+    font-size: large;
+}
+
+.cost{
+    color: var(--green);
+}
+
 #market{
-    margin : 20px 20px 3em 30px;
+    margin : 10px 20px 3em 30px;
     display : flex;
     flex-direction: column;
     gap : 10px;
@@ -7,8 +31,7 @@
 
 #market_top{
     font-size: 1.2em;
-    margin-left : 3em;
-    margin-bottom: 10px;
+    margin-left : 1em;
 }
 
 #market_filters {
@@ -31,20 +54,6 @@
     font-size: 0.9em;
 }
 
-.suggestion_button button{
-    margin: 5px 10px 5px 0;
-    padding: 10px;
-    font-size: large;
-    width: 7em;
-    text-align: center;
-}
-
-.suggestion_button{
-    margin-left: 35%;
-}
-
-.suggestion_button a:link { text-decoration: none; }
-
 #research_bar {
     background-image: url('/static/image/icon/search_icon.png'); /* Add a search icon to input */
     background-position: 10px 12px; /* Position the search icon */
@@ -56,6 +65,20 @@
     margin-bottom: 12px; /* Add some space below the input */
     color : grey;
     
+}
+
+.buy button{
+    margin-top: 2px;
+    padding: 8px;
+    font-size: large;
+    width: 9em;
+    text-align: center;
+}
+
+.buy a:link { text-decoration: none; }
+
+.buy {
+    margin-left: auto;
 }
 
 #research_barsearch::placeholder {
@@ -149,8 +172,13 @@
     color : inherit;
 }
 
-@media only screen and (max-width: 1200px) {
-    .suggestion_button{
-        margin-left: auto;
-    }
+#user_golds{
+    padding: 8px;
+    font-size: large;
+    margin-left: auto;
+    text-align: center;
+    width: 9em;
+    background-color: var(--background-secondary);
+    opacity: 0.9;
+    border-radius: 5px;
 }
