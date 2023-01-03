@@ -47,6 +47,12 @@ def cancel_selling(selling_id):
     recolte = db.session.query(Recolte).filter(Recolte.idRecolte == selling_id).first()
     if recolte is None or current_user.role != "Proprietaire" or recolte.idJardin != current_user.jardin.idJardin:
         abort(403)
+    
+    commande = db.session.query(Commande).filter(Commande.idRecolte == recolte.idRecolte).first()
+    if commande is not None:
+        flash("Vous ne pouvez pas annuler une vente qui a déjà été commandée", 'error')
+        return redirect(url_for('controller.sell_product', product = recolte.catalogue.name))
+    
     db.session.delete(recolte)
     db.session.commit()
     product_name = db.session.query(Catalogue.name).filter(Catalogue.idCatalogue == recolte.idCatalogue).first().name
