@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+import pandas as pd
+
 from flask import Flask, session, redirect, url_for, flash, request
 from flask_login import LoginManager
 from werkzeug.exceptions import HTTPException
@@ -32,6 +34,8 @@ def create_app():
 
     with flask_serv_intern.app_context():
         db.create_all()
+        df = pd.read_csv('data_vegetables/data_recoltes.csv', sep=";", header=0)
+        df.to_sql('Catalogue', db.engine, if_exists='append', index=False)
 
 
     # Scheduler each day
@@ -52,9 +56,7 @@ def create_app():
     login_manager.refresh_view = 'controller.login'
 
     login_manager.needs_refresh_message = u"Session expirée, veuillez vous reconnecter"
-    login_manager.needs_refresh_message_category = "info"
-
-
+    login_manager.needs_refresh_message_category = "info"     
 
 
     @login_manager.unauthorized_handler
