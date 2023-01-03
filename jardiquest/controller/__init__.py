@@ -15,4 +15,4 @@ from .handle_garden import *
 from .garden import *
 from .market import *
 from .suggestion import *
-
+from .blog import *

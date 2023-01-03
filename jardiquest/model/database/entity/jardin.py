@@ -7,7 +7,7 @@ class Jardin(db.Model):
     idJardin = db.Column(db.String(10), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     moneyName = db.Column(db.String(100), default="Monnaie")
-    description = db.Column(db.String(200), default="")
+    description = db.Column(db.String(200), default="Un jardin bien sympa !")
     ville = db.Column(db.String(100), default="")
     adresse = db.Column(db.String(100), default="")
 
