@@ -11,8 +11,8 @@ def app():
         with flask_app.app_context():
             yield app
 
-@pytest.fixture(scope='class')
-def db(app):
+@pytest.fixture(scope='class', autouse=True)
+def database(app):
     f = open('jardiquest/tests/dataset/dataset.sqlite')
     db.create_all()
     for l in f.readlines():

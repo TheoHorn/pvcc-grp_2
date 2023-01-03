@@ -37,3 +37,5 @@ Insert into recolte values('azdjazb3', 3, CURRENT_DATE, 9, NULL, 19, 1);
 Insert into recolte values('6az3rf', 4, CURRENT_DATE, 4, NULL, 38, 1);
 Insert into recolte values('8ncaz3r', 2, CURRENT_DATE, 5, NULL, 96, 1);
 Insert into recolte values('8ncazazze', 2, CURRENT_DATE, 5, NULL, 96, 2);
+
+Insert into Commande values('abcdef', 5, CURRENT_DATE, False, 30, 'b@gmail.com', 'adba2');
