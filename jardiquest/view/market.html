@@ -36,6 +36,12 @@
                 <option value="quantity">Quantité</option>
             </select>
         </div>
+
+        <div class="suggestion_button">
+            <button>
+                <a href="{{url_for('controller.suggestion')}}">Suggestion</a>
+            </button>
+        </div>
     </div>
 
     {% if not produits %}

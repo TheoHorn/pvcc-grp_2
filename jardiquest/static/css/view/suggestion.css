@@ -4,7 +4,13 @@
     padding-right: 5%;
     display: grid;
     grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.message_suggestion{
+    font-size: large;
+    color: var(--brown-orange);
+    text-align: center;
 }
 
 .prix_panier{
@@ -17,18 +23,15 @@
 }
 
 #market{
-    margin : 20px 20px 3em 30px;
+    margin : 10px 20px 3em 30px;
     display : flex;
     flex-direction: column;
     gap : 10px;
 }
 
 #market_top{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     font-size: 1.2em;
-    margin-left : 3em;
-    margin-bottom: 10px;
+    margin-left : 1em;
 }
 
 #market_filters {
@@ -62,6 +65,20 @@
     margin-bottom: 12px; /* Add some space below the input */
     color : grey;
     
+}
+
+.buy button{
+    margin-top: 2px;
+    padding: 8px;
+    font-size: large;
+    width: 9em;
+    text-align: center;
+}
+
+.buy a:link { text-decoration: none; }
+
+.buy {
+    margin-left: auto;
 }
 
 #research_barsearch::placeholder {
@@ -156,10 +173,12 @@
 }
 
 #user_golds{
+    padding: 8px;
+    font-size: large;
+    margin-left: auto;
     text-align: center;
-    width: 15em;
+    width: 9em;
     background-color: var(--background-secondary);
     opacity: 0.9;
     border-radius: 5px;
-    padding : 5px;
 }

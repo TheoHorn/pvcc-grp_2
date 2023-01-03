@@ -10,21 +10,24 @@
     <div>
         <p class="prix_panier">Prix du panier : <span class="cost">{{"%.2f" % prix}} {{ jardin.moneyName }}</span></p>
     </div>
+    <div class="message_suggestion">Cette suggestion maximise la diversité des produits et le prix pour votre solde</div>
     <div id="user_golds">
-        <p>Vous avez : {{ user.balance }} {{ jardin.moneyName }}</p>
+        <p>{{ user.balance }} {{ jardin.moneyName }}</p>
     </div>
-    <div class="buy_form">
-        <input type="submit" class="buy_button" value="Acheter" data-toggle="modal" data-target="#myModal">
-    </div>
-</div>
-<div id="market">
     <div id="market_top">
         <p>Panier recommandé :</p>
     </div>
-    
+    <div></div>
+    <div class="buy">
+    {% if length!=0 %}
+        <button><a href="{{url_for('controller.buy',numbs=numbs,ids=ids)}}">Acheter</a></button>
+    {% endif %}
+    </div>
+</div>
+<div id="market">
     {% if length==0 %}
         <div id="market_no_product">
-            <p>Aucun produit n'est actuellement disponible</p>	
+            <p>Aucune recommandation possible, vérifiez votre solde ou vérifiez la disponibilité des produits</p>	
         </div>
     {% else %}
     <div id="market_products">

@@ -9,8 +9,10 @@ from jardiquest.model.database.entity.jardin import Jardin
 from jardiquest.model.database.entity.annonce import Annonce
 from jardiquest.model.database.entity.recolte import Recolte
 from jardiquest.model.database.entity.catalogue import Catalogue
-
-import random
+from jardiquest.model.database.entity.commande import Commande
+import math
+import uuid
+from datetime import datetime
 
 @app.route('/suggestion')
 @login_required
@@ -27,7 +29,7 @@ def suggestion():
 
     result = dict((i[3], [panier.count(i),i]) for i in panier) # dictionnaire {id_produit,[qtt,lot]}
 
-    produits, numbs, recoltes = [],[],[]
+    produits, numbs, recoltes, ids = [],[],[],[]
     
     for cle, valeur in result.items(): # création tableaux pour template
         catalogue = Catalogue.query.filter(Catalogue.idCatalogue == valeur[1][0]).first()
@@ -35,13 +37,46 @@ def suggestion():
         produits.append(catalogue)
         recoltes.append(recolte)
         numbs.append(valeur[0])
+        ids.append(cle)
 
-    return render_template('suggestion.html',jardin = jardin,user = current_user,recoltes = recoltes,numbs = numbs,produits = produits,prix = prix, length = len(result))
+    return render_template('suggestion.html',jardin = jardin,user = current_user,recoltes = recoltes,numbs = numbs,produits = produits,prix = prix, length = len(result), ids = ids)
 
-@app.route('/buy')
+@app.route('/buy/<numbs>/<ids>')
 @login_required
-def buy():
-    return 1
+def buy(numbs,ids):
+    ids=ids.replace("'","")
+    ids=ids.replace(" ","")
+    ids=ids.replace("[","")
+    ids=ids.replace("]","")
+    ids = ids.split(',')
+    numbs = json.loads(numbs)
+    for i in range(0,len(numbs)):
+        selling = db.session.query(Recolte).filter(Recolte.idRecolte == ids[i]).first()
+        buy_product(numbs[i]*selling.qtt_recommandee,selling)
+    return redirect(url_for('controller.suggestion'))
+
+def buy_product(quantity,selling):
+    if selling is None or quantity > selling.quantity or quantity <= 0 or selling.jardin != current_user.jardin:
+        abort(404)
+
+    totalPrice = selling.cost * quantity
+
+    if current_user.balance < totalPrice:
+        flash("Votre solde n'est pas suffisant", "error")
+    else:
+        # If no error : 
+        # Decrease quantity, and delete if no more
+        selling.quantity -= quantity
+        selling.quantity = math.floor(selling.quantity*100)/100
+    
+        # Decrease user balance
+        current_user.balance -= totalPrice
+        current_user.balance = math.floor(current_user.balance*100)/100
+
+        # Create an order
+        commande = Commande(idCommande = uuid.uuid1().hex, acheteur=current_user.email, idRecolte=selling.idRecolte, quantite=quantity, cout = totalPrice , dateAchat = datetime.now())
+        db.session.add(commande)
+        db.session.commit()
 
 def prixPanier(panier):
     somme = 0
