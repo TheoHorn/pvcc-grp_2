@@ -1,12 +1,19 @@
-from flask import render_template
-from flask_login import current_user, login_required
+from flask import *
+from flask_login import *
 
 from jardiquest.controller import app
 
 
 @app.get('/blog')
 def blog():
-    from jardiquest.model.path.blog_model import render_home
-    return render_home()
+    """Print the blog page"""
+    from jardiquest.model.path.blog_model import render_blog
+    return render_blog()
+
+@app.post('/blog')
+def add_blog():
+    """Post a new message on the blog page"""    
+    from jardiquest.model.path.blog_model import add_new_message
+    return add_new_message()
 
 
