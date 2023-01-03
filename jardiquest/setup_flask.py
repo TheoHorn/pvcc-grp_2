@@ -9,6 +9,7 @@ from werkzeug.exceptions import HTTPException
 from jardiquest import controller, model
 from jardiquest.controller import handling_status_error
 from jardiquest.model.database.entity.user import User
+from jardiquest.model.database.entity.catalogue import Catalogue
 from jardiquest.setup_sql import db, database_path
 
 # do not remove this import allows SQLAlchemy to find the table
@@ -34,8 +35,9 @@ def create_app():
 
     with flask_serv_intern.app_context():
         db.create_all()
-        df = pd.read_csv('data_vegetables/data_recoltes.csv', sep=";", header=0)
-        df.to_sql('catalogue', db.engine, if_exists="append", index=False)
+        if db.session.query(Catalogue).first() == None:
+            df = pd.read_csv('data_vegetables/data_recoltes.csv', sep=";", header=0)
+            df.to_sql('catalogue', db.engine, if_exists="append", index=False)
 
 
     # Scheduler each day

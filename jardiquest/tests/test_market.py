@@ -1,31 +1,67 @@
-from jardiquest.model.path.auth_model import *
+from jardiquest.setup_flask import create_app
+from jardiquest.model.path.market_model import *
 import html5lib
+import unittest
 
 html5parser = html5lib.HTMLParser(strict=True)
 # file of test for the market
 
+#test_client.post('/login', data={'email': 'a@gmail.com', 'password' : 'azertyui'})
 
-# make sur the path are good
-def test_market_controller(test_client):
-    response = test_client.get('/market')
-    assert response.status_code == 200
+user1 = {'username': 'a', 'email': 'a@gmail.com', 'password': 'azertyui'}
+user2 = {'username': 'b', 'email': 'b@gmail.com', 'password': 'azertyui'}
+class TestUserLogged(unittest.TestCase):
+    def login(self, email, password):
+        return self.app.post('/login', data=dict(
+            email = email,
+            password=password
+        ), follow_redirects=True)
 
-    response = test_client.get('/market/Abricot')
-    assert response.status_code == 200
+    def setUp(self):
+        app = create_app()
+        db.app = app  #
+        self.app = app.test_client()
+        self.login("a@gmail.com", "azertyui")
 
-    response = test_client.get('/market/catalogue')
-    assert response.status_code == 200
+    def tearDown(self):
+        pass
 
-    response = test_client.get('/market/catalogue/Abricot')
-    assert response.status_code == 200
+    def register_user(self, username, email, password):
+        return self.app.post('/register', data=dict(
+            username=username,
+            email=email,
+            password=password,
+        ), follow_redirects=True)
 
-    response = test_client.get('/market/orders')
-    assert response.status_code == 200
 
+    def test_login(self):
+        resp = self.login(user1.get('email'), user1.get('password'))
+        assert resp.status_code == 200
 
-def test_auth_model(test_client):
-    # test html is valid
-    assert html5parser.parse(signup_model())
-    assert html5parser.parse(login_model())
+    def test_market(self):
+        assert(False)
+    
 
-    assert logout_model().status_code == 302
+class TestUserNotLogged(unittest.TestCase):
+    def setUp(self):
+        app = create_app()
+        db.app = app  
+        self.app = app.test_client()
+
+    def tearDown(self):
+        pass
+
+    def test_get_catalogue(self):
+        resp = self.app.get('/market')
+        assert(resp.status_code == 302)
+
+    
+
+    def test_get_sell_product(self):
+        resp = self.app.get('/market/catalogue')
+        assert(resp.status_code == 302)
+    
+    def test_get_market(self):
+        resp = self.app.get('/market')
+        assert(resp.status_code == 302)
+        
