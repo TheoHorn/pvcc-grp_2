@@ -35,7 +35,7 @@ def create_app():
     with flask_serv_intern.app_context():
         db.create_all()
         df = pd.read_csv('data_vegetables/data_recoltes.csv', sep=";", header=0)
-        df.to_sql('Catalogue', db.engine, if_exists='append', index=False)
+        df.to_sql('catalogue', db.engine, if_exists="replace", index=False)
 
 
     # Scheduler each day
