@@ -1,10 +1,11 @@
+from datetime import datetime
 from jardiquest.setup_sql import db
 
 
 class Annonce(db.Model):
     __tablename__ = "annonce"
 
-    idAnnonce = db.Column(db.String(10), primary_key=True)
+    idAnnonce = db.Column(db.Integer, primary_key=True)
     timestamps = db.Column(db.Date())
     message = db.Column(db.String(1000), default="")
 
@@ -16,3 +17,10 @@ class Annonce(db.Model):
 
     def get_id(self):
         return self.idAnnonce
+
+    def __init__(self, idAnnonce, msg, user):
+        self.idAnnonce = idAnnonce
+        self.timestamps = datetime.utcnow()
+        self.message = msg
+        self.idJardin = user.idJardin
+        self.email = user.email

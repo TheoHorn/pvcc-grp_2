@@ -48,5 +48,4 @@ def delete_model_garden(jardin:Jardin,user:User):
     user.role = "Participant"
     db.session.delete(jardin)
     db.session.commit()
-    #redirect a modifier pour garden
-    return redirect(url_for('controller.profile'))
+    return redirect(url_for('controller.garden'))

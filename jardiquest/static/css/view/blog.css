@@ -1,0 +1,51 @@
+
+.messages{
+    align-self: center;
+    margin: auto;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 10% ;
+}
+
+.user{
+    text-align: left;
+}
+
+.date-msg{
+    text-align: right;
+}
+
+.msg{
+    font-size: x-large;
+    border-bottom: 1px solid var(--green);
+    border-top: 1px solid var(--green);
+    color: var(--brown-orange);
+
+    text-align: justify;
+}
+
+.new-messages{
+    border-top: 2px solid var(--green);
+    margin: 2% 10%;
+    align-items: center;
+    justify-content: center;
+    display : flex;
+    flex-direction: column;
+    padding: 2em;
+}
+
+#msg{
+    width: 90%;
+    height: 3em;
+}
+
+.msg-button {
+    padding: 0.2em ;
+    margin: 0.2em 1em;
+    font-size: x-large;
+    cursor: pointer;
+    border: 1px solid var(--green);
+    color: var(--brown-orange);
+    border-radius: 4px;
+}
