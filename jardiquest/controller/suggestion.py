@@ -23,15 +23,17 @@ def suggestion():
     else :
         recoltes = []
 
-    solde = current_user.balance # argent que dispose le client
-    panier = glouton_solution(recoltes,solde) # lots de produits recommandés
-    prix = prixPanier(panier) # prix total
+    solde = current_user.balance # money the customer has
+    if solde==None : solde = 0
 
-    result = dict((i[3], [panier.count(i),i]) for i in panier) # dictionnaire {id_produit,[qtt,lot]}
+    panier = glouton_solution(recoltes,solde) # recommended product bundles
+    prix = prixPanier(panier) # total price
+
+    result = creation_dictionnaire(panier) # dictionary {id_produit,[qtt,lot]}
 
     produits, numbs, recoltes, ids = [],[],[],[]
     
-    for cle, valeur in result.items(): # création tableaux pour template
+    for cle, valeur in result.items(): # creating tables for template
         catalogue = Catalogue.query.filter(Catalogue.idCatalogue == valeur[1][0]).first()
         recolte = Recolte.query.filter(Recolte.idRecolte == cle).first()
         produits.append(catalogue)
@@ -44,16 +46,24 @@ def suggestion():
 @app.route('/buy/<numbs>/<ids>')
 @login_required
 def buy(numbs,ids):
+    try:
+        ids = jsonify(ids)
+        numbs = json.loads(numbs)
+    except:
+        ids = []
+        numbs = []
+    for i in range(0,len(numbs)):
+        selling = db.session.query(Recolte).filter(Recolte.idRecolte == ids[i]).first()
+        if(selling.qtt_recommandee is not None):
+            buy_product(numbs[i]*selling.qtt_recommandee,selling)
+    return redirect(url_for('controller.suggestion'))
+
+def jsonify(ids):
     ids=ids.replace("'","")
     ids=ids.replace(" ","")
     ids=ids.replace("[","")
     ids=ids.replace("]","")
-    ids = ids.split(',')
-    numbs = json.loads(numbs)
-    for i in range(0,len(numbs)):
-        selling = db.session.query(Recolte).filter(Recolte.idRecolte == ids[i]).first()
-        buy_product(numbs[i]*selling.qtt_recommandee,selling)
-    return redirect(url_for('controller.suggestion'))
+    return ids.split(',')
 
 def buy_product(quantity,selling):
     if selling is None or quantity > selling.quantity or quantity <= 0 or selling.jardin != current_user.jardin:
@@ -78,6 +88,9 @@ def buy_product(quantity,selling):
         db.session.add(commande)
         db.session.commit()
 
+def creation_dictionnaire(panier):
+    return dict((i[3], [panier.count(i),i]) for i in panier)
+
 def prixPanier(panier):
     somme = 0
     for i in range(0,len(panier)):
@@ -85,30 +98,41 @@ def prixPanier(panier):
     return somme
     
 def glouton_solution(recoltes,solde) :
-    tab = []
 
-    for i in range(0,len(recoltes[:])): # création de lots en fonction de la quantité recommandée
-        for j in range(0,int(recoltes[i].quantity/recoltes[i].qtt_recommandee)):
-            tab.append([recoltes[i].idCatalogue,recoltes[i].cost*recoltes[i].qtt_recommandee,recoltes[i].qtt_recommandee,recoltes[i].idRecolte])
-
-    tri_bulle(tab) # tri des lots en fonction du prix pour minimiser le prix du panier final
-    ordre = triLoop(tab,[]) # tri pour maximiser la diversité
+    tab = creation_lots(recoltes) # First step : creation of batches according to the recommended quantity
     
+    tri_bulle(tab) # Second step : sorting lots by price to minimize the final basket price
+    
+    ordre = triLoop(tab,[]) # Third step : sorting to maximize diversity
+
+    panier = remplir_panier(ordre,solde) # Fourth step :creation of the basket according to the limit of the balance
+
+    return panier
+
+def creation_lots(recoltes):
+    tab = []
+    for i in range(0,len(recoltes[:])):
+        if(recoltes[i].cost!=None and recoltes[i].quantity!=None and recoltes[i].qtt_recommandee != None and recoltes[i].idCatalogue!=None and recoltes[i].idRecolte!=None):
+            for j in range(0,int(recoltes[i].quantity/recoltes[i].qtt_recommandee)):
+                tab.append([recoltes[i].idCatalogue,recoltes[i].cost*recoltes[i].qtt_recommandee,recoltes[i].qtt_recommandee,recoltes[i].idRecolte])
+    return tab
+
+def remplir_panier(ordre,solde):
     panier = []
-    for i in range(0,len(ordre)): # création du panier selon la limite du solde
+    for i in range(0,len(ordre)):
         if(solde-ordre[i][1]>0):
             solde = solde - ordre[i][1]
             panier.append(ordre[i])
     return panier
 
-def tri_bulle(tab): # tri a bulle
+def tri_bulle(tab): # bubble sorting
     n = len(tab)
     for i in range(n):
         for j in range(0, n-i-1):
             if tab[j][1] > tab[j+1][1] :
                 tab[j], tab[j+1] = tab[j+1], tab[j]
 
-def triLoop(tab,last): # tri récursif des lots afin de maximiser la diversité
+def triLoop(tab,last): # recursive sorting of batches to maximize diversity
     liste = tab[:]
     memoire = []
     panier = []
