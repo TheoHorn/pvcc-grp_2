@@ -10,6 +10,7 @@ class Jardin(db.Model):
     description = db.Column(db.String(200), default="Un jardin bien sympa !")
     ville = db.Column(db.String(100), default="")
     adresse = db.Column(db.String(100), default="")
+    nbParticipants = db.Column(db.Integer, default=0)
 
     recolte = db.relationship("Recolte", back_populates="jardin")
     annonce = db.relationship("Annonce", back_populates="jardin", uselist=False)
@@ -32,3 +33,6 @@ class Jardin(db.Model):
     
     def update_city(self, new_city):
         self.ville = new_city
+
+    def update_nbParticipants(self, nb):
+        self.nbParticipants = int(nb)
