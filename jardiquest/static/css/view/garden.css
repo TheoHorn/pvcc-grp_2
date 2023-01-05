@@ -126,6 +126,7 @@
     padding: 8px;
     font-size: medium;
     width: 5em;
+    height: 3em;
 }
 
 .bottom{
@@ -133,14 +134,6 @@
 }
 
 a:link { text-decoration: none; }
-
-@media only screen and (max-width: 850px) {
-    .handler-display-data {
-        display: grid;
-        height: 100%;
-        grid-template-rows: 30% 70%;
-    }
-}
 
 .garden-name {
     margin: 0;
