@@ -116,7 +116,9 @@ def choose(choose):
 @login_required
 def leave(id):
     jar = Jardin.query.filter(Jardin.idJardin == id).first()
-    jar.update_nbParticipants(int(jar.nbParticipants) - 1)
+    nb = int(jar.nbParticipants) - 1
+    if(nb<0) : nb=0
+    jar.update_nbParticipants(nb)
     current_user.update_garden('')
     db.session.commit()
     flash(f"Vous avez quitté le jardin")
