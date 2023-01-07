@@ -17,7 +17,7 @@ def display_sell_catalogue():
         abort(403)
 
     catalogue = db.session.query(Catalogue.name, Catalogue.imagePath, Catalogue.type, func.round((func.sum(Recolte.cost * Recolte.quantity)/func.sum(Recolte.quantity)),2).label("mean_cost"), func.min(Recolte.cost).label("min_cost"), func.sum(Recolte.quantity).label("quantity")).join(Recolte, isouter=True).group_by(Catalogue.name).all()
-    return render_template('sell_catalogue.html', catalogue = catalogue, garden = current_user.jardin)
+    return render_template('sell_catalogue.html', catalogue = catalogue, garden = current_user.jardin,user = current_user)
 
 
 
@@ -29,7 +29,7 @@ def display_sell_product(product):
     product = db.session.query(Catalogue.idCatalogue, Catalogue.name, Catalogue.imagePath, Catalogue.description, Catalogue.description_source).filter(Catalogue.name == product).first()
     infos = db.session.query(func.min(Recolte.cost).label("min_cost")).filter(Recolte.idCatalogue == product.idCatalogue, Recolte.idJardin == current_user.jardin.idJardin).group_by(Recolte.idCatalogue).first()
     sellings = db.session.query(Recolte.idRecolte, Recolte.quantity, Recolte.cost, Recolte.date).filter(Recolte.idCatalogue == product.idCatalogue, Recolte.idJardin == current_user.jardin.idJardin).all()
-    return render_template('sell_product.html', product = product, infos=infos, sellings = sellings, garden = current_user.jardin)
+    return render_template('sell_product.html', product = product, infos=infos, sellings = sellings, garden = current_user.jardin,user = current_user)
 
 
 def sell_product(product, quantity, cost):
@@ -66,7 +66,7 @@ def display_market():
         return redirect(url_for('controller.garden'))
 
     produits = db.session.query(func.min(Recolte.cost).label("cheaper_price"), func.sum(Recolte.quantity).label("quantity"), Catalogue.name, Catalogue.type, Catalogue.imagePath).join(Catalogue).group_by(Catalogue.name).filter(Recolte.idJardin == garden.idJardin).having(func.sum(Recolte.quantity) >= 0.1).all()
-    return render_template('market.html', produits=produits, garden=garden)
+    return render_template('market.html', produits=produits, garden=garden,user = current_user)
 
 
 
@@ -120,7 +120,7 @@ def display_orders():
     if current_user.role != "Proprietaire":
         abort(403)
     orders = db.session.query(Commande.idCommande, Commande.quantite, Commande.acheteur.label("email"), User.name.label("username"), Commande.dateAchat, Commande.cout, Catalogue.name.label("productName")).join(Recolte.commande).join(Catalogue).join(User).filter(Recolte.idJardin == garden.idJardin, Commande.traitee == False).order_by(Commande.dateAchat).all()
-    return render_template('orders.html', orders=orders, garden=garden)
+    return render_template('orders.html', orders=orders, garden=garden,user = current_user)
 
 
 def confirm_order(order_id):

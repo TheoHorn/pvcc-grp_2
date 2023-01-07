@@ -1,3 +1,8 @@
+{%if user%}
+    {% if user.role =='Proprietaire' %}
+        {% set owner=1 %}
+    {% endif %}
+{% endif %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
 
 <div class="topnav" id="topnav">

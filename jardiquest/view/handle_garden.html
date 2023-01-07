@@ -1,13 +1,9 @@
 {% extends "_base.html" %}
 {% set active='handlegarden' %}
-{% if user.role =='Gerant' %}
-    {% set owner=1 %}
-{% endif %}
 {% include "_navbar.html" %}
 {% block content %}
 
 <title>Profil</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/view/profile.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/handle_garden.css') }}">
 
 
@@ -66,20 +62,27 @@
                 </form>
 
             </div>
+            
             <div class="button-panel">
 
                 <button class="green" onclick="updateGarden()">Enregistrer les modifications du Jardin</button>
-                
-                <form action="/handle_garden/add_quest" method="get">
-                    <button class="green" type="submit" >Ajouter une quête</button>
-                </form>
-                
-                
                 <button class="red" onclick="deleteGarden()">Supprimer le Jardin</button>
                 <form action="/handle_garden" method="post" id="delete-garden">
                     <input type="hidden" name="_method" value="delete" />
                 </form>
 
+            </div>
+            <hr class="litle-hr">
+            <div class="button-panel">
+                <form action="/handle_garden/add_quest" method="get">
+                    <button class="third" type="submit" >Ajouter une quête</button>
+                </form>
+                <form action="/market/catalogue" method="get">
+                    <button class="third" type="submit" >Déposer des récoltes</button>
+                </form>
+                <form action=" /market/orders" method="get">
+                    <button class="third" type="submit" >Finaliser les commandes</button>
+                </form>
             </div>
         {% endif %}
     </div>

@@ -22,7 +22,7 @@ def list_garden_quest_model():
         quests = Quete.query.filter_by(id_jardin=garden.idJardin, id_user = None, accomplished=False).all()
         quests.sort(key=lambda x: x.timeBeforeExpiration - (date.today() - x.startingDate).days)
         quests = [quest for quest in quests if not ((date.today() - quest.startingDate).days > quest.timeBeforeExpiration) and quest.startingDate <=  date.today()]
-        return render_template("quests_list_garden.html", quests=quests, today = date.today(), garden = garden)
+        return render_template("quests_list_garden.html", quests=quests, today = date.today(), garden = garden,user = current_user)
 
 
 # ------------------------------------------ User quests ------------------------------------------
