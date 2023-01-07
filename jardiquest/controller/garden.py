@@ -52,7 +52,7 @@ def garden():
 
     table = []
     for i in jardins :
-        row = [i.name,i.description,i.moneyName,i.ville,i.adresse,i.idJardin]
+        row = [i.name,i.description,i.moneyName,i.ville,i.adresse,i.nbParticipants,i.idJardin]
         table.append(row)
 
     return render_template('garden.html', jsTable = table, user=current_user, jardin=jardin_de_user, total=len(table))
@@ -86,7 +86,7 @@ def new_garden():
         id = generateId(nom)
 
         # create it
-        new_garden = Jardin(idJardin=id, name=nom, moneyName=monnaie, description=description, adresse=adresse, ville=ville)
+        new_garden = Jardin(idJardin=id, name=nom, moneyName=monnaie, description=description, adresse=adresse, ville=ville, nbParticipants=1)
         db.session.add(new_garden)
         
         # update user status
@@ -100,8 +100,10 @@ def new_garden():
     return render_template("new_garden.html", user=current_user)
 
 @app.route('/change/<choose>')
+@login_required
 def choose(choose):
     jar = Jardin.query.filter_by(idJardin=choose).first()
+    jar.update_nbParticipants(int(jar.nbParticipants) + 1)
     flash(f"Vous avez rejoint le jardin \"{jar.name}\" en tant que participant")
  
     # update user status
@@ -110,14 +112,20 @@ def choose(choose):
     db.session.commit()
     return redirect(url_for('controller.garden'))   
 
-@app.route('/leave')
-def leave():
+@app.route('/leave/<id>')
+@login_required
+def leave(id):
+    jar = Jardin.query.filter(Jardin.idJardin == id).first()
+    nb = int(jar.nbParticipants) - 1
+    if(nb<0) : nb=0
+    jar.update_nbParticipants(nb)
     current_user.update_garden('')
     db.session.commit()
     flash(f"Vous avez quitté le jardin")
     return redirect(url_for('controller.garden'))  
 
 @app.route('/delete')
+@login_required
 def delete():
     Jardin.query.filter(Jardin.idJardin == current_user.idJardin).delete()
     current_user.update_garden('')
