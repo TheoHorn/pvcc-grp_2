@@ -50,7 +50,7 @@ def cancel_selling(selling_id):
     
     commande = db.session.query(Commande).filter(Commande.idRecolte == recolte.idRecolte).first()
     if commande is not None:
-        flash("Vous ne pouvez pas annuler une vente qui a déjà été commandée", 'error')
+        flash("Vous ne pouvez pas annuler une vente pour laquelle une commande a déjà été effectuée.", 'error')
         return redirect(url_for('controller.sell_product', product = recolte.catalogue.name))
     
     db.session.delete(recolte)
