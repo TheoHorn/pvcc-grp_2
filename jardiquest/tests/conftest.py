@@ -1,6 +1,8 @@
+import os
+
 import pytest
 from jardiquest.setup_sql import db
-from jardiquest.setup_flask import create_app
+from jardiquest.setup_flask import create_app, ROOT_DIR
 
 
 # Allow to not write the lines in the test_function everywhere but instead just pass testing_client in argument
@@ -13,7 +15,7 @@ def app():
 
 @pytest.fixture(scope='class', autouse=True)
 def database(app):
-    f = open('jardiquest/tests/dataset/dataset.sqlite')
+    f = open( os.path.join(ROOT_DIR, 'tests/dataset/dataset.sqlite') )
     db.create_all()
     for l in f.readlines():
         print(l)

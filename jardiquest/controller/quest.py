@@ -1,6 +1,7 @@
-from flask import render_template, redirect, url_for, session
-from flask_login import current_user, login_required
+from flask_login import login_required
+
 from . import app
+
 
 @app.get("/garden/quests")
 @login_required
@@ -18,13 +19,13 @@ def list_user_quests():
     return list_user_quests_model()
 
 
-
 @app.get("/quest/<string:quest_id>")
 @login_required
 def display_quest(quest_id):
     """Display a quest with a specific id"""
     from jardiquest.model.path.quest_model import display_quest_model
     return display_quest_model(quest_id)
+
 
 @app.post("/quest/<string:quest_id>/accept")
 @login_required
@@ -33,12 +34,14 @@ def accept_quest(quest_id):
     from jardiquest.model.path.quest_model import accept_quest_model
     return accept_quest_model(quest_id)
 
+
 @app.post("/quest/<string:quest_id>/cancel")
 @login_required
 def cancel_quest(quest_id):
     """Cancel a quest with a specific id"""
     from jardiquest.model.path.quest_model import cancel_quest_model
     return cancel_quest_model(quest_id)
+
 
 @app.post("/quest/<string:quest_id>/complete")
 @login_required

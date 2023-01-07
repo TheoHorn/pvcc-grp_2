@@ -1,6 +1,3 @@
-from flask import *
-from flask_login import *
-
 from jardiquest.controller import app
 
 
@@ -9,6 +6,7 @@ def blog():
     """Print the blog page"""
     from jardiquest.model.path.blog_model import render_blog
     return render_blog()
+
 
 @app.post('/blog')
 def add_blog():
