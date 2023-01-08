@@ -20,6 +20,10 @@ def suggestion_model():
         recoltes = []
 
     solde = current_user.balance  # money the customer has
+    if request.method == 'POST':
+        if request.form['balance'] !='' :
+            solde = int(float(request.form['balance']))
+
     if solde is None:
         solde = 0
 

@@ -5,8 +5,8 @@ Delete from catalogue;
 Delete from recolte;
 Delete from user;
 
-Insert into jardin values(1,"Jardiland","dollars", "a descr", "Champenoux","3 rue des champs");
-Insert into jardin values(2,"GardeningCity","golds", "another descr", "Nancy", "chez moi");
+Insert into jardin values(1,"Jardiland","dollars", "a descr", "Champenoux","3 rue des champs", 2);
+Insert into jardin values(2,"GardeningCity","golds", "another descr", "Nancy", "chez moi", 0);
 
 Insert into user values('a@gmail.com','sha256$9cfxB8kmSEenq16c$9b3b4f6d3b2ff92a7006290c78329265d1b4f455cfe70fc65ae2411e524853de','a','Proprietaire',1000,CURRENT_DATE,1);
 Insert into user values('b@gmail.com','sha256$9cfxB8kmSEenq16c$9b3b4f6d3b2ff92a7006290c78329265d1b4f455cfe70fc65ae2411e524853de','b','Participant',1000,CURRENT_DATE,1);
