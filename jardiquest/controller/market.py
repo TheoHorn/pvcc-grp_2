@@ -1,6 +1,8 @@
-from flask import redirect, url_for, session, request
+from flask import redirect, url_for, request
 from flask_login import current_user, login_required
+
 from . import app
+
 
 @app.get('/market/catalogue')
 @login_required
@@ -21,7 +23,6 @@ def sell_product(product):
         return display_sell_product(product)
     else:
         return redirect(url_for('login'))
-
 
 
 @app.post('/market/catalogue/sell/<string:product>')
@@ -77,6 +78,7 @@ def market_buy(product):
     else:
         return redirect(url_for('login'))
 
+
 @app.get('/market/orders')
 @login_required
 def display_orders():
@@ -85,6 +87,7 @@ def display_orders():
         return display_orders()
     else:
         return redirect(url_for('login'))
+
 
 @app.post('/market/orders/<string:order_id>/confirm')
 @login_required

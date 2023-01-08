@@ -13,7 +13,7 @@ def test_glouton_suggestion_zero():
 def test_tri_loop():
     tab = [[6],[6],[6],[6],[6],[5],[5],[5],[5],[1],[2],[2],[2],[3],[3],[1],[1],[4],[4],[7]]
     res = [[6],[5],[1],[2],[3],[4],[7],[6],[5],[2],[3],[1],[4],[6],[5],[2],[1],[6],[5],[6]]
-    assert triLoop(tab,[]) == res
+    assert tri_loop(tab, []) == res
 
 def test_creation_lots_none():
     recoltes = [Recolte(idRecolte=uuid.uuid1()),Recolte(idRecolte=uuid.uuid1())]
@@ -26,7 +26,7 @@ def test_tri_bulle():
     assert tab == res
 
 def test_prix_pannier_empty():
-    assert prixPanier([]) == 0
+    assert prix_panier([]) == 0
 
 def test_creation_dictionnaire_empty():
     assert creation_dictionnaire([]) == {}
