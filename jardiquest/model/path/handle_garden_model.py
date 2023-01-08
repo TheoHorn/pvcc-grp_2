@@ -1,11 +1,14 @@
 from http.client import HTTPException
+import uuid
+from datetime import datetime,timedelta
 
-from flask import request, render_template, redirect, url_for
+from flask import abort, flash, request, render_template, redirect, url_for
 from flask_login import current_user
 
 from jardiquest.controller import handling_status_error
 from jardiquest.model.database.entity.jardin import Jardin
 from jardiquest.model.database.entity.user import User
+from jardiquest.model.database.entity.quete import Quete
 from jardiquest.setup_sql import db
 
 
@@ -47,3 +50,30 @@ def delete_model_garden(jardin: Jardin, user: User):
     db.session.delete(jardin)
     db.session.commit()
     return redirect(url_for('controller.garden'))
+
+def add_garden_quest_print():
+    idJar = current_user.idJardin
+    jardin = Jardin.query.filter_by(idJardin=idJar).first()
+    return render_template('create_quest.html',user=current_user,jardin=jardin)
+
+def add_garden_quest(title: str, description: str,reward: int,duration: int,periodic: bool, start: str, expiration:str):
+    start= datetime(start)
+    expiration = datetime(expiration)
+    if start < expiration:
+        
+        timeBeforeExpiration = expiration - start
+        tbf = timeBeforeExpiration.days
+        new_quest = Quete(idQuete=uuid.uuid1().hex, title=title, description=description,
+                              periodicity=periodic,
+                              estimatedTime=duration,
+                              timeBeforeExpiration=tbf, reward=reward,
+                              id_jardin=current_user.id_jardin,
+                              accomplished=False,
+                              startingDate=start)
+        db.session.add(new_quest)
+        db.session.commit()
+        return redirect(url_for("controller.your_garden"))
+    else :
+        flash("Les dates ne sont pas bien ordonnées")
+        return redirect(url_for('controller.add_quest_garden'))
+    

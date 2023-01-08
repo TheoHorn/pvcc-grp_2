@@ -20,3 +20,22 @@ def post_garden():
     from jardiquest.model.path.handle_garden_model import handle_garden_handler_model
     return handle_garden_handler_model(methods)
 
+@app.get('/handle_garden/add_quest')
+@login_required
+def add_quest_garden():
+
+    from jardiquest.model.path.handle_garden_model import add_garden_quest_print
+    return add_garden_quest_print()
+
+@app.post('/handle_garden/add_quest')
+@login_required
+def post_add_quest_garden():
+    title = request.form['title']
+    description = request.form['description']
+    reward = request.form['sum']
+    duration = request.form['duration']
+    periodic = request.form.get('periodic') != None
+    start = request.form['start']
+    expiration = request.form['expiration']
+    from jardiquest.model.path.handle_garden_model import add_garden_quest
+    return add_garden_quest(title,description,reward,duration,periodic,start,expiration)

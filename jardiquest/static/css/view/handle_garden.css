@@ -1,6 +1,5 @@
 .portal-container {
     align-self: center;
-    margin: 6% auto auto;
     width: 100vw;
     display: flex;
     padding: 2em 10%;
@@ -127,3 +126,29 @@
     border-bottom: 2px solid var(--green);
 }
 
+.form-add-quest {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.form-add-quest > .big {
+    margin: 1% 10%
+}
+
+.form-add-quest > .small {
+    margin: 1% 37%
+}
+
+.inline {
+    display: flex;
+    flex-direction: row;
+}
+
+.inline > p {
+    padding:0% 1%;
+}
+
+.not_required {
+    font-style: italic;
+}

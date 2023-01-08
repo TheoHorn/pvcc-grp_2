@@ -1,13 +1,9 @@
 {% extends "_base.html" %}
 {% set active='blog' %}
-{% if user.role =='Gerant' %}
-    {% set owner=1 %}
-{% endif %}
 {% include "_navbar.html" %}
 {% block content %}
 
 <title>Blog</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/view/profile.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/blog.css') }}">
 
 
@@ -32,7 +28,7 @@
             
             <form class="new-messages" action="/blog" method="post">
                 <p>Annoncez-ici les informations importantes pour le jardin !</p>
-                <textarea id="msg" name="msg" maxlength="30"></textarea>
+                <textarea id="msg" name="msg" maxlength="1000"></textarea>
                 <button class="msg-button">Envoyez votre annonce</button>
             </form>
             
