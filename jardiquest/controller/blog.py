@@ -1,5 +1,6 @@
 from jardiquest.controller import app
-
+from flask_login import login_required, current_user
+from flask import redirect, url_for, flash
 
 @app.get('/blog')
 @login_required
