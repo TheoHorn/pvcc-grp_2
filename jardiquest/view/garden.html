@@ -77,7 +77,8 @@
             <!-- To leave a garden we must be a participant that is in a garden -->
             {% if idJardin|length != 0 %}
             {% if user.role == 'Participant' %}
-            <button class="button_edit"><a href="{{url_for('controller.leave',id=jardin.idJardin)}}">Quitter</a></button>
+            <button class="button_edit"><a
+                    href="{{url_for('controller.leave',id=jardin.idJardin)}}">Quitter</a></button>
             {% endif %}
             {% endif %}
         </div>
@@ -137,89 +138,90 @@
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        var init = -10
-        var counts = JSON.parse('{{jsTable|tojson|safe}}')
-        const sizeCounts = '{{total}}'
-        const role = '{{user.role}}'
-        numberItems = 10
-        nextPage()
+<script>
+    var init = -10
+    var counts = JSON.parse('{{jsTable|tojson|safe}}')
+    const sizeCounts = '{{total}}'
+    const role = '{{user.role}}'
+    numberItems = 10
+    nextPage()
 
-        function changeId(id) {
-            var element = document.getElementById('idGarden');
-            element.innerHTML = id;
-        }
+    function changeId(id) {
+        var element = document.getElementById('idGarden');
+        element.innerHTML = id;
+    }
 
-        function changeGarden() {
-            var element = document.getElementById('idGarden');
-            link = '/change/' + element.innerHTML
-            window.location = link;
-        }
+    function changeGarden() {
+        var element = document.getElementById('idGarden');
+        link = '/change/' + element.innerHTML
+        window.location = link;
+    }
 
-        function emptyTable() {
+    function emptyTable() {
+        elt = document.getElementById('body')
+        elt.innerHTML = ""
+    }
+
+    // next page is used to display the nexts rows in the table
+    function nextPage() {
+        if (init + numberItems < sizeCounts) {
+            init = init + numberItems
+            emptyTable()
             elt = document.getElementById('body')
-            elt.innerHTML = ""
-        }
-
-        // next page is used to display the nexts rows in the table
-        function nextPage() {
-            if (init + numberItems < sizeCounts) {
-                init = init + numberItems
-                emptyTable()
-                elt = document.getElementById('body')
-                liste = counts.slice(init, init + numberItems)
-                changeResultat(init + numberItems)
-                liste.forEach(
-                    element => addRow(element, elt)
-                );
-            }
-        }
-
-        function previousPage() {
-            if (init - numberItems >= 0) {
-                emptyTable()
-                elt = document.getElementById('body')
-                listePrev = counts.slice(init - numberItems, init)
-                changeResultat(init)
-                listePrev.forEach(
-                    element => addRow(element, elt)
-                );
-                init = init - numberItems
-            }
-        }
-
-        function chooseButton(row) {
-            const choose = '<button type="button" onclick="changeId(\'' + row[6] + '\')" data-toggle="modal" data-target="#myModal">Choisir</button>'
-            return choose
-        }
-
-        function changeResultat(displayed) {
-            res = document.getElementById('resultats')
-            res.innerHTML = 'Résultats : ' + Math.min(displayed, sizeCounts) + '/' + sizeCounts
-        }
-
-        // use to insert a row in the table
-        function addRow(row, elt) {
-
-            if (role == 'Participant') {
-                if (!row[6].includes('button type="button"')) {
-                    choose = chooseButton(row)
-                    row.pop()
-                    row.push(choose)
-                }
-            } else {
-                row = row.slice(0, 6)
-            }
-
-            var ligne = elt.insertRow(-1);
-
-            row.forEach(
-                element => ligne.insertCell(-1).innerHTML = element,
+            liste = counts.slice(init, init + numberItems)
+            changeResultat(init + numberItems)
+            liste.forEach(
+                element => addRow(element, elt)
             );
-
-            var table = document.getElementById('body');
-            table.setAttribute("class", "cells");
         }
-    </script>
-    {% endblock %}
+    }
+
+    function previousPage() {
+        if (init - numberItems >= 0) {
+            emptyTable()
+            elt = document.getElementById('body')
+            listePrev = counts.slice(init - numberItems, init)
+            changeResultat(init)
+            listePrev.forEach(
+                element => addRow(element, elt)
+            );
+            init = init - numberItems
+        }
+    }
+
+    function chooseButton(row) {
+        const choose = '<button type="button" onclick="changeId(\'' + row[6] + '\')" data-toggle="modal" data-target="#myModal">Choisir</button>'
+        return choose
+    }
+
+    function changeResultat(displayed) {
+        res = document.getElementById('resultats')
+        res.innerHTML = 'Résultats : ' + Math.min(displayed, sizeCounts) + '/' + sizeCounts
+    }
+
+    // use to insert a row in the table
+    function addRow(row, elt) {
+
+        if (role == 'Participant') {
+            if (!row[6].includes('button type="button"')) {
+                choose = chooseButton(row)
+                row.pop()
+                row.push(choose)
+            }
+        } else {
+            row = row.slice(0, 6)
+        }
+
+        var ligne = elt.insertRow(-1);
+
+        row.forEach(
+            element => ligne.insertCell(-1).innerHTML = element,
+        );
+
+        var table = document.getElementById('body');
+        table.setAttribute("class", "cells");
+    }
+</script>
+{% endblock %}
