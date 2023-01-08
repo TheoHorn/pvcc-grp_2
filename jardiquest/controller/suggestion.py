@@ -3,7 +3,7 @@ from flask_login import *
 from . import app
 
 
-@app.route('/suggestion')
+@app.route('/suggestion', methods=['GET', 'POST'])
 @login_required
 def suggestion():
     from jardiquest.model.path.suggestion_model import suggestion_model
@@ -15,4 +15,3 @@ def suggestion():
 def buy(numbs, ids):
     from jardiquest.model.path.suggestion_model import buy_model
     return buy_model(numbs, ids)
-
