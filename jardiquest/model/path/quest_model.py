@@ -89,7 +89,7 @@ def display_quest_model(quest_id: int):
     """Display a quest with a specific id"""
     quest = Quete.query.get(quest_id)
     if quest.id_jardin != current_user.jardin.idJardin or (
-            quest.user != current_user and quest.user is not None) or quest.accomplished:
+            quest.user != current_user and quest.user is not None) or quest.accomplished or quest.startingDate > date.today() or (date.today() - quest.startingDate).days > quest.timeBeforeExpiration:
         abort(403)
     garden = Jardin.query.get(quest.id_jardin)
     return render_template("quest_details.html", quest=quest, today=date.today(), garden=garden,
