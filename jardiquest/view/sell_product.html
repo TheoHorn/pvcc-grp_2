@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 {% block content %}
 
-{% set active="market" %}
+{% set active="handlegarden" %}
 {% include "_navbar.html" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/market/product.css') }}">
 
@@ -20,20 +20,21 @@
 
 <div id="market_product"></div>
     <div id="market_product_presentation">
+        <a href="{{ url_for('controller.sell_catalogue') }}"><img src="{{ url_for('static', filename='image/icon/back-arrow-icon.png') }}" alt="back arrow" id="back_arrow"></a>
         <h2 id="product_name">{{ product.name }}</h2>
         <div id="product_desc_img">
             <img src="{{ url_for('static', filename='image/vegetables/' + product.imagePath) }}" alt="image de {{ product.name }}" id="product_image">
             <p id="product_desc">{{ product.description }} <a id="product_desc_source" href="{{ product.description_source }}">(source)</a></p> 
         </div>
-    </div>
+    </div> 
     
     <h4>Vendre : </h4>
     <div id="sell">
         <form id="sell_product" action="{{ url_for('controller.sell_product_post', product = product.name) }}" method="post">
                 <label for="sell_quantity">Quantité à vendre en kg :</label>
-                <input type="number" name="sell_quantity" id="sell_quantity" value="0.1" step="0.1" min="0.1">
+                <input type="number" name="sell_quantity" id="sell_quantity" value="0.01" step="0.01" min="0.1">
                 <label for="sell_price">Prix de vente par kg :</label>
-                <input type="number" name="sell_price" id="sell_price" step="0.1" min="0" {% if infos.min_cost %} value="{{ '%.2f' % infos.min_cost }}" {% else %} value="{{ '%.2f' % 0 }}" {% endif %}>
+                <input type="number" name="sell_price" id="sell_price" step="0.01" min="0" {% if infos.min_cost %} value="{{ '%.2f' % infos.min_cost }}" {% else %} value="{{ '%.2f' % 0 }}" {% endif %}>
                 <input type="submit" id="sell_button" value="Vendre">
         </form>
     </div>

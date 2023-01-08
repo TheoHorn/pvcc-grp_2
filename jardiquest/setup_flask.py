@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 
 import pandas as pd
@@ -10,7 +11,7 @@ from jardiquest import controller, model
 from jardiquest.controller import handling_status_error
 from jardiquest.model.database.entity.user import User
 from jardiquest.model.database.entity.catalogue import Catalogue
-from jardiquest.setup_sql import db, database_path
+from jardiquest.setup_sql import db, database_path, database_path_test
 
 # do not remove this import allows SQLAlchemy to find the table
 from jardiquest.model.database.entity import annonce, catalogue, jardin, quete, recolte, commande
@@ -18,10 +19,18 @@ from jardiquest.model.database.entity import annonce, catalogue, jardin, quete, 
 from flask_apscheduler import APScheduler
 from jardiquest.model.database.entity.quete import update_quests
 
+# To find the root of the project everywhere
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # create the flask app (useful to be separate from the app.py
 # to be used in the test and to put all the code in the jardiquest folder
-def create_app():
-    db_path = 'sqlite://' + database_path
+
+
+def create_app(test):
+    if test:
+        db_path = 'sqlite://' + database_path_test
+    else:
+        db_path = 'sqlite://' + database_path
     # config the app to make app.py the start point but the actual program is one directory lower
     flask_serv_intern = Flask(__name__,
                               static_folder="static",
@@ -32,11 +41,11 @@ def create_app():
     flask_serv_intern.register_blueprint(controller.app)
     flask_serv_intern.register_error_handler(HTTPException, handling_status_error)
     db.init_app(flask_serv_intern)
-
     with flask_serv_intern.app_context():
         db.create_all()
-        if db.session.query(Catalogue).first() == None:
-            df = pd.read_csv('data_vegetables/data_recoltes.csv', sep=";", header=0)
+
+        if db.session.query(Catalogue).first() is None:
+            df = pd.read_csv(os.path.join(ROOT_DIR, '../data_vegetables/data_recoltes.csv'), sep=";", header=0)
             df.to_sql('catalogue', db.engine, if_exists="append", index=False)
 
 
@@ -44,7 +53,7 @@ def create_app():
     scheduler = APScheduler()
     scheduler.init_app(flask_serv_intern)
 
-    @scheduler.task("interval",hours=12)  
+    @scheduler.task("interval",hours=24)  
     def update_state_quests():
         update_quests(scheduler.app)
  

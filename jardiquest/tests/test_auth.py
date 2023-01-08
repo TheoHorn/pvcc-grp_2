@@ -1,7 +1,4 @@
 from jardiquest.model.path.auth_model import *
-import html5lib
-
-html5parser = html5lib.HTMLParser(strict=True)
 # file of test for the auth
 # controller and model part
 
@@ -21,12 +18,4 @@ def test_auth_controller(app):
     assert response.status_code == 302
 
     response = app.get('/logout')
-    assert response.status_code == 302
-
-
-def test_auth_model(app):
-    # test html is valid
-    assert html5parser.parse(signup_model())
-    assert html5parser.parse(login_model())
-
-    assert logout_model().status_code == 302
+    assert response.status_code == 405

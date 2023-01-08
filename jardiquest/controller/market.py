@@ -1,6 +1,8 @@
-from flask import redirect, url_for, session, request
+from flask import redirect, url_for, request
 from flask_login import current_user, login_required
+
 from . import app
+
 
 @app.get('/market/catalogue')
 @login_required
@@ -21,7 +23,6 @@ def sell_product(product):
         return display_sell_product(product)
     else:
         return redirect(url_for('login'))
-
 
 
 @app.post('/market/catalogue/sell/<string:product>')
@@ -77,6 +78,7 @@ def market_buy(product):
     else:
         return redirect(url_for('login'))
 
+
 @app.get('/market/orders')
 @login_required
 def display_orders():
@@ -86,11 +88,21 @@ def display_orders():
     else:
         return redirect(url_for('login'))
 
+
 @app.post('/market/orders/<string:order_id>/confirm')
 @login_required
 def confirm_order(order_id):
     if current_user.is_authenticated():
         from jardiquest.model.path.market_model import confirm_order
         return confirm_order(order_id)
+    else:
+        return redirect(url_for('login'))
+
+@app.get('/market/my_orders')
+@login_required
+def user_orders():
+    if current_user.is_authenticated():
+        from jardiquest.model.path.market_model import display_user_orders
+        return display_user_orders()
     else:
         return redirect(url_for('login'))
