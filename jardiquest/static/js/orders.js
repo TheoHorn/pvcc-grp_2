@@ -1,5 +1,6 @@
 parent = document.querySelector("#orders")
-document.querySelector("#orders_sort").onchange = (ev) => {
+if (document.querySelector("#orders_sort") ){
+  document.querySelector("#orders_sort").onchange = (ev) => {
     element = ev.target
     nodes = parent.querySelectorAll(".order")
     array = []
@@ -13,6 +14,8 @@ document.querySelector("#orders_sort").onchange = (ev) => {
       parent.appendChild(node)
     });
 }
+}
+
 
 function sort_by_user(array) {
     array.sort((a, b) => {
@@ -25,3 +28,25 @@ function sort_by_date(data){
       return new Date(a.querySelector(".date").innerHTML) - new Date(b.querySelector(".date").innerHTML);
     });
   }
+
+
+/* Filter */
+if(document.querySelector("#filter_states")){
+  document.querySelector("#filter_states").onchange = (ev) => {
+    nodes = parent.querySelectorAll(".order")
+    nodes.forEach((node) => {
+        if (node.querySelector(".state_value").innerHTML.toLowerCase() == ev.target.value.toLowerCase()){
+            node.style.display = node.previousDisplay
+        }
+        else if (ev.target.value.toLowerCase() == "all"){
+            node.style.display = node.previousDisplay
+        }
+        else {
+            if(window.getComputedStyle(node).display != "none"){
+                node.previousDisplay = window.getComputedStyle(node).display
+            }
+            node.style.display = "none";
+        }
+    });
+  }
+}

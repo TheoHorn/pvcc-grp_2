@@ -156,3 +156,13 @@ def confirm_order(order_id):
     order.traitee = True
     db.session.commit()
     return redirect(url_for('controller.display_orders'))
+
+
+def display_user_orders():
+    garden = current_user.jardin
+    if garden is None:
+        flash("Vous devez d'abord créer ou rejoindre un jardin pour accéder à cette page", "error")
+        return redirect(url_for('controller.garden'))
+    else:
+        orders = db.session.query(Commande.idCommande, Commande.quantite, Commande.traitee, Commande.dateAchat, Commande.cout, Catalogue.name.label("productName")).join(Commande.recolte).join(Catalogue).filter(Commande.acheteur == current_user.email, Recolte.jardin == current_user.jardin).order_by(Commande.dateAchat).all()
+        return render_template('user_orders.html', orders=orders, garden=garden)
