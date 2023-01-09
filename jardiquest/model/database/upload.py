@@ -16,9 +16,11 @@ def upload_file(request, path, filename_stored):
     if file.filename == '':
         flash('Aucun fichier sélectionné')
         return False
+
     if file and allowed_file(file.filename):
         file.save(os.path.join(UPLOAD_FOLDER, path, filename_stored))
         return True
+    return False
 
 
 def delete_file(path, filename):

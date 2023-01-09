@@ -184,6 +184,8 @@ def modify_garden_model():
         jardin.update_address(adresse)
         jardin.update_city(ville)
 
+        print(upload_file(request, 'garden', jardin.idJardin))
+
         db.session.commit()
 
         flash(f"Le jardin a été modifié avec succès")
