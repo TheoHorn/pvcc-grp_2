@@ -165,4 +165,4 @@ def display_user_orders():
         return redirect(url_for('controller.garden'))
     else:
         orders = db.session.query(Commande.idCommande, Commande.quantite, Commande.traitee, Commande.dateAchat, Commande.cout, Catalogue.name.label("productName")).join(Commande.recolte).join(Catalogue).filter(Commande.acheteur == current_user.email, Recolte.jardin == current_user.jardin).order_by(Commande.dateAchat).all()
-        return render_template('user_orders.html', orders=orders, garden=garden,user=current_user, user = current_user)
+        return render_template('user_orders.html', orders=orders, garden=garden,user=current_user)
