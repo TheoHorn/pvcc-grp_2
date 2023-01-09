@@ -130,20 +130,20 @@
 .button{
     margin: 3px 10px 3px 0;
     padding: 8px;
+    width: 6em;
     font-size: medium;
-    width: 5em;
 }
 
 .button_edit{
     margin: 3px 10px 3px 0;
     padding: 8px;
     font-size: medium;
-    width: 5em;
+    width: 6em;
     height: 3em;
 }
 
 .bottom{
-    padding-top: 30px;
+    margin-top: 95px;
 }
 
 a:link { text-decoration: none; }
