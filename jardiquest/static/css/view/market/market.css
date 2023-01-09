@@ -109,7 +109,8 @@
     grid-row: 1/4;
     object-fit: cover;
     margin : 2px;
-    max-width : 6em;
+    width : 5em;
+    height : 5em;
     border-radius: 80%;
 }
 
