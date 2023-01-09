@@ -326,4 +326,5 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/python,osx,windows,linux,visualstudiocode,pycharm
 # Add by project team
 .idea
-jardiquest/jardiquest.db
+instance
+jardiquest/static/upload/

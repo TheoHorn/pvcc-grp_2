@@ -22,6 +22,10 @@ from jardiquest.model.database.entity.quete import update_quests
 # To find the root of the project everywhere
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# To restrict the format of file being upload
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+UPLOAD_FOLDER = 'jardiquest/static/upload'
+
 # create the flask app (useful to be separate from the app.py
 # to be used in the test and to put all the code in the jardiquest folder
 
@@ -31,6 +35,10 @@ def create_app(test):
         db_path = 'sqlite://' + database_path_test
     else:
         db_path = 'sqlite://' + database_path
+
+
+    size_limit_mo = 10
+
     # config the app to make app.py the start point but the actual program is one directory lower
     flask_serv_intern = Flask(__name__,
                               static_folder="static",
@@ -38,6 +46,9 @@ def create_app(test):
 
     flask_serv_intern.config['SQLALCHEMY_DATABASE_URI'] = db_path
     flask_serv_intern.config['SECRET_KEY'] = '=xyb3y=2+z-kd!3rit)hfrg0j!e!oggyny0$5bliwlb8v76j'
+    flask_serv_intern.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    flask_serv_intern.config['MAX_CONTENT_LENGTH'] = size_limit_mo * 1024 * 1024
+
     flask_serv_intern.register_blueprint(controller.app)
     flask_serv_intern.register_error_handler(HTTPException, handling_status_error)
     db.init_app(flask_serv_intern)

@@ -4,6 +4,7 @@
 {% block content %}
 
 <title>Jardin</title>
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/view/garden.css') }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -24,43 +25,43 @@
 <div class="portal-container">
     <div class="handler-display-data">
         <div class="top">
-            <div class="attributs">
                 {% set name=jardin.name %}
                 {% if name|length != 0 %}
-                <h1 class="garden-name">{{ jardin.name }}</h1>
-            </div>
+                <div class="attributs">
+                    <h1 class="garden-name">{{ jardin.name }}</h1>
+                </div>
 
-            <div class="align-garden-image">
-                 <img src="{{ url_for('static', filename='image/icon/default-garden.png') }}" class="display-garden">
-            </div>
+                <div class="align-garden-image">
+                    {% if ispicture %}
+                     <img src="{{ url_for('static', filename='upload/garden/' + jardin.idJardin) }}" class="display-garden">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='image/icon/default-garden.png') }}" class="display-garden">
+                    {% endif %}
+                </div>
 
 
-            <p class="description-garden">{{jardin.description.replace('\n', '<br>') | safe}}</p>
+                <p class="description-garden">{{jardin.description.replace('\n', '<br>') | safe}}</p>
 
-            <div class="money_city">
-                <b class="brown-orange-style">Adresse :</b>
-                <span>{{jardin.adresse}} {{jardin.ville}}</span>
-                <br>
-                <b class="brown-orange-style">Role :</b>
-                <span>{{user.role}}</span>
-                <br>
-                <b class="brown-orange-style">Monnaie :</b>
-                <span>{{jardin.moneyName}}</span>
-                <br>
-                <b class="brown-orange-style">Participants :</b>
-                <span>{{jardin.nbParticipants}}</span>
-            </div>
+                <div class="money_city">
+                    <b class="brown-orange-style">Adresse :</b>
+                    <span>{{jardin.adresse}} {{jardin.ville}}</span>
+                    <br>
+                    <b class="brown-orange-style">Role :</b>
+                    <span>{{user.role}}</span>
+                    <br>
+                    <b class="brown-orange-style">Monnaie :</b>
+                    <span>{{jardin.moneyName}}</span>
+                    <br>
+                    <b class="brown-orange-style">Participants :</b>
+                    <span>{{jardin.nbParticipants}}</span>
+                </div>
             {% else %}
-            <p>Vous n'avez pas de jardin. <br> Voulez-vous en créer un ?</p>
+                <p>Vous n'avez pas de jardin. <br> Voulez-vous en créer un ?</p>
             {% endif %}
 
              <div class="right">
 
             {% set idJardin=user.idJardin %}
-
-            {% if idJardin is none %}
-                {% set idJardin='' %}
-            {% endif %}
 
             <!-- To create a garden you musn't have garden -->
             {% if idJardin|length == 0 %}
@@ -148,6 +149,7 @@
 <script>
     var init = -10
     var counts = JSON.parse('{{jsTable|tojson|safe}}')
+    console.log(counts)
     const sizeCounts = '{{total}}'
     const role = '{{user.role}}'
     numberItems = 10

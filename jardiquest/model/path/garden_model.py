@@ -1,10 +1,13 @@
+import os.path
 import uuid
-
 
 from jardiquest.model.database.entity.jardin import Jardin
 from flask import *
 from flask_login import *
 
+from jardiquest.model.database.entity.user import User
+from jardiquest.model.database.upload import upload_file, delete_file, file_exist
+from jardiquest.setup_flask import UPLOAD_FOLDER
 from jardiquest.setup_sql import db
 
 
@@ -46,10 +49,12 @@ def garden_model():
 
     table = []
     for i in jardins:
-        row = [i.name, i.description, i.moneyName, i.ville, i.adresse, i.nbParticipants, i.idJardin]
+        row = [i.name, i.description.replace('\r', '').replace('\n', "<br>"), i.moneyName, i.ville, i.adresse, i.nbParticipants, i.idJardin]
         table.append(row)
 
-    return render_template('garden.html', jsTable=table, user=current_user, jardin=jardin_de_user, total=len(table))
+    return render_template('garden.html', jsTable=table, user=current_user,
+                           ispicture=file_exist(os.path.join(UPLOAD_FOLDER, "garden"), current_user.idJardin),
+                           jardin=jardin_de_user, total=len(table))
 
 
 def new_garden_model():
@@ -86,6 +91,9 @@ def new_garden_model():
         current_user.update_garden(id)
         current_user.update_role('Proprietaire')
         current_user.update_balance(0)
+
+        upload_file(request, 'garden', id)
+
         db.session.commit()
 
         return redirect(url_for('controller.garden'))
@@ -118,7 +126,18 @@ def leave_model(id):
 
 
 def delete_model():
+    idJardin = current_user.idJardin
+
+    users = User.query.filter(User.idJardin == current_user.idJardin)
+    for user in users:
+        if user.role == "Participant":
+            user.update_garden('')
+    db.session.commit()
+
     Jardin.query.filter(Jardin.idJardin == current_user.idJardin).delete()
+    if file_exist(os.path.join(UPLOAD_FOLDER, 'garden'), idJardin):
+        delete_file(os.path.join(UPLOAD_FOLDER, 'garden'), idJardin)
+
     current_user.update_garden('')
     current_user.update_role('Participant')
     db.session.commit()
