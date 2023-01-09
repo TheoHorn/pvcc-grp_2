@@ -11,15 +11,17 @@
     <div class="centered-element">
         <div class="align-user-icon">
             <br>
-            <span class="display-name">Blog du Jardin<span>
+            <span class="display-name">Blog du Jardin</span>
         </div>
         <hr class="litle-hr">
         <div>
             {% for m in messages %}
             <div class="messages">
-                <p class="user">{{m.email}}</p>
-                <p class="msg">{{m.message}}</p>
-                <p class="date-msg">Date du Post : {{m.timestamps}}</p> 
+                <p class="metadata-message">
+                    <span class="user">{{m.user.name}}</span>
+                    <span class="date-msg">Publié le {{m.timestamps.strftime('%d-%m-%Y')}}</span>
+                </p>
+                <span class="msg">{{m.message.replace('\n', '<br>') | safe}}</span>
             </div> 
             {%endfor%}
         </div>

@@ -35,31 +35,37 @@
     padding: 15px 10% ;
 }
 
+.metadata-message {
+    border-bottom: 2px dotted var(--green);
+    width: fit-content;
+}
+
 .user{
     text-align: left;
+    font-size: larger;
+    color: var(--brown-orange);
 }
 
 .date-msg{
     text-align: right;
+    margin-left: 2em;
+    font-size: smaller;
+    color: var(--grey);
 }
 
 .msg{
-    font-size: x-large;
-    border-bottom: 1px solid var(--green);
-    border-top: 1px solid var(--green);
-    color: var(--brown-orange);
-
+    margin-top: 3px;
     text-align: justify;
 }
 
 .new-messages{
     border-top: 2px solid var(--green);
-    margin: 2% 10%;
+    margin: 5% 10% 2%;
     align-items: center;
     justify-content: center;
     display : flex;
     flex-direction: column;
-    padding: 2em;
+    padding: 1em;
 }
 
 #msg{
@@ -69,7 +75,7 @@
 
 .msg-button {
     padding: 0.2em ;
-    margin: 0.2em 1em;
+    margin: 0.4em 1em 0.2em;
     font-size: x-large;
     cursor: pointer;
     border: 1px solid var(--green);
