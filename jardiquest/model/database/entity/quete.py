@@ -5,7 +5,7 @@ import uuid
 class Quete(db.Model):
     __tablename__ = "quete"
 
-    idQuete = db.Column(db.String(10), primary_key=True)
+    idQuete = db.Column(db.String(100), primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000), default="")
     periodicity = db.Column(db.Boolean, default=False)

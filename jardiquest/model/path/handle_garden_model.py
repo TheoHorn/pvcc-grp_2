@@ -1,6 +1,6 @@
 from http.client import HTTPException
 import uuid
-from datetime import datetime,timedelta
+from datetime import date
 
 from flask import abort, flash, request, render_template, redirect, url_for
 from flask_login import current_user
@@ -56,24 +56,15 @@ def add_garden_quest_print():
     jardin = Jardin.query.filter_by(idJardin=idJar).first()
     return render_template('create_quest.html',user=current_user,jardin=jardin)
 
-def add_garden_quest(title: str, description: str,reward: int,duration: int,periodic: bool, start: str, expiration:str):
-    start= datetime(start)
-    expiration = datetime(expiration)
-    if start < expiration:
-        
-        timeBeforeExpiration = expiration - start
-        tbf = timeBeforeExpiration.days
+def add_garden_quest(title: str, description: str,reward: int,duration: int,periodic: bool, start: str, expiration:int):
+        st = start.split("-")
+        start = date(int(st[0]),int(st[1]),int(st[2]))
         new_quest = Quete(idQuete=uuid.uuid1().hex, title=title, description=description,
                               periodicity=periodic,
                               estimatedTime=duration,
-                              timeBeforeExpiration=tbf, reward=reward,
-                              id_jardin=current_user.id_jardin,
-                              accomplished=False,
+                              timeBeforeExpiration=expiration, reward=reward,
+                              id_jardin=current_user.idJardin,
                               startingDate=start)
         db.session.add(new_quest)
         db.session.commit()
         return redirect(url_for("controller.your_garden"))
-    else :
-        flash("Les dates ne sont pas bien ordonnées")
-        return redirect(url_for('controller.add_quest_garden'))
-    

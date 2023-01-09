@@ -25,11 +25,11 @@
                 </div>
                 <div class="inline big">
                     <p>Date de début de la quête : </p>
-                    <input class="small" type="date" name="start" required>
+                    <input id="datePicker" class="small" type="date" name="start" required>
                 </div>
                 <div class="inline big not_required">
-                    <p>Date de fin de la quête : </p>
-                    <input class="small" type="date" name="expiration">
+                    <p>Temps avant expiration de la quête (en jour) : </p>
+                    <input class="small" type="number" min=1 name="expiration">
                 </div>
                 <div class="inline big not_required">
                     <p>Durée estimée de la quête (en min) : </p>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="inline big not_required">
                     <p>Quête périodique : </p>
-                    <input type="checkbox" class="small" name="periodic" value="periodic">
+                    <input type="checkbox" class="small" name="periodic">
                 </div>
                 
                 <p class="small not_required">(Les données en italique ne sont pas obligatoires)</p>
@@ -49,5 +49,8 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('datePicker').valueAsDate = new Date();
+</script>
 
 {% endblock %}
