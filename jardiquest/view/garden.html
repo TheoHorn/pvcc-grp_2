@@ -30,6 +30,11 @@
                 <h1 class="garden-name">{{ jardin.name }}</h1>
             </div>
 
+            <div class="align-garden-image">
+                 <img src="{{ url_for('static', filename='image/icon/default-garden.png') }}" class="display-garden">
+            </div>
+
+
             <p class="description-garden">{{jardin.description.replace('\n', '<br>') | safe}}</p>
 
             <div class="money_city">
