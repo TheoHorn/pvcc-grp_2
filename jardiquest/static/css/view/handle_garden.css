@@ -133,11 +133,13 @@
 }
 
 .form-add-quest > .big {
-    margin: 1% 10%
+    margin: 1% 10%;
 }
 
 .form-add-quest > .small {
-    margin: 1% 37%
+    margin: 1% 30%;
+    text-align: center;
+    font-size: smaller;
 }
 
 .inline {
