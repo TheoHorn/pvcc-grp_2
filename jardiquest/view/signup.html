@@ -65,7 +65,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><input class="input" type="password" name="password"></td>
+                        <td><input class="input" id="password" type="password" name="password"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="checkbox" onclick="toggleDisplayPassword()">
+                            <b style="margin-left: 5px">Afficher</b>
+                        </td>
                     </tr>
                 </table>
 
@@ -86,6 +93,8 @@
 
         <div class="portal-rainbow invert-rainbow"></div>
     </div>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 
 </div>
 {% endblock %}
