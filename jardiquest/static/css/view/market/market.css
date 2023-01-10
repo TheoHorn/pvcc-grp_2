@@ -161,6 +161,12 @@
     color : inherit;
 }
 
+.product_cost_infos{
+    grid-row : 2/4;
+}
+
+
+
 @media only screen and (max-width: 1200px) {
     .suggestion_button, .history_button{
         margin-left: auto;

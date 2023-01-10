@@ -9,17 +9,20 @@ from jardiquest.model.database.entity.catalogue import Catalogue
 from jardiquest.model.database.entity.recolte import Recolte
 from jardiquest.model.database.entity.commande import Commande
 from jardiquest.model.database.entity.user import User
+from jardiquest.model.database.entity.jardin import Jardin
 
 
 def display_sell_catalogue():
     if current_user.role != "Proprietaire":
         abort(403)
 
-    catalogue = db.session.query(Catalogue.name, Catalogue.imagePath, Catalogue.type,
-                                 func.round((func.sum(Recolte.cost * Recolte.quantity) / func.sum(Recolte.quantity)),
-                                            2).label("mean_cost"), func.min(Recolte.cost).label("min_cost"),
-                                 func.sum(Recolte.quantity).label("quantity")).join(Recolte, isouter=True).group_by(
-        Catalogue.name).all()
+    catalogue = db.session.connection().execute(
+        """Select name, imagePath, 
+            (Select Round(SUM(cost * quantity)/SUM(quantity),2) FROM recolte natural join jardin WHERE idjardin = '""" + current_user.idJardin +"""' and idcatalogue = c.idcatalogue) as mean_cost,
+            (Select MIN(cost) FROM recolte natural join jardin WHERE idjardin = '""" + current_user.idJardin +"""' and idcatalogue = c.idcatalogue) as min_cost,
+            (Select SUM(quantity) FROM recolte natural join jardin WHERE idjardin = '""" + current_user.idJardin +"""' and idcatalogue = c.idcatalogue) as quantity
+            FROM catalogue as c""")
+
     return render_template('sell_catalogue.html', catalogue=catalogue, garden=current_user.jardin,user = current_user)
 
 

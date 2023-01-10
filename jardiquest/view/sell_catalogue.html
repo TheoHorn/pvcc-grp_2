@@ -62,12 +62,14 @@
                 
             </div>
             
-            {% if produit.mean_cost and produit.min_cost %}
-            <p>Cout moyen : {{ produit.mean_cost }} {{ garden.moneyName }}</p>
-            <p>Le moins cher : {{ produit.min_cost }} {{ garden.moneyName }}</p>
-            {% endif %}
-           
-            
+            <div class="product_cost_infos">
+                {% if produit.mean_cost and produit.min_cost %}
+
+                <p>Cout moyen : {{ produit.mean_cost }} {{ garden.moneyName }}</p>
+                <p>Le moins cher : {{ produit.min_cost }} {{ garden.moneyName }}</p>
+                {% endif %}
+            </div>
+                        
         </div>
         {% endfor %}
     </div>
