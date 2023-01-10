@@ -8,22 +8,25 @@ document.querySelectorAll(".buy_quantity").forEach((element) => {
   }  
 });
 
-document.querySelector("#sort_sellings").onchange = (ev) => {
-  element = ev.target
-  parent = element.parentNode.parentNode
-  nodes = parent.querySelectorAll(".market_product_selling")
-  array = []
-  nodes.forEach((node) => {
-    array.push(node)
-    node.remove()
-  })
-  if (element.value.toLowerCase() == "price") {sort_by_price(array)}
-  else if (element.value.toLowerCase() == "quantity") {sort_by_quantity(array)}
-  else if (element.value.toLowerCase() == "date") {sort_by_date(array)}
-  array.forEach((node) => {
-    parent.appendChild(node)
-  });
+if (document.querySelector("#sort_sellings")){
+  document.querySelector("#sort_sellings").onchange = (ev) => {
+    element = ev.target
+    parent = element.parentNode.parentNode
+    nodes = parent.querySelectorAll(".market_product_selling")
+    array = []
+    nodes.forEach((node) => {
+      array.push(node)
+      node.remove()
+    })
+    if (element.value.toLowerCase() == "price") {sort_by_price(array)}
+    else if (element.value.toLowerCase() == "quantity") {sort_by_quantity(array)}
+    else if (element.value.toLowerCase() == "date") {sort_by_date(array)}
+    array.forEach((node) => {
+      parent.appendChild(node)
+    });
+  }
 }
+
 
 
 function sort_by_price(data) {
