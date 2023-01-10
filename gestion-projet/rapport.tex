@@ -67,8 +67,8 @@ Finalement, nous avons réalisé des sessions de vérification de notre travail 
 
 \chapter{Descriptif de l’application}
 
-Jardi'Quest sera une application qui a pour objectifs de rendre les jardins partagés ludique, comme un jeu et d'insister sur le mot "partagé" car actuellement les jardins partagés représente plus souvent un terrain découpé en parcelles. \\ 
-Notre application a pour but de faire des jardins un travail d'équipe, qu'il soit entretenu par tous avec tout le monde qui apporte ça contribution a celui-ci a l'aide de quête. \\ 
+Jardi'Quest sera une application qui a pour objectifs de rendre les jardins partagés ludique, comme un jeu et d'insister sur le mot "partagé" car actuellement les jardins partagés représentent plus souvent un terrain découpé en parcelles. \\ 
+Notre application a pour but de faire des jardins un travail d'équipe, qu'il soit entretenu par tous avec tout le monde qui apporte sa contribution a celui-ci a l'aide de quêtes. \\ 
 
 
 \begin{center}
@@ -86,7 +86,7 @@ Un utilisateur peut accéder à son jardin, au blog associé et aux différentes
 
 Un propriétaire, quant à lui, a accès à des fonctionnalités supplémentaires. Il peut accéder à la gestion de son jardin dans laquelle il pourra effectuer plusieurs actions comme déposer des quêtes, cycliques ou non, à réaliser par les participants, ajouter des récoltes dans le marché du jardin ou encore modifier les informations de son jardin.
 
-Tout l’enjeu de notre application tourne autour du système de quête et de l’économie qui en découle. Chaque jardin possède sa propre monnaie que l’utilisateur peut gagner en effectuant les quêtes proposées par le propriétaire. Ainsi chaque jardin possède sa propre économie : la monnaie d’un jardin ne peut pas être échangée avec celle d’un autre jardin. Cette monnaie est uniquement échangeable avec les récoltes de son jardin. \\ \\
+Tout l’enjeu de notre application tourne autour du système de quêtes et de l’économie qui en découle. Chaque jardin possède sa propre monnaie que l’utilisateur peut gagner en effectuant les quêtes proposées par le propriétaire. Ainsi chaque jardin possède sa propre économie : la monnaie d’un jardin ne peut pas être échangée avec celle d’un autre jardin. Cette monnaie est uniquement échangeable avec les récoltes de son jardin. \\ \\
 
 Le but de ce système est donc de proposer un moyen ludique permettant de rendre plus attractif le jardinage tout en récompensant les utilisateurs les plus actifs. Celui-ci offre donc un jardin partagé plus convivial tout en y apportant une certaine équité. 
 
@@ -106,7 +106,7 @@ Voici l'aperçu de celui-ci.
 \chapter{Serveur web}
 
 \section{Structure du serveur}
-Le serveur web est le point central du projet. Ainsi, il est important que celui-ci soit correctement construit afin de faciliter à la fois son implémentation et les éventuels mise à jour qu’il pourrait subir. \\
+Le serveur web est le point central du projet. Ainsi, il est important que celui-ci soit correctement construit afin de faciliter à la fois son implémentation et les éventuelles mise à jour qu’il pourrait subir. \\
 
 C’est ainsi que nous avons décidé d’utiliser une architecture MVC. Une architecture Model-View-Contoller est un motif d'architecture logicielle qui consiste à distinguer trois entités distinctes étant le modèle, la vue et le contrôleur.
 Dans notre projet, les controllers sont les fonctions Python qui créent les URL du serveur et appelle les modèles à utiliser pour celles-ci, les modèles contiennent les différentes fonctionnalités et algorithmes utiles au serveur et appellent les différentes vues voulues. 
@@ -115,7 +115,7 @@ Les vues sont les différentes templates html qui correspond donc aux différent
 En plus de cette architecture particulière, nous avons décidé de séparer complètement le projet informatique et les autres documents qui ne sont pas utiles à son bon fonctionnement  (exemple : documents de gestion de projet) en créant un répertoire au-dessus du projet. 
 Cependant dans un souci de facilité d’accès, nous avons décidé de garder un fichier python à la racine afin de pouvoir lancer le programme avec la commande basique de flask (“flask run”).
 
-Voici un aperçu de l'arborescence du projet (version simplifié)
+Voici un aperçu de l'arborescence du projet (version simplifiée)
 \begin{center}
      \includegraphics[scale=0.5]{arborescence.png} 
 \end{center}
@@ -124,35 +124,35 @@ Le serveur utilise plusieurs dépendances pour gérer différentes fonctionnalit
 
 \section{Flask-Login}
 
-Pour le bon fonctionnement du serveur vis-à-vis des connexions nous avons décidé d'ajouté Flask-login à celui-ci. Flask-login est un supplément à Flask qui permet de gérer la connexion des utilisateurs de manière simplifiée. Cela permet de s’assurer de l’authentification de l’utilisateur pour certains chemins et de récupérer certaines informations.
+Pour le bon fonctionnement du serveur vis-à-vis des connexions nous avons décidé d'ajouter Flask-login à celui-ci. Flask-login est un supplément à Flask qui permet de gérer la connexion des utilisateurs de manière simplifiée. Cela permet de s’assurer de l’authentification de l’utilisateur pour certains chemins et de récupérer certaines informations.
 
 \section{SQLAlchemy}
 
-Avec un serveur Web, il y a toujours une base de données. Il est donc important de choisir la meilleure solution permettant la flexibilité et la sécurité nécessaire au bon fonctionnement du serveur. Ici, nous avons implémenter SQL à l'aide de Python. De nombreuses solutions sont possibles pour le faire. Il est possible de joindre directement une base de données à Python, cependant cela avait de nombreux inconvénients comme l’obligation d’écrire les requêtes SQL en entièreté. \\ 
+Avec un serveur Web, il y a toujours une base de données. Il est donc important de choisir la meilleure solution permettant la flexibilité et la sécurité nécessaire au bon fonctionnement du serveur. Ici, nous avons implémenté SQL à l'aide de Python. De nombreuses solutions sont possibles pour le faire. Il est possible de joindre directement une base de données à Python, cependant cela avait de nombreux inconvénients comme l’obligation d’écrire les requêtes SQL en entièreté. \\ 
 
 De ce fait, nous nous sommes portés sur l’utilisation d’un ORM (Object Relational Mapper) qui permet de faciliter grandement la manipulation des données de la base. Notre choix s’est donc porté sur l'ORM SQLAlchemy qui semblait être le plus simple d’utilisation tout en nous permettant de réaliser toutes les fonctionnalités que nous avions prévu. De plus, SQLAlchemy possède un atout particulièrement utile : il va générer automatiquement la base de données au lancement du programme si celle-ci n’existe pas. Cela permet de lancer le projet informatique même sans avoir le schéma de la base de données car SQLAlchemy va directement le créer d’après sa configuration.
 
 \section{Pytest}
 
-Pour gérer les bugs et pouvoir tester notres serveur, il nous fallait un système de tests. Pytest permet d’écrire des tests en python pour vérifier l’absence de bugs. Les tests peuvent être lancés facilement à l’aide de la commande “pytest” et ainsi permettent d’assurer un bon niveau de qualité et de fonctionnement globale du programme. Ainsi, son implémentation était logique et immédiate.
+Pour gérer les bugs et pouvoir tester notres serveur, il nous fallait un système de tests. Pytest permet d’écrire des tests en python pour vérifier l’absence de bugs. Les tests peuvent être lancés facilement à l’aide de la commande “pytest” et ainsi permettent d’assurer un bon niveau de qualité et de fonctionnement global du programme. Ainsi, son implémentation était logique et immédiate.
 
 \section{Wezkzeug}
 
-A propos de la sécurité du serveur, Wezkzeug permet de hasher les mots de passe lors de la sauvegarde de ceux-ci dans la base de données. Le hashage du mot de passe avant le stockage est une étape primordiale pour la sécurité des données et pour s’assurer de la sûreté des comptes utilisateurs et de leurs mot de passe.
+A propos de la sécurité du serveur, Wezkzeug permet de hasher les mots de passe lors de la sauvegarde de ceux-ci dans la base de données. Le hashage du mot de passe avant le stockage est une étape primordiale pour la sécurité des données et pour s’assurer de la sûreté des comptes utilisateurs et de leur mot de passe.
 
 \section{Visuel des pages Web}
 Pour la réalisation de l’aspect visuel de l’application, nous avons utilisé plusieurs ressources différentes. Tout d’abord, notre site web est en entièreté codé en CSS. Nous avons fait le choix de ne pas utiliser de moyen tiers comme Bootstrap. Celui-ci nous limite grandement dans l’implémentation d’un beau visuel mais nous avions l’envie de concevoir notre site à 100\%. Le CSS a été une part entière du développement de notre application. \\
 
 De plus, à l’aide de Flask et des templates html, nous avons pu rendre notre site plus agréable. Un des meilleurs exemples est la barre de navigation. Elle est séparée du reste des pages html et est implémenté dans chacune de celles-ci en y précisant une variable. Ainsi, elle reconnait sur quels endroits du site elle se situe et modifie la couleur de l’endroit courant. \\
 
-Enfin, nous avons rajouté du dynamise au site en y implémentant du javascript. Celui-ci est utiliser en petite dose tout autour du projet, mais il est très important au niveau des barres de navigation et de recherche. En effet, l’ajout de javascript à celles-ci rajoutent du dynamise et de la modernité aux pages Web. 
+Enfin, nous avons rajouté du dynamise au site en y implémentant du javascript. Celui-ci est utilisé en petite dose tout autour du projet, mais il est très important au niveau des barres de navigation et de recherche. En effet, l’ajout de javascript à celles-ci rajoutent du dynamisme et de la modernité aux pages Web. 
 
 \chapter{Base de données}
 
 \section{Conception de la base}
 
 La conception initiale de la base de données est très proche de la base finale réalisée dans l’application. 
-Cependant, des détails techniques, des optimisations ou encore des ajouts de fonctionnalités nous ont poussés à apporter quelques modifications dans la base. On peut citer par exemple, l’ajout de l’adresse et de la ville d’appartenance d’un jardin ou encore pour l’utilisateur, le passage d’un identifiant unique à son email. Voici donc la conception actuelle : \\
+Cependant, des détails techniques, des optimisations ou encore des ajouts de fonctionnalités nous ont poussé à apporter quelques modifications dans la base. On peut citer par exemple, l’ajout de l’adresse et de la ville d’appartenance d’un jardin ou encore pour l’utilisateur, le passage d’un identifiant unique à son email. Voici donc la conception actuelle : \\
 
 \begin{itemize}
     \item Un utilisateur est représenté par son adresse email. Il possède un nom, un mot de passe, un rôle (gérant, participant, ou rien), une date de recrutement et un solde. Il peut s’associer à un jardin. \\
@@ -163,7 +163,7 @@ Cependant, des détails techniques, des optimisations ou encore des ajouts de fo
 
     \item Un catalogue est représenté par son identifiant. Il possède un nom, un type (légume, fruit, herbe aromatique), une description, un chemin vers son image, la source de l’image et la source de sa description. \\
 
-    \item Une récolte est représentée par un identifiant. Elle est vendue à un coût/kg, a une certaine quantité et a été récoltée à une certaine date. Elle correspond à un produit du catalogue, et a été récolté dans un jardin. \\
+    \item Une récolte est représentée par un identifiant. Elle est vendue à un coût/kg, a une certaine quantité et a été récoltée à une certaine date. Elle correspond à un produit du catalogue, et a été récolté dans un jardin. Elle dispose également d'une quantité recommandée par produit. \\
 
     \item Une commande est représentée par un identifiant. Elle possède une certaine quantité et un certain coût, une date d’achat et un booléen pour savoir si elle a été traitée ou non. Elle est effectuée par un utilisateur sur une récolte. \\
 
@@ -188,9 +188,9 @@ Pour implémenter le catalogue de produits, au lancement de l’application celu
 
 Afin de gérer l’expiration des quêtes dans le temps, nous avons utilisé flask\_apscheduler. Cette extension de flask va effectuer un test tous les jours sur l'entièreté des quêtes afin de savoir lesquelles sont accomplies. Si la quête est périodique, alors une nouvelle quête ayant les mêmes caractéristiques est créée. Ainsi, si le jardin doit être arrosé tous les jours, une quête pour réaliser cette tâche n'a pas besoin d'être recréée à chaque fois. Si elle n'est pas périodique, la quête est tout simplement supprimée. \\
 
-Un autre point pour lequel nous nous servons de la base de données est le système d’upload d'image. Ce système permet aux utilisateurs propriétaires de montrer à quoi ressemble leur jardin. Cela a été implémentée avec toutes les sécurités classiques d’upload de fichiers, une taille limite à la requête, un nombre spécifique d’extension de fichier accepté et un renommage du nom des fichiers.
+Un autre point pour lequel nous nous servons de la base de données est le système d’upload d'images. Ce système permet aux utilisateurs propriétaires de montrer à quoi ressemble leur jardin. Cela a été implémenté avec toutes les sécurités classiques d’upload de fichiers, une taille limite à la requête, un nombre spécifique d’extensions de fichier accepté et un renommage du nom des fichiers.
 
-Lorsque l'image est uploadé, celle-ci est renommée par l’identifiant du jardin. Cela sert à éviter les potentiels noms dangereux des fichiers. Mais également à assurer l'unicité de chaque nom d’image pour chaque jardin et donc ne pas consommer de l’espace de stockage inutile en ayant plusieurs images par jardin.
+Lorsque l'image est uploadée, celle-ci est renommée par l’identifiant du jardin. Cela sert à éviter les potentiels noms dangereux des fichiers. Mais également à assurer l'unicité de chaque nom d’image pour chaque jardin et donc ne pas consommer de l’espace de stockage inutile en ayant plusieurs images par jardin.
 
 Les images sont stockées dans le static/upload. Elles se situent dans le module static car celles-ci doivent être accessibles à tous les utilisateurs et cela permet de pouvoir vérifier si le fichier existe rapidement et afficher une image par défaut le cas échéant.
 
@@ -241,7 +241,7 @@ L'algorithme trouvant ce résultat a une complexité en O(n) car on parcours la 
 \subsection{Tri des produits en fonction du prix}
 
 Nous avons utilisé un tri à bulles pour arranger les produits en fonction de leur prix. De cette manière, les lots les moins coûteux se retrouvent en début de liste. \\  \\
-Pour l'exemple nous obtenons la liste de lots suivante (les chiffres sont les id des légumes) : 6,6,6,6,6,5,5,5,5,1,2,2,2,3,3,1,1,4,4,7 \\ \\
+Pour l'exemple nous obtenons la liste de lots suivante (les chiffres sont les id des légumes) :\\ 6,6,6,6,6,5,5,5,5,1,2,2,2,3,3,1,1,4,4,7 \\ \\
 La complexité du tri à bulles est en O(n²) dans le pire des cas (le plus petit élément est à la fin du tableau).
 
 \subsection{Création d’un liste avec répartition équitable}
@@ -306,7 +306,7 @@ La plage de données étant trop faible, nous avons refait un test avec un écha
 Il est difficile de tester avec des valeurs plus grandes à cause du temps d’exécution. \\ \\
 Ainsi on peut voir que les données du graphes sont cohérentes avec la complexité théorique mentionnée précédemment dans la section dédiée à l’algorithme, soit O(n²).
 
-Il est donc difficilement utilisable sur un grand nombre de données, mais le nombre de récoltes d'un même jardin ne devrait pas être énorme, sachant que les produits peuvent périmé et donc ne resteront pas en stock indéfiniment. L'algorithme reste donc utilisable malgré le fait qu'il manque de performance et pourrait être amélioré.
+Il est donc difficilement utilisable sur un grand nombre de données, mais le nombre de récoltes d'un même jardin ne devrait pas être énorme, sachant que les produits peuvent périmer et donc ne resteront pas en stock indéfiniment. L'algorithme reste donc utilisable et efficace pour la tâche demandée.
 
 
 
@@ -345,7 +345,7 @@ TEMPESTINI Terry : page du jardin, maquettage du site, algorithme de suggestion 
 A noter aussi, l’implication plus conséquente de Lucas. En s'étant proposé en tant que chef de projet, il a eu une part plus importante dans la gestion du projet tant dans la gestion de l’avancement du projet que dans la rédaction des comptes rendus de réunion.
 
 \section{Rythme du travail}
-Bien que nous avions chacun un rythme différent de travail, des échéances étaient programmées pour lesquelles chaque fonctionnalité requise devait être fusionner sur la branche principal du projet afin d’être testé, vérifié, et possiblement amélioré à travers des remarques ou idées de chaque membre. \\
+Bien que nous avions chacun un rythme différent de travail, des échéances étaient programmées pour lesquelles chaque fonctionnalité requise devait être fusionnée sur la branche principale du projet afin d’être testée, vérifiée, et possiblement améliorée à travers des remarques ou idées de chaque membre. \\
 
 Une même fonctionnalité était donc souvent fusionnée sur la branche principale, pour être vérifiée et améliorée plusieurs fois avant d’atteindre sa version finale. 
 Ce rythme de travail peut être associé à la méthode PDCA bien que les dates limites généralement fixes ne l’étaient pas ici, étant donné les contraintes de disponibilités différentes pour chacun des membres du groupe pour le projet, comme le projet est sur le temps libre de chacun.
@@ -356,34 +356,36 @@ Nous avons utilisé plusieurs outils pour la réalisation de la gestion de proje
 Tout d’abord, pour la partie graphique de l’application, nous avons utilisé Figma pour faire un maquettage du site web et en tirer une charte graphique. Cela nous a permis de créer une identité propre au site en amont du développement. De la même façon, nous avons utilisé Canva pour créer le logo de l’application. \\
 Ensuite, pour le diagramme de Gantt, nous avons utilisé Gantt Project. 
 Pour la communication du groupe, nous avons utilisé principalement Discord qui nous a permis de communiquer sur l’avancement du projet et de débattre en équipe. \\
-Enfin pour la rédaction des différents documents nous avons utilisé les outils Google : Google Document et Google Présentations. Ces documents nous permettant de travailler en simultanée sont la solution la plus simple. De la même manière, nous avons utilisé Overleaf pour la rédaction en LaTeX
+Enfin pour la rédaction des différents documents nous avons utilisé les outils Google : Google Document et Google Présentations. Ces documents nous permettant de travailler en simultané sont la solution la plus simple. De la même manière, nous avons utilisé Overleaf pour la rédaction en LaTeX
 
 \section{Difficultés rencontrées}
 
-Dans la globalité du projet, nous avons rencontré peu de difficultés. Notre conception et notre expérience nous a permis d’éviter de nombreux pièges ou problèmes. \\Cependant, on peut noter la difficulté principale étant le temps. En effet, bien que la période consacré au projet soit conséquente, notre longue conception nous a fait perdre un temps précieux. De plus, la partie de développement se situait en grande partie pendant la période d’examens et de vacances de fin d’année. \\
+Dans la globalité du projet, nous avons rencontré peu de difficultés. Notre conception et notre expérience nous ont permis d’éviter de nombreux pièges ou problèmes. \\Cependant, on peut noter la difficulté principale étant le temps. En effet, bien que la période consacrée au projet soit conséquente, notre longue conception nous a fait perdre un temps précieux. De plus, la partie de développement se situait en grande partie pendant la période d’examens et de vacances de fin d’année. \\
 Ainsi, le temps consacré au projet se trouvait parfois grandement réduit par les temps de révisions ou les fêtes de fin d’année. \\
 
 Nous avons aussi rencontré d'autres problèmes mineurs. On peut citer notamment la gestion des tests et de leur impact sur la base de données. Nous avons dû réfléchir et implémenter plusieurs solutions, modifier la base de données du serveur en ‘production’, ou alors utiliser (une base de données simulée qui reproduit le comportement de notre base originelle.
 
 
 \chapter{Conclusion}
-Ce projet permet de réaliser du développement web et de réellement voir de quoi il s'agit ce n'est pas un simple html/css mais bien tout un serveur avec un back-end un front-end, une base de données et les différentes sécurité a mettre en place. \\ \\ 
-Le PPII est un projet multidisciplinaire qui nous permet réellement de nous rendre compte de la difficulté du développement web et de la gestion de projet. Le développement web ne se limite pas à des pages simples sans dynamismes mais nous pousse à devoir créer un véritable environnement avec un serveur, sa base de données, les différentes pages et les différentes sécurités à mettre en place. De plus il nous permet de nous montrer l'importance de la gestion de projet, lors d'un développement informatique en groupe, cela peut devenir vite très ardu de ne pas se perdre et de continuer à diriger l’ensemble du groupe dans la même direction. \\ \\ 
-Etant donné que tous les membres de ce groupe proviennent de DUT, nous avions déjà réalisés des projets informatiques (notamment en web). Nous avions déjà pu constater ces différentes difficultés cependant nous avons l’impression générale que de la part de la gestion de projet dans le PPII est plus importante et nous permet de mieux intégrer notre futur rôle d’ingénieur. C’est grâce à ce contexte et cet environnement que nous avons eu une réelle volonté de faire les choses bien et de façon professionnelle. \\ \\
-De plus, ce projet nous a plongé dans un environnement web différent à travers Python et flask. Aucun de nous n’avez utiliser cet environnement ce qui nous permet d’engranger une nouvelle expérience informatique. \\ \\
-Enfin, nous avons eu un réel intérêt pour le projet grâce à son ouverture et la liberté que nous proposer le sujet initial. Il nous a permis de laisser place à notre créativité, ou à la recherche d’innovation. Cependant, l’absence d’encadrement surtout pour la partie développement aurait pu nous rendre la tache bien plus difficile et nous aurions pu acquérir de mauvaises méthodes de programmation si nous n’avions pas eu une certaine expérience.
+
+\section{Conclusion}
+Ce projet permet de réaliser du développement web et de réellement voir de quoi il s'agit, ce n'est pas un simple html/css mais bien tout un serveur avec un back-end, un front-end, une base de données et les différentes sécurités à mettre en place. \\ \\ 
+Le PPII est un projet multidisciplinaire qui nous permet réellement de nous rendre compte de la difficulté du développement web et de la gestion de projet. Le développement web ne se limite pas à des pages simples sans dynamismes mais nous pousse à devoir créer un véritable environnement avec un serveur, sa base de données, les différentes pages et les différentes sécurités à mettre en place. De plus il nous permet de nous montrer l'importance de la gestion de projet lors d'un développement informatique en groupe. Cela peut devenir vite très ardu de ne pas se perdre et de s'assurer que l’ensemble du groupe avance dans la même direction. \\ \\ 
+Étant donné que tous les membres de ce groupe proviennent de DUT, nous avions déjà réalisés des projets informatiques (notamment en web). Nous avions déjà pu constater ces différentes difficultés, cependant nous avons l’impression générale que de la part de la gestion de projet dans le PPII est plus importante et nous permet de mieux intégrer notre futur rôle d’ingénieur. C’est grâce à ce contexte et cet environnement que nous avons eu une réelle volonté de faire les choses bien et de façon professionnelle. \\ \\
+De plus, ce projet nous a plongé dans un environnement web différent à travers Python et flask. Aucun de nous n’avait utilisé cet environnement, ce qui nous permet d’engranger une nouvelle expérience informatique. \\ \\
+Enfin, nous avons eu un réel intérêt pour le projet grâce à son ouverture et la liberté que nous proposait le sujet initial. Il nous a permis de laisser place à notre créativité, ou à la recherche d’innovation. Cependant, l’absence d’encadrement surtout pour la partie développement aurait pu nous rendre la tâche bien plus difficile et nous aurions pu acquérir de mauvaises méthodes de programmation si nous n’avions pas eu une certaine expérience.
 
 \section{Si c'était à refaire}
 
 Si le projet était à refaire, nous passerions cependant moins de temps sur la partie de conception. Bien qu’elle nous ait été très utile, nous aurions pu, à l’aide de notre expérience, éviter tout aussi bien les problèmes. Les examens finaux sont chronophages et cela a été un point difficile à gérer lors de la création du projet. Nous aurions du nous faire un peu plus confiance et utiliser à bon escient notre expérience passée.
 \\ \\ 
-Un dernier point à souligner serait l'absence d'utilisation de framework pour le front-end (exemple: Bootstrap), nous avons réalisé tout notre front-end à la main, l'utilisation d'un framework pour le visuel nous aurait permis d'avancer plus vite et d'avoir un résultat sûrement plus propre, mais nous avons préféré le faire nous même bien qu'aucun des membres de notre équipe n'apprécie faire le front-end, nous avons juger que cela serait plus instructif de le réaliser nous même et que cela permettrait de s'améliorer sur la partie front-end du web.
-Mais d'un autre côté nous avons donc perdu beaucoup de temps que nous aurions pu allouer au développement d'autres fonctionnalités qui auraient donné de la valeur ajoutée à notre produit.
 
-Un dernier point à souligner ser
+Un dernier point à souligner serait notre non-utilisation d'un framework comme Bootstrap pour le visuel de l'application. 
+Nous aurions pu avancer bien plus vite et ainsi accentuer nos efforts sur la partie algorithmique ou sur le nombre de fonctionnalités de l’application. Cependant, nous avons très vite remarqué qu’aucun d’entre nous possédait un attrait sur le développement frontend. Dans un esprit d’apprentissage, nous avons jugé qu’il était alors préférable de développer ce point faible et donc de programmer l’entièreté du visuel par nous-même.  Nous préférons avoir de vrais bases solides dans ce domaine que de développer plus fonctionnalités dans un domaine qui nous est bien plus familier. 
+ 
 
 % ---------------------------------- Annexes ---------------------------------
-\chapter{Annexe}
+\chapter{Annexes}
 
 
 \newpage
@@ -414,8 +416,8 @@ Un dernier point à souligner ser
 
 \subsection*{Ordre du jour :}
 \begin{itemize}
-    \item{Repérer les différentes taches a réalisés}
-    \item{Réfléchir a une idée d’application}
+    \item{Repérer les différentes tâches à réaliser}
+    \item{Réfléchir à une idée d’application}
     \item{Organiser la répartition du travail}
 \end{itemize}
 
@@ -426,7 +428,7 @@ Un dernier point à souligner ser
     \\ \hline
     Faire l’analyse de l’existant & x & 1 jour & x & x
     \\ \hline
-    Réfléchir a une idée d’application web & x & 1 jour & x & x
+    Réfléchir à une idée d’application web & x & 1 jour & x & x
     \\ \hline
 \end{tabular}
 \newpage
@@ -476,7 +478,7 @@ Un dernier point à souligner ser
     \textbf{Motif / Type de réunion :}
     & \textbf{Lieu :}
     \\
-    Visualiser l'avancement du projet et redirigez le travail si nécessaire.
+    Visualiser l'avancement du projet et rediriger le travail si nécessaire.
     & 
     Telecom Nancy
     \\ \hline
@@ -649,7 +651,7 @@ Un dernier point à souligner ser
     DEVEAUX Paul & début 14h43\\
     HORNBERGER Théo & fin 14h56\\
     ARIES Lucas & 
-    \\ \hline
+    \\ \hlineF
 \end{tabular}
 
 \subsection*{Ordre du jour :}
@@ -893,8 +895,6 @@ Un dernier point à souligner ser
 \newpage
 
 \section{Diagramme de Gantt}
-\includegraphics[scale=0.8, angle=90]{gantt.png}
+\includegraphics[scale=0.65, angle=90]{gantt.png}
 
 \end{document}
-
-
