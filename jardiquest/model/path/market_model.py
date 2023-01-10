@@ -30,7 +30,6 @@ def display_sell_product(product):
     if current_user.role != "Proprietaire":
         abort(403)
 
-    # TODO formulaire pour la quantité et le prix    
     product = db.session.query(Catalogue.idCatalogue, Catalogue.name, Catalogue.imagePath, Catalogue.description,
                                Catalogue.description_source).filter(Catalogue.name == product).first()
     infos = db.session.query(func.min(Recolte.cost).label("min_cost")).filter(
@@ -59,10 +58,12 @@ def cancel_selling(selling_id):
     if recolte is None or current_user.role != "Proprietaire" or recolte.idJardin != current_user.jardin.idJardin:
         abort(403)
 
-    commande = db.session.query(Commande).filter(Commande.idRecolte == recolte.idRecolte).first()
-    if commande is not None:
-        flash("Vous ne pouvez pas annuler une vente pour laquelle une commande a déjà été effectuée.", 'error')
-        return redirect(url_for('controller.sell_product', product=recolte.catalogue.name))
+    commandes = db.session.query(Commande).filter(Commande.idRecolte == recolte.idRecolte).all()
+    # Remboursement
+    for command in commandes:
+        user = db.session.query(User).filter(User.email == command.acheteur).first()
+        user.balance += command.quantite * recolte.cost
+        db.session.delete(command)
 
     db.session.delete(recolte)
     db.session.commit()
