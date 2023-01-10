@@ -93,36 +93,62 @@
     background: var(--brown-orange);
 }
 
-.table_participating {
+.table-column {
+     grid-area: 1 / 2 / 4 / 2;
+}
+
+.table-participating {
     border-collapse: collapse;
     font-size: 0.9em;
     font-family: sans-serif;
     overflow-y : scroll;
+    margin : 0% 10% 0% 0%;
+    height: 100%;
 }
 
-.table_participating thead tr {
+
+
+.table-participating .table-header .table-row {
     background-color: var(--green);
-    text-align: left;
+    text-align: center;
     border : 2px solid var(--green);
+    display: flex;
+    flex-direction: row;
 }
 
-.table_participating th,
-.table_participating td {
+.table-participating .table-element-principal,
+.table-participating .table-element-secondary {
     padding: 12px 15px;
 }
 
-.table_participating tbody tr {
+.table-participating .table-body .table-row {
     border-right: 2px solid var(--green) ;
     border-left: 2px solid var(--green);
     border-bottom: thin solid var(--green);
+    text-align: center;
+    
+    display: flex;
+    flex-direction: row;
+}
+
+.table-row .name {
+    width: 50%;
+}
+
+.table-row .balance {
+    width: 20%;
+}
+
+.table-row .date-recruitment {
+    width: 30%;
 }
 
 /*change the background when even*/
-.table_participating tbody tr:nth-of-type(even) {
+.table-participating .table-body .table-row:nth-of-type(even) {
     background-color: var(--background-primary);
 }
 
-.table_participating tbody tr:last-of-type {
+.table-participating .table-body .table-row:last-of-type {
     border-bottom: 2px solid var(--green);
 }
 

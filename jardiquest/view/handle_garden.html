@@ -33,31 +33,30 @@
                         <b>Nom de la monnaie</b> <br>
                         <input class="input" type="text" name="moneyName" autofocus="" value="{{jardin.moneyName}}">
                     </div>
-                    <div>
+                    <div class="table-column">
                         <b>Participants</b> <br>
-                        <table class="table_participating">
+                        <div class="table-participating">
                             <!-- Table headers -->
-                            <thead>
-                                <tr>
-                                    <th><b>Nom</b></th>
-                                    <th><b>Balance</b></th>
-                                    <th><b>Date de Recrutement</b></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            {% for p in participant %}
-
-                                <tr>
-                                    <td>{{p.name}}</td>
-                                    <td>{{p.balance}}</td>
-                                    <td>{{p.recruitmentDate}}</td>
-                                </tr>
+                            <div class="table-header">
+                                <div class="table-row">
+                                    <p class="table-element-principal name"><b>Nom</b></p>
+                                    <p class="table-element-principal balance"><b>Balance</b></p>
+                                    <p class="table-element-principal date-recruitment"><b>Date de Recrutement</b></p>
+                                </div>
+                            </div>
+                            <div class="table-body">
+                                {% for p in participant %}
     
-                            {%endfor%}
-    
-                            </tbody>
-                        </table>
+                                    <div class="table-row">
+                                        <p class="table-element-secondary name">{{p.name}}</p>
+                                        <p class="table-element-secondary balance">{{p.balance}}</p>
+                                        <p class="table-element-secondary date-recruitment">{{p.recruitmentDate}}</p>
+                                    </div>
+        
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
                     </div>
                 </form>
 
