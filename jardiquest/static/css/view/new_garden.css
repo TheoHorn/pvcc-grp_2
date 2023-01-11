@@ -47,3 +47,10 @@ a:link { text-decoration: none; }
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+.display_buttons_inline input{
+    margin: 5px 10px 5px 0;
+    padding: 10px;
+    font-size: large;
+    width: 6em;
+}

@@ -35,7 +35,6 @@ for data_size in range(1, nb_Tests*step_data_size+1, step_data_size):
     totalTime = time() - startTime
     times[data_size] = totalTime
 
-print(times)
 plt.plot(list(times.keys()), list(times.values()))
 plt.xlabel("Data size")
 plt.ylabel("Execution time in seconds")
