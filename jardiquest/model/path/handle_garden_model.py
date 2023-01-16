@@ -51,20 +51,25 @@ def delete_model_garden(jardin: Jardin, user: User):
     db.session.commit()
     return redirect(url_for('controller.garden'))
 
+
 def add_garden_quest_print():
     idJar = current_user.idJardin
     jardin = Jardin.query.filter_by(idJardin=idJar).first()
-    return render_template('create_quest.html',user=current_user,jardin=jardin)
+    return render_template('create_quest.html', user=current_user, jardin=jardin)
 
-def add_garden_quest(title: str, description: str,reward: int,duration: int,periodic: bool, start: str, expiration:int):
-        st = start.split("-")
-        start = date(int(st[0]),int(st[1]),int(st[2]))
-        new_quest = Quete(idQuete=uuid.uuid1().hex, title=title, description=description,
-                              periodicity=periodic,
-                              estimatedTime=duration,
-                              timeBeforeExpiration=expiration, reward=reward,
-                              id_jardin=current_user.idJardin,
-                              startingDate=start)
-        db.session.add(new_quest)
-        db.session.commit()
-        return redirect(url_for("controller.your_garden"))
+
+def add_garden_quest(title: str, description: str, reward: int, duration: int, periodic: bool, start: str,
+                     expiration: int):
+    st = start.split("-")
+    start = date(int(st[0]), int(st[1]), int(st[2]))
+    if expiration is '':
+        expiration = 1
+    new_quest = Quete(idQuete=uuid.uuid1().hex, title=title, description=description,
+                      periodicity=periodic,
+                      estimatedTime=duration,
+                      timeBeforeExpiration=expiration, reward=reward,
+                      id_jardin=current_user.idJardin,
+                      startingDate=start)
+    db.session.add(new_quest)
+    db.session.commit()
+    return redirect(url_for("controller.your_garden"))
