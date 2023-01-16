@@ -43,3 +43,7 @@ Dans le root du projet :
 source venv/bin/activate
 pytest
 ```
+
+## Rendu de Projet
+Les fichiers se situent dans la gestion de projet : 
+/gestion-projet/Rapport_Final_PPII_Aries_Devaux_Hornberger_Tempestini.tex (ou .pdf)
